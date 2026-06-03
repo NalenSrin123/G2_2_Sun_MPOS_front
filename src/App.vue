@@ -1,3 +1,10 @@
+<script setup lang="ts">
+import Dsign_Create_Product_Page from './pages/dashboard/Dsign_Create_Product_Page.vue';
+
+
+
+</script>
+
 /*
 |--------------------------------------------------------------------------
 | File: App.vue
@@ -20,5 +27,5 @@
 
 <template>
   <!-- Router outlet: renders matched route component -->
-  <RouterView />
+  <Dsign_Create_Product_Page/>
 </template>
