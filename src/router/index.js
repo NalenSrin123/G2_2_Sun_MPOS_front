@@ -26,6 +26,7 @@ import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
 import Home from '@/pages/home/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
+import SendEmail from '../pages/auth/SendEmail.vue'
 
 /**
  * Route definitions
@@ -55,7 +56,7 @@ const routes = [
    */
   { path: '/login', component: Login },
   { path: '/register', component: Register },
-
+  { path: '/forgot-password', component: SendEmail },
   /**
    * Optional home route (disabled for now)
    * Uncomment when switching from preview to real landing page
