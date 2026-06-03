@@ -21,11 +21,13 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // Page components
 import Dashboard from '@/pages/dashboard/Dashboard.vue'
+import Category_List from '../pages/dashboard/Category_List.vue'
 import Login from '@/pages/auth/Login.vue'
 import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
 import Home from '@/pages/home/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
+
 
 /**
  * Route definitions
@@ -49,6 +51,7 @@ const routes = [
    * Typically requires authentication (can add guards later)
    */
   { path: '/dashboard', component: Dashboard },
+  { path: '/Category_List', component: Category_List },
 
   /**
    * Authentication routes
