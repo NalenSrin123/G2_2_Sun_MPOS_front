@@ -26,12 +26,17 @@ import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
 import Home from '@/pages/home/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
+import Setting from '@/pages/dashboard/Setting.vue'
+
+
 
 /**
  * Route definitions
  * Each route maps a URL path to a specific page component
  */
 const routes = [
+
+  
   /**
    * Default entry route
    * Redirects "/" to "/preview" to showcase the project structure
@@ -49,6 +54,7 @@ const routes = [
    * Typically requires authentication (can add guards later)
    */
   { path: '/dashboard', component: Dashboard },
+  { path: '/setting', component: Setting },
 
   /**
    * Authentication routes
@@ -68,6 +74,8 @@ const routes = [
    * Displays a styled 404 page for unknown paths
    */
   { path: '/:pathMatch(.*)*', component: NotFound },
+  
+ 
 ]
 
 /**
