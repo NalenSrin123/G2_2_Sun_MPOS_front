@@ -20,12 +20,14 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Page components
+
 import Dashboard from '@/pages/dashboard/Dashboard.vue'
 import Login from '@/pages/auth/Login.vue'
 import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
 import Home from '@/pages/home/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
+import Sidebar from '@/components/layout/Sidebar.vue'
 
 /**
  * Route definitions
@@ -43,6 +45,7 @@ const routes = [
    * Displays project structure and navigation examples
    */
   { path: '/preview', component: Preview },
+  { path: '/Sidebar', component: Sidebar },
 
   /**
    * Main application dashboard
