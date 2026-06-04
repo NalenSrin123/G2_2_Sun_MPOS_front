@@ -6,6 +6,7 @@
 </template>
 
 <script setup>
+
 // Dashboard page (Composition API)
 </script>
 
