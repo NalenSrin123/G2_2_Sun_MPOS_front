@@ -1,3 +1,8 @@
+<script setup lang="ts">
+import Product_list from './pages/dashboard/Product_list.vue';
+
+</script>
+
 /*
 |--------------------------------------------------------------------------
 | File: App.vue
@@ -20,5 +25,6 @@
 
 <template>
   <!-- Router outlet: renders matched route component -->
-  <RouterView />
+  <!-- <RouterView /> -->
+  <Product_list />
 </template>
