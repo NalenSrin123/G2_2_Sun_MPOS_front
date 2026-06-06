@@ -1,3 +1,12 @@
+<script setup lang="ts">
+// import Filter_Order from './pages/orders/Filter_Order.vue';
+import Orders from './pages/orders/Orders.vue';
+
+
+
+
+</script>
+
 /*
 |--------------------------------------------------------------------------
 | File: App.vue
@@ -21,4 +30,5 @@
 <template>
   <!-- Router outlet: renders matched route component -->
   <RouterView />
+  
 </template>
