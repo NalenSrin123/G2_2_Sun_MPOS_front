@@ -44,12 +44,12 @@
         </div>
 
         <!-- WELCOME -->
-        <div class="mb-8">
-          <h2 class="text-3xl lg:text-4xl font-bold text-gray-900 mb-3">
+        <div class="mb-6">
+          <h2 class="text-3xl text-center lg:text-4xl font-bold text-gray-900 mb-3">
             Welcome back
           </h2>
 
-          <p class="text-gray-500 leading-7 text-base lg:text-lg">
+          <p class="text-gray-500 leading-7 text-base text-center lg:text-lg">
             Enter your credentials to access the management suite
           </p>
         </div>
@@ -103,7 +103,7 @@
           </div>
 
           <!-- BUTTON -->
-          <button type="submit"
+          <button type="submit" onclick="window.location.href='/confirm-otp'"
             class="w-full h-14 bg-[#2d724c] hover:bg-[#1f5d3b] rounded-2xl text-white text-base lg:text-lg font-semibold flex justify-center items-center gap-3 shadow-md transition">
             Sign In
             <i class="bi bi-box-arrow-in-right"></i>
