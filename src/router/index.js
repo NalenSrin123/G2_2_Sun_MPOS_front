@@ -38,6 +38,7 @@ import Setting from '@/pages/dashboard/Setting.vue'
 
 
 import Sidebar from '@/components/layout/Sidebar.vue'
+import Category from '../pages/dashboard/Category.vue'
 
 /**
  * Route definitions
@@ -68,6 +69,7 @@ const routes = [
   {path: '/table', component: TableForm },
   { path: '/setting', component: Setting },
   { path: '/Category_List', component: Category_List },
+  {path: '/category', component: Category },
 
   /**
    * Authentication routes
