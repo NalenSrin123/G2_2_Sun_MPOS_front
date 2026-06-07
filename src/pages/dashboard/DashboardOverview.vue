@@ -1,17 +1,16 @@
 <template>
-  <main class="flex-1 bg-emerald-50 min-h-screen p-6 overflow-auto">
+  <main class="flex-1 bg-emerald-50 h-[calc(100vh-84px)] overflow-hidden p-4">
     <!-- Header -->
     <div
-      class="flex flex-col md:flex-row md:justify-between md:items-center gap-4 mb-6"
+      class="flex flex-col md:flex-row md:justify-between md:items-center gap-3 mb-3"
     >
       <div>
-        <h1 class="text-3xl font-bold">Executive Overview</h1>
-
+        <h1 class="text-2xl font-semibold">Executive Overview</h1>
         <p class="text-gray-500">Real-time performance metrics</p>
       </div>
 
       <button
-        class="bg-emerald-700 hover:bg-emerald-800 transition cursor-pointer text-white px-5 py-3 rounded-xl flex items-center gap-2 w-fit"
+        class="bg-emerald-700 hover:bg-emerald-800 transition cursor-pointer text-white px-4 py-3 rounded-xl flex items-center gap-2 w-fit"
       >
         <Download class="w-5 h-5" />
         Export PDF
@@ -19,17 +18,17 @@
     </div>
 
     <!-- Metric Cards -->
-    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3">
       <div
         v-for="card in cards"
         :key="card.title"
-        class="bg-white rounded-2xl p-6 shadow-sm"
+        class="bg-white rounded-2xl p-4 shadow-sm"
       >
         <div class="flex justify-between items-start">
-          <div class="p-3 rounded-xl" :class="card.iconBg">
+          <div class="p-2 rounded-xl" :class="card.iconBg">
             <component
               :is="card.icon"
-              class="w-5 h-5"
+              class="w-4 h-4"
               :class="card.iconColor"
             />
           </div>
@@ -39,132 +38,70 @@
           </span>
         </div>
 
-        <p class="uppercase text-sm text-gray-500 mt-5">
+        <p class="uppercase text-sm text-gray-500 mt-3">
           {{ card.title }}
         </p>
 
-        <h2 class="text-3xl font-bold mt-2">
+        <h2 class="text-2xl font-bold mt-1">
           {{ card.value }}
         </h2>
       </div>
     </div>
 
-    <!-- Chart -->
-    <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
-      <div class="flex justify-between items-center">
+    <!-- Chart Section -->
+    <div class="bg-white rounded-2xl p-4 shadow-sm mt-3 h-105">
+      <div class="flex justify-between items-center mb-4">
         <div>
           <h2 class="text-2xl font-semibold">Sales & Revenue</h2>
-
           <p class="text-gray-500">Weekly trend analysis</p>
         </div>
 
-        <div class="flex gap-2 bg-emerald-50 rounded-lg p-1.5">
+        <div class="flex gap-2 bg-emerald-100 rounded-lg p-1.5">
           <button
-            class="cursor-pointer px-3 py-1 rounded-lg bg-white text-emerald-700 font-semibold"
+            @click="selectedPeriod = 'week'"
+            class="cursor-pointer px-3 py-1 rounded-lg font-semibold transition"
+            :class="
+              selectedPeriod === 'week'
+                ? 'bg-white text-emerald-700'
+                : 'text-gray-400'
+            "
           >
             Week
           </button>
 
           <button
-            class="cursor-pointer px-3 py-1 rounded-lg text-gray-400 font-semibold"
+            @click="selectedPeriod = 'month'"
+            class="cursor-pointer px-3 py-1 rounded-lg font-semibold transition"
+            :class="
+              selectedPeriod === 'month'
+                ? 'bg-white text-emerald-700'
+                : 'text-gray-400'
+            "
           >
             Month
           </button>
         </div>
       </div>
-      <!-- chat section -->
-      <div class="bg-white rounded-2xl p-6 shadow-sm mt-6">
-        <div class="flex justify-between mb-6">
-          <div>
-            <h2 class="text-2xl font-semibold">Sales & Revenue</h2>
 
-            <p class="text-gray-500">Weekly trend analysis</p>
-          </div>
-        </div>
-
-        <div class="h-72">
-          <Line :data="chartData" :options="chartOptions" />
-        </div>
-      </div>
-    </div>
-
-    <!-- Orders -->
-    <div class="bg-white rounded-2xl shadow-sm mt-6 overflow-hidden">
-      <div class="p-6 flex justify-between items-start">
-        <div>
-          <h2 class="text-2xl font-semibold">Recent Orders</h2>
-
-          <p class="text-gray-500">Live feed of floor activity</p>
-        </div>
-
-        <button class="p-2 rounded-lg hover:bg-slate-100 transition">
-          <Filter class="w-5 h-5 text-gray-500" />
-        </button>
-      </div>
-
-      <div class="overflow-x-auto">
-        <table class="w-full min-w-175">
-          <thead class="bg-emerald-50">
-            <tr class="text-left text-gray-500">
-              <th class="p-4">Order ID</th>
-              <th>Table</th>
-              <th>Items</th>
-              <th>Status</th>
-              <th>Amount</th>
-              <th>Action</th>
-            </tr>
-          </thead>
-
-          <tbody>
-            <tr v-for="order in orders" :key="order.id" class="p-4">
-              <td class="p-4">
-                {{ order.id }}
-              </td>
-
-              <td>{{ order.table }}</td>
-
-              <td>{{ order.items }}</td>
-
-              <td>
-                <span
-                  class="px-3 py-1 rounded-full text-sm"
-                  :class="
-                    order.status === 'Success'
-                      ? 'bg-green-100 text-green-700'
-                      : 'bg-yellow-100 text-yellow-700'
-                  "
-                >
-                  {{ order.status }}
-                </span>
-              </td>
-
-              <td class="font-semibold">
-                {{ order.amount }}
-              </td>
-
-              <td>
-                <Eye
-                  class="w-5 h-5 text-gray-500 hover:text-emerald-600 cursor-pointer"
-                />
-              </td>
-            </tr>
-          </tbody>
-        </table>
+      <!-- Chart -->
+      <div class="h-78">
+        <Line :data="chartData" :options="chartOptions" />
       </div>
     </div>
   </main>
 </template>
 
 <script setup>
+import { ref, computed } from "vue";
+
 import {
-  Eye,
   Download,
   Wallet,
   ClipboardList,
   Armchair,
   BarChart3,
-  Filter,
 } from "lucide-vue-next";
+
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -188,24 +125,47 @@ ChartJS.register(
   Legend,
 );
 
-const chartData = {
-  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+// toggle state
+const selectedPeriod = ref("week");
 
-  datasets: [
-    {
-      label: "Revenue",
-      data: [120, 190, 170, 220, 260, 240, 300],
-      borderColor: "#10b981",
-      backgroundColor: "#10b981",
-      tension: 0.4,
-    },
-  ],
+// weekly data
+const weekData = {
+  labels: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+  values: [120, 190, 170, 220, 260, 240, 300],
 };
+
+// monthly data
+const monthData = {
+  labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+  values: [1200, 1500, 1800, 2100, 2600, 3000],
+};
+
+const chartData = computed(() => {
+  const data = selectedPeriod.value === "week" ? weekData : monthData;
+
+  return {
+    labels: data.labels,
+    datasets: [
+      {
+        label:
+          selectedPeriod.value === "week"
+            ? "Weekly Revenue"
+            : "Monthly Revenue",
+
+        data: data.values,
+        borderColor: "#10b981",
+        backgroundColor: "#10b981",
+        tension: 0.4,
+      },
+    ],
+  };
+});
 
 const chartOptions = {
   responsive: true,
   maintainAspectRatio: false,
 };
+
 const cards = [
   {
     title: "Today's Sales",
@@ -242,30 +202,6 @@ const cards = [
     iconBg: "bg-green-100",
     iconColor: "text-green-700",
     trendColor: "text-green-600",
-  },
-];
-
-const orders = [
-  {
-    id: "#LX-9241",
-    table: "Table 08",
-    items: "3 items",
-    status: "Success",
-    amount: "$142.00",
-  },
-  {
-    id: "#LX-9242",
-    table: "Table 04",
-    items: "5 items",
-    status: "Pending",
-    amount: "$218.50",
-  },
-  {
-    id: "#LX-9243",
-    table: "Table 12",
-    items: "1 item",
-    status: "Success",
-    amount: "$45.00",
   },
 ];
 </script>
