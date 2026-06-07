@@ -28,7 +28,7 @@
       <div class="w-full max-w-[430px]">
 
         <!-- LOGO -->
-        <div class="text-center mb-12">
+        <div class="text-center mb-9">
           <div
             class="w-[75px] h-[75px] bg-[#54be8c] rounded-2xl flex justify-center items-center mx-auto mb-5 shadow-md">
             <i class="bi bi-fork-knife text-white text-3xl"></i>
@@ -44,7 +44,7 @@
         </div>
 
         <!-- WELCOME -->
-        <div class="mb-6">
+        <div class="mb-4">
           <h2 class="text-3xl text-center lg:text-4xl font-bold text-gray-900 mb-3">
             Welcome back
           </h2>
