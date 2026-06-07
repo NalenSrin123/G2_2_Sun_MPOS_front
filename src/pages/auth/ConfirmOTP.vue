@@ -33,7 +33,7 @@
                     ref="inputs"
                />
             </div>
-            <button class="verify-button" @click="verifyOTP">Verify Code
+            <button class="verify-button" @click="verifyCode">Verify Code
                 <svg class="shield-icon" viewBox="0 0 24 24" fill="none">
                     <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                     <path d="M9 12l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -53,12 +53,12 @@
                 </div>
             </div>            
             <div class="back-section">
-            <button class="back-link">
-                <svg class="back-icon" viewBox="0 0 24 24" fill="none">
+            <router-link to="/login" class="back-link">
+              <svg class="back-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                </svg>
-                Back to Login
-          </button>
+              </svg>
+              Back to Login
+            </router-link>
           </div>
         </div>
     </div>
@@ -66,10 +66,11 @@
 </template>
 <script>
     import { ref, onMounted, onBeforeUnmount } from 'vue';
-
+    import { useRouter } from 'vue-router';
     export default {
     name: 'ConfirmOTPPage',
     setup() {
+            const router = useRouter();
             const otpLength = 6;
             const otp = ref(new Array(otpLength).fill(''));
             const inputs = ref([]);
@@ -105,7 +106,7 @@
             const fullOtp = otp.value.join('');
                 if (fullOtp.length === otpLength) {
                     console.log('Verifying code OTP:', fullOtp);
-
+                    router.push('/dashboard');
                 } else {
                     alert('Please enter all 6 digits of the code!');
                 }
@@ -307,6 +308,7 @@
   margin-bottom: 12px;
   display: inline-block;
   transition: color 0.2s;
+  padding: 8px 16px;
 }
 
 .resend-link.disabled {
