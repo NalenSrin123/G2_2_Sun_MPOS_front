@@ -39,6 +39,7 @@ import Setting from '@/pages/dashboard/Setting.vue'
 
 import Sidebar from '@/components/layout/Sidebar.vue'
 import Category from '../pages/dashboard/Category.vue'
+import UserForm from '@/pages/auth/UserForm.vue'
 
 /**
  * Route definitions
@@ -80,6 +81,7 @@ const routes = [
   { path: '/confirm-otp', component: ConfirmOTP },
 
   { path: '/forgot-password', component: SendEmail },
+{ path: '/user-form', component: UserForm },
   /**
    * Optional home route (disabled for now)
    * Uncomment when switching from preview to real landing page
