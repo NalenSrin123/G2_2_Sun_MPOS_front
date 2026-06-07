@@ -22,6 +22,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 // Page components
 import Dashboard from '@/pages/dashboard/Dashboard.vue'
 import ConfirmOTP from '@/pages/auth/ConfirmOTP.vue'
+import Category_List from '../pages/dashboard/Category_List.vue'
 import Login from '@/pages/auth/Login.vue'
 import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
@@ -32,6 +33,7 @@ import ResetPassword  from '@/pages/auth/ResetPassword.vue'
 import TableForm from '../pages/dashboard/TableForm.vue'
 import SendEmail from '../pages/auth/SendEmail.vue'
 import Setting from '@/pages/dashboard/Setting.vue'
+
 
 
 
@@ -62,6 +64,7 @@ const routes = [
   // === table 
   {path: '/table', component: TableForm },
   { path: '/setting', component: Setting },
+  { path: '/Category_List', component: Category_List },
 
   /**
    * Authentication routes
