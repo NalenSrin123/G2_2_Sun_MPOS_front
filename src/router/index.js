@@ -28,6 +28,8 @@ import Home from '@/pages/home/Home.vue'
 import NotFound from '@/pages/NotFound.vue'
 import ResetPassword  from '@/pages/auth/ResetPassword.vue'
 
+import TableForm from '../pages/dashboard/TableForm.vue'
+
 /**
  * Route definitions
  * Each route maps a URL path to a specific page component
@@ -50,6 +52,8 @@ const routes = [
    * Typically requires authentication (can add guards later)
    */
   { path: '/dashboard', component: Dashboard },
+  // === table 
+  {path: '/table', component: TableForm },
 
   /**
    * Authentication routes
