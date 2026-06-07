@@ -30,6 +30,7 @@ import NotFound from '@/pages/NotFound.vue'
 import ResetPassword  from '@/pages/auth/ResetPassword.vue'
 
 import TableForm from '../pages/dashboard/TableForm.vue'
+import SendEmail from '../pages/auth/SendEmail.vue'
 
 /**
  * Route definitions
@@ -64,6 +65,7 @@ const routes = [
   { path: '/reset_pasword', component: ResetPassword },
   { path: '/confirm-otp', component: ConfirmOTP },
 
+  { path: '/forgot-password', component: SendEmail },
   /**
    * Optional home route (disabled for now)
    * Uncomment when switching from preview to real landing page
