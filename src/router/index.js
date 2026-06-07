@@ -21,6 +21,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 
 // Page components
 import Dashboard from '@/pages/dashboard/Dashboard.vue'
+import ConfirmOTP from '@/pages/auth/ConfirmOTP.vue'
 import Login from '@/pages/auth/Login.vue'
 import Register from '@/pages/auth/Register.vue'
 import Preview from '@/pages/preview/Preview.vue'
@@ -61,6 +62,7 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/reset_pasword', component: ResetPassword },
+  { path: '/confirm-otp', component: ConfirmOTP },
 
   /**
    * Optional home route (disabled for now)
