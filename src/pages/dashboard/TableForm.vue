@@ -1,5 +1,6 @@
 <template>
-    <section class="md:m-6 lg:m-10 flex flex-col lg:flex-row gap-6 justify-center">
+    <section class="min-h-full bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+      <div class="mx-auto flex max-w-6xl flex-col justify-center gap-6 lg:flex-row">
         <div class="w-full lg:w-[576px] flex-shrink-0">
 
             <div class="p-6 bg-white grid gap-6 rounded-xl w-full border border-gray-100 shadow-sm">
@@ -168,6 +169,7 @@
                 </div>
             </div>
         </div>
+      </div>
     </section>
 </template>
 

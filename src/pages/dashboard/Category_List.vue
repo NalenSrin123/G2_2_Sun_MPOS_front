@@ -19,14 +19,16 @@
             </h1>
           </div>
 
-          <button
+          <RouterLink
+            to="/categories/new"
             class="w-12 h-12 md:w-14 md:h-14
                    rounded-full bg-emerald-700
                    text-white text-2xl md:text-3xl
-                   shadow-lg hover:bg-emerald-800"
+                   shadow-lg hover:bg-emerald-800
+                   flex items-center justify-center"
           >
             +
-          </button>
+          </RouterLink>
         </div>
 
         <!-- Statistics -->
@@ -114,16 +116,18 @@
       </div>
 
       <!-- Floating Button -->
-      <button
+      <RouterLink
+        to="/categories/new"
         class="fixed bottom-4 right-4
                md:bottom-8 md:right-8
                w-14 h-14 md:w-16 md:h-16
                rounded-full bg-emerald-700
                text-white text-3xl
-               shadow-xl hover:bg-emerald-800"
+               shadow-xl hover:bg-emerald-800
+               flex items-center justify-center"
       >
         +
-      </button>
+      </RouterLink>
 
     </div>
   </div>

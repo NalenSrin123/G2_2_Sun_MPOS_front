@@ -1,7 +1,11 @@
 <template>
-  <Title />
-  <Filter_Order />
-  <Table_Order />
+  <div class="min-h-full bg-gray-50 px-4 py-6 sm:px-6 lg:px-8">
+    <div class="space-y-5">
+      <Title />
+      <Filter_Order />
+      <Table_Order />
+    </div>
+  </div>
 </template>
 
 <script setup>

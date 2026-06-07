@@ -1,8 +1,8 @@
 <template>
-  <div class="bg-background text-on-background min-h-screen">
+  <div class="min-h-full bg-gray-50 px-4 py-6 text-on-background sm:px-6 lg:px-8">
     <!-- Main Content -->
-    <main class="p-6">
-      <div class="max-w-6xl mx-auto">
+    <main>
+      <div class="mx-auto max-w-6xl">
         <!-- Header -->
         <div class="mb-8">
           <h2 class="text-3xl font-bold">Create New Category</h2>
