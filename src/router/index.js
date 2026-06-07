@@ -20,6 +20,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 // Page components
+
 import Dashboard from '@/pages/dashboard/Dashboard.vue'
 import ConfirmOTP from '@/pages/auth/ConfirmOTP.vue'
 import Category_List from '../pages/dashboard/Category_List.vue'
@@ -36,6 +37,7 @@ import Setting from '@/pages/dashboard/Setting.vue'
 
 
 
+import Sidebar from '@/components/layout/Sidebar.vue'
 
 /**
  * Route definitions
@@ -55,6 +57,7 @@ const routes = [
    * Displays project structure and navigation examples
    */
   { path: '/preview', component: Preview },
+  { path: '/Sidebar', component: Sidebar },
 
   /**
    * Main application dashboard
