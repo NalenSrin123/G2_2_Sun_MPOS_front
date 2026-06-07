@@ -31,12 +31,17 @@ import ResetPassword  from '@/pages/auth/ResetPassword.vue'
 
 import TableForm from '../pages/dashboard/TableForm.vue'
 import SendEmail from '../pages/auth/SendEmail.vue'
+import Setting from '@/pages/dashboard/Setting.vue'
+
+
 
 /**
  * Route definitions
  * Each route maps a URL path to a specific page component
  */
 const routes = [
+
+  
   /**
    * Default entry route
    * Redirects "/" to "/preview" to showcase the project structure
@@ -56,6 +61,7 @@ const routes = [
   { path: '/dashboard', component: Dashboard },
   // === table 
   {path: '/table', component: TableForm },
+  { path: '/setting', component: Setting },
 
   /**
    * Authentication routes
@@ -78,6 +84,8 @@ const routes = [
    * Displays a styled 404 page for unknown paths
    */
   { path: '/:pathMatch(.*)*', component: NotFound },
+  
+ 
 ]
 
 /**
