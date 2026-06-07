@@ -74,30 +74,31 @@
 
           <!-- PASSWORD -->
           <div>
-            <label class="block mb-2 font-semibold text-gray-700 text-sm lg:text-base">
+            <label class="block mb-2 font-medium text-gray-700">
               Password
             </label>
 
-            <div
-              class="h-14 border border-gray-300 rounded-2xl flex items-center px-4 bg-white focus-within:border-[#2d724c] transition">
-              <i class="bi bi-lock text-gray-400 text-lg"></i>
+            <div class="h-14 border border-gray-300 rounded-2xl flex items-center px-4 bg-white">
+              <i class="bi bi-lock text-gray-500 text-lg"></i>
 
               <input v-model="form.password" :type="showPassword ? 'text' : 'password'" placeholder="••••••••"
-                class="w-full h-full outline-none px-4 bg-transparent text-sm lg:text-base" />
+                class="w-full h-full outline-none px-4 bg-transparent" />
 
-              <i @click="togglePassword" :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+              <!-- SHOW / HIDE -->
+              <i @click="showPassword = !showPassword" :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
                 class="text-gray-500 cursor-pointer text-lg"></i>
             </div>
           </div>
 
           <!-- OPTIONS -->
           <div class="flex justify-between items-center">
-            <label class="flex items-center gap-2">
-              <input v-model="remember" type="checkbox" class="w-4 h-4 accent-[#2d724c]" />
-              <span class="text-gray-700 text-sm">Remember me</span>
-            </label>
 
-            <a href="/forgot-password" class="text-[#216946] font-semibold text-sm hover:underline">
+            <div class="flex items-center gap-2">
+              <input type="checkbox" class="w-4 h-4" />
+              <span class="text-gray-700">Remember me</span>
+            </div>
+
+            <a href="#" class="text-[#216946] font-semibold hover:underline">
               Forgot password?
             </a>
           </div>
