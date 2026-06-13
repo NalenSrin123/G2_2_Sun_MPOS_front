@@ -23,6 +23,8 @@ import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
 
+import QR_Payment from "../../payment/QR_Payment.vue";
+
 const routes = [
   { path: "/", redirect: "/dashboard" },
   { path: "/preview", component: Preview },
@@ -42,6 +44,8 @@ const routes = [
       { path: "categories/new", component: Category },
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
+
+    
     ],
   },
 
@@ -54,6 +58,8 @@ const routes = [
   { path: "/user-form", component: UserForm },
 
   { path: "/:pathMatch(.*)*", component: NotFound },
+
+    {path:  "/payment", component:QR_Payment}
 ];
 
 const router = createRouter({
