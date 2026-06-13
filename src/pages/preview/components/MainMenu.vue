@@ -1,4 +1,4 @@
-<!-- src/components/MainMenu.vue -->
+
 <template>
   <div class="min-h-screen bg-emerald-50 flex flex-col">
     <div class="flex-1 px-5 pt-8 pb-28">
