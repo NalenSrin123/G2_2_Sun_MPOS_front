@@ -45,15 +45,14 @@ const routes = [
       { path: "dashboard/overview", component: DashboardOverview },
       { path: "orders", component: Orders },
       { path: "tables", component: TableList },
-      { path: "tables/new", component: TableForm },
       { path: "products", component: ProductList },
+      { path: "tables/new", component: TableForm },
       { path: "categories", component: CategoryList },
       { path: "categories/new", component: Category },
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
 
-    
-      { path: "products", component: ProductList },
+  
       { path: "products/detail/:id", component: ProductDetail },
       {path: "payment", component: PaymentMethod}
     ],
@@ -89,7 +88,8 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
-
+        { path: "tables", component: TableList },
+        { path: "products", component: ProductList },
       ]
     },
     {
@@ -101,7 +101,7 @@ const route=[
 ]
 const router = createRouter({
   history: createWebHistory(),
-  route,
+  routes,
 });
 
 export default router;
