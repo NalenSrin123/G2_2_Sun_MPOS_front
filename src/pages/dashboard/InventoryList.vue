@@ -167,11 +167,6 @@
 </template>
 <script setup>
 	import { computed } from "vue";
-	// Import your sub-components here
-	import BaseButton from "./BaseButton.vue";
-	import BaseCard from "./BaseCard.vue";
-	import BaseInput from "./BaseInput.vue";
-	import InventoryTable from "./InventoryTable.vue";
 
 	const props = defineProps({
 		items: { type: Array, required: true },
@@ -193,34 +188,3 @@
 	});
 </script>
 
-<template>
-	<div class="space-y-8">
-		<div class="grid grid-cols-4 gap-4">
-			<BaseCard
-				title="Total Items"
-				:value="items.length"
-				status="info"
-				icon="bi-box-seam" />
-			<BaseCard
-				title="Low Stock"
-				:value="computedStats.lowStock"
-				status="warning"
-				icon="bi-exclamation-triangle" />
-			<BaseCard
-				title="Out Of Stock"
-				:value="computedStats.outOfStock"
-				status="danger"
-				icon="bi-x-circle" />
-			<BaseCard
-				title="Total Value"
-				:value="`$${computedStats.totalValue.toFixed(2)}`"
-				status="default"
-				icon="bi-layers" />
-		</div>
-
-		<InventoryTable
-			:items="items"
-			@edit="emit('edit-item', $event)"
-			@delete="emit('delete-item', $event)" />
-	</div>
-</template>

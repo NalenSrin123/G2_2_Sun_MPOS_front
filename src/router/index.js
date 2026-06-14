@@ -34,7 +34,7 @@ const routes = [
 	{
 		path: "/",
 		children: [
-      { path: "home", component: Home },
+      { path: "", component: Home },
       { path: "products/detail/:id", component: ProductDetail },
       { path: "payment", component: PaymentMethod },
       { path: "confirm-payment", component: QR_Payment },
