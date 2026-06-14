@@ -82,7 +82,10 @@ const route = [
 	{
 		path: "/dashboard",
 		component: Sidebar,
-		children: [{ path: "inventory", component: InventoryList }],
+		children: [
+      { path: "inventory", component: InventoryList },
+      { path: "tables/new", component: TableForm },
+    ],
 	},
 	{
 		path: "/auth",
