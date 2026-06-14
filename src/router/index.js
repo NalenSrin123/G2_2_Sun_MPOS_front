@@ -28,6 +28,7 @@ import Dsign_Create_Product_Page from "../pages/dashboard/Dsign_Create_Product_P
 import QR_Payment from "../../payment/QR_Payment.vue";
 import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
 
+import PaymentMethod from "../pages/orders/PaymentMethod.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -54,6 +55,7 @@ const routes = [
     
       { path: "products", component: ProductList },
       { path: "products/detail/:id", component: ProductDetail },
+      {path: "payment", component: PaymentMethod}
     ],
   },
 
