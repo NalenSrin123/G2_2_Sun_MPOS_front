@@ -35,7 +35,7 @@ const routes = [
   { path: "/preview", component: Preview },
   { path: "/home", component: Home },
   { path: "/Home", redirect: "/home" },
- 
+
 
   {
     path: "/",
@@ -52,7 +52,7 @@ const routes = [
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
 
-    
+
       { path: "products", component: ProductList },
       { path: "products/detail/:id", component: ProductDetail },
       {path: "payment", component: PaymentMethod}
@@ -77,32 +77,23 @@ const routes = [
 }
 
 ];
-const route=[
-    {
-      path:"/",
-      children:[
-
-      ]
-        
-    },
-    {
-      path:"/dashboard",
-      component:Sidebar,
-      children:[
-
-      ]
-    },
-    {
-      path: "/auth",
-      children:[
-
-      ]
-    }
-]
+const route = [
+  {
+    path: "/",
+  },
+  {
+    path: "/dashboard",
+    component: Sidebar,
+    children: [{ path: "settings", component: Setting }],
+  },
+  {
+    path: "/auth",
+    children: [],
+  },
+];
 const router = createRouter({
   history: createWebHistory(),
   route,
 });
 
 export default router;
- 
