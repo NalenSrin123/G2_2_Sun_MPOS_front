@@ -95,7 +95,7 @@ const route=[
     {
       path: "/auth",
       children:[
-
+        { path: "/forgot-password", component: SendEmail },
       ]
     }
 ]
