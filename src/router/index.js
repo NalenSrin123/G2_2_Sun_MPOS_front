@@ -59,7 +59,7 @@ const routes = [
 
 	{ path: "/login", component: Login },
 	{ path: "/register", component: Register },
-	{ path: "/reset-password", component: ResetPassword },
+	
 	{ path: "/reset_pas`~word", redirect: "/reset-password" },
 	{ path: "/confirm-otp", component: ConfirmOTP },
 	{ path: "/forgot-password", component: SendEmail },
@@ -86,7 +86,9 @@ const route = [
 	},
 	{
 		path: "/auth",
-		children: [],
+		children: [
+      { path: "/reset-password", component: ResetPassword },
+    ],
 	},
 ];
 const router = createRouter({
