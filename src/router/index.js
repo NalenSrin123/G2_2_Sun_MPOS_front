@@ -28,7 +28,7 @@ import QR_Payment from "../../payment/QR_Payment.vue";
 import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
 
 import PaymentMethod from "../pages/orders/PaymentMethod.vue";
-import InventoryList from "@/pages/dashboard/InventoryList.vue";
+
 
 const routes = [
 	{
@@ -38,7 +38,7 @@ const routes = [
       { path: "products/detail/:id", component: ProductDetail },
       { path: "payment", component: PaymentMethod },
       { path: "confirm-payment", component: QR_Payment },
-      { path: "orders", component: Orders },
+      
     ],
 	},
 	{
@@ -46,7 +46,6 @@ const routes = [
 		component: Sidebar,
 		children: [
       { path: "", component: DashboardOverview },
-      { path: "inventory", component: InventoryList },
       { path: "categories", component: CategoryList },
 			{ path: "tables", component: TableList },
 			{ path: "create-table", component: TableForm },
@@ -55,6 +54,7 @@ const routes = [
 			{ path: "create-categorie", component: Category },
 			{ path: "settings", component: Setting },
       { path: "users", component: UserList },
+      { path: "orders", component: Orders },
       { path: "user-form", component: UserForm },
       {
           path: "create_product",
