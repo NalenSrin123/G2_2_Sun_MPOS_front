@@ -89,7 +89,11 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
-
+        {
+          path: "/design_create_product_page",
+          name: "design_create_product_page",
+          component: Dsign_Create_Product_Page,
+        }
       ]
     },
     {
