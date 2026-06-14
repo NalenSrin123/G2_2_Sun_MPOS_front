@@ -29,6 +29,7 @@ import QR_Payment from "../../payment/QR_Payment.vue";
 import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
 
 import PaymentMethod from "../pages/orders/PaymentMethod.vue";
+import MainMenu from "../pages/preview/components/MainMenu.vue";
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -74,14 +75,14 @@ const routes = [
   path: "/design_create_product_page",
   name: "design_create_product_page",
   component: Dsign_Create_Product_Page,
-}
+} 
 
 ];
 const route=[
     {
       path:"/",
       children:[
-
+      
       ]
         
     },
@@ -89,6 +90,7 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
+        { path: "mainmenu", component: MainMenu },
 
       ]
     },
