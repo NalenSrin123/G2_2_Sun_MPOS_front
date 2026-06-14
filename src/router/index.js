@@ -89,7 +89,7 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
-
+        { path: "tables/new", component: TableForm },
       ]
     },
     {
