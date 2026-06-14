@@ -77,10 +77,31 @@ const routes = [
 }
 
 ];
+const route=[
+    {
+      path:"/",
+      children:[
 
+      ]
+        
+    },
+    {
+      path:"/dashboard",
+      component:Sidebar,
+      children:[
+
+      ]
+    },
+    {
+      path: "/auth",
+      children:[
+
+      ]
+    }
+]
 const router = createRouter({
   history: createWebHistory(),
-  routes,
+  route,
 });
 
 export default router;
