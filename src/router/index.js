@@ -22,6 +22,7 @@ import ResetPassword from "@/pages/auth/ResetPassword.vue";
 import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
+import Dsign_Create_Product_Page from "../pages/dashboard/Dsign_Create_Product_Page.vue";
 
 const routes = [
   { path: "/", redirect: "/dashboard" },
@@ -54,6 +55,13 @@ const routes = [
   { path: "/user-form", component: UserForm },
 
   { path: "/:pathMatch(.*)*", component: NotFound },
+
+{
+  path: "/design_create_product_page",
+  name: "design_create_product_page",
+  component: Dsign_Create_Product_Page,
+}
+
 ];
 
 const router = createRouter({

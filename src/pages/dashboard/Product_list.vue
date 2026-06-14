@@ -75,7 +75,7 @@
             <h1 class="page-title">Menu Management</h1>
             <p class="page-sub">Manage your catalog of {{ items.length }} active items across 4 categories.</p>
           </div>
-         <button class="btn-add" @click="openAdd"><i class="bi bi-plus-lg"></i>Add New Item Row</button>
+         <button class="btn-add" @click="design_create"><i class="bi bi-plus-lg"></i>Add New Item Row</button>
         </div>
  
         <!-- Filter bar -->
@@ -232,6 +232,15 @@
 </template>
  
 <script setup>
+
+// go to page design_create_product_page>
+
+import { useRouter } from "vue-router"
+const router = useRouter()
+const design_create = () => {
+  router.push("/design_create_product_page")
+}
+
 import { ref, computed } from 'vue'
  
 const items = ref([

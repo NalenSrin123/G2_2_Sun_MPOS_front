@@ -221,7 +221,7 @@
             </h2>
 
             <label
-              class="flex h-[220px] cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#ccd4c9] bg-[#f8faf7] text-center transition hover:border-[#0d7a4c]"
+              class="flex h-55 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#ccd4c9] bg-[#f8faf7] text-center transition hover:border-[#0d7a4c]"
             >
               <input type="file" class="hidden" />
 
@@ -285,7 +285,7 @@
                   </h3>
 
                   <p class="text-xs text-slate-400">
-                    Show in “Chef’s Picks”
+                    Show in “Chef's Picks”
                   </p>
                 </div>
 
