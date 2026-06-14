@@ -31,75 +31,57 @@ import PaymentMethod from "../pages/orders/PaymentMethod.vue";
 import InventoryList from "@/pages/dashboard/InventoryList.vue";
 
 const routes = [
-	{ path: "/", redirect: "/home" },
-	{ path: "/preview", component: Preview },
-	{ path: "/home", component: Home },
-	{ path: "/Home", redirect: "/home" },
-
 	{
 		path: "/",
+		children: [
+      { path: "home", component: Home },
+      { path: "products/detail/:id", component: ProductDetail },
+      { path: "payment", component: PaymentMethod },
+      { path: "confirm-payment", component: QR_Payment },
+      { path: "orders", component: Orders },
+    ],
+	},
+	{
+		path: "/dashboard/",
 		component: Sidebar,
 		children: [
-			{ path: "dashboard", component: Dashboard },
-			{ path: "dashboard/overview", component: DashboardOverview },
-			{ path: "orders", component: Orders },
+      { path: "overview", component: DashboardOverview },
+      { path: "inventory", component: InventoryList },
+      { path: "categories", component: CategoryList },
 			{ path: "tables", component: TableList },
-			{ path: "tables/new", component: TableForm },
+			{ path: "create-table", component: TableForm },
 			{ path: "products", component: ProductList },
 			{ path: "categories", component: CategoryList },
-			{ path: "categories/new", component: Category },
+			{ path: "create-categorie", component: Category },
 			{ path: "settings", component: Setting },
-			{ path: "users", component: UserList },
-
-			{ path: "products", component: ProductList },
-			{ path: "products/detail/:id", component: ProductDetail },
-			{ path: "payment", component: PaymentMethod },
-		],
-	},
-
-	{ path: "/login", component: Login },
-	{ path: "/register", component: Register },
-	{ path: "/reset-password", component: ResetPassword },
-	{ path: "/reset_pas`~word", redirect: "/reset-password" },
-	{ path: "/confirm-otp", component: ConfirmOTP },
-	{ path: "/forgot-password", component: SendEmail },
-	{ path: "/user-form", component: UserForm },
-
-	{ path: "/:pathMatch(.*)*", component: NotFound },
-
-	{ path: "/payment", component: QR_Payment },
-	{
-		path: "/design_create_product_page",
-		name: "design_create_product_page",
-		component: Dsign_Create_Product_Page,
-	},
-];
-const route = [
-	{
-		path: "/",
-		children: [],
-	},
-	{
-		path: "/dashboard",
-		component: Sidebar,
-		children: [
-      { path: "inventory", component: InventoryList },
-      { path: "tables/new", component: TableForm },
-      { path: "categories", component: CategoryList },
-
+      { path: "users", component: UserList },
+      { path: "user-form", component: UserForm },
+      {
+          path: "create_product",
+          name: "design_create_product_page",
+          component: Dsign_Create_Product_Page,
+      },
     ],
 	},
 	{
 		path: "/auth",
 		children: [
+      { path: "/login", component: Login },
+      { path: "/register", component: Register },
+      { path: "/reset-password", component: ResetPassword },
+      { path: "/confirm-otp", component: ConfirmOTP },
       { path: "/forgot-password", component: SendEmail },
 
     ],
 	},
+  {
+    path: "/:pathMatch(.*)*",
+    component: NotFound,
+  },
 ];
 const router = createRouter({
 	history: createWebHistory(),
-	route,
+	routes,
 });
 
 export default router;
