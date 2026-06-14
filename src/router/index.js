@@ -43,7 +43,7 @@ const routes = [
     children: [
       { path: "dashboard", component: Dashboard },
       { path: "dashboard/overview", component: DashboardOverview },
-      { path: "orders", component: Orders },
+      // { path: "orders", component: Orders },
       { path: "tables", component: TableList },
       { path: "tables/new", component: TableForm },
       { path: "products", component: ProductList },
@@ -89,6 +89,7 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
+        { path: "orders", component: Orders },
 
       ]
     },
