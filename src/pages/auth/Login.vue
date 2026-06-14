@@ -98,7 +98,7 @@
               <span class="text-gray-700">Remember me</span>
             </div>
 
-            <a href="/forgot-password" class="text-[#216946] font-semibold hover:underline">
+            <a href="" class="text-[#216946] font-semibold hover:underline">
               Forgot password?
             </a>
           </div>

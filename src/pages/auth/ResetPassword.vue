@@ -54,9 +54,8 @@
               placeholder="Confirm New Password"
               class="w-full border border-gray-200 rounded-lg pl-3 pr-10 py-2.5 text-sm tracking-wide focus:outline-none focus:border-[#026945] focus:ring-1 focus:ring-[#026945]"
             />
-            <button type="button" @click="showConfirmPassword = !showConfirmPassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600">
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"/></svg>
-            </button>
+            <i @click="showPassword = !showPassword" :class="showPassword ? 'bi bi-eye-slash' : 'bi bi-eye'"
+                class="text-gray-500 cursor-pointer text-lg"></i>
           </div>
         </div>
 
@@ -76,11 +75,10 @@
       </form>
 
       <div class="text-center mt-6">
-        <a href="#" class="inline-flex items-center space-x-1 text-xs font-medium text-gray-500 hover:text-gray-800 transition-colors">
+        <a href="/Login" class="inline-flex items-center space-x-1 text-xs font-medium text-gray-500 hover:text-gray-800 transition-colors">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
           </svg>
-          <span>Back to Sign In</span>
         </a>
       </div>
     </div>
