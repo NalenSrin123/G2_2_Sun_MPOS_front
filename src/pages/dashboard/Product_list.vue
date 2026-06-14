@@ -105,6 +105,7 @@
             <p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
             <p class="text-xs text-gray-400 mt-0.5">{{ item.desc }}</p>
           </div>
+         <button class="btn-add" @click="design_create"><i class="bi bi-plus-lg"></i>Add New Item Row</button>
         </div>
 
         <!-- Category -->
@@ -267,6 +268,15 @@
 </template>
 
 <script setup>
+
+// go to page design_create_product_page>
+
+import { useRouter } from "vue-router"
+const router = useRouter()
+const design_create = () => {
+  router.push("/design_create_product_page")
+}
+
 import { ref, computed } from 'vue'
 
 const items = ref([

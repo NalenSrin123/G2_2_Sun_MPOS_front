@@ -23,6 +23,7 @@ import ResetPassword from "@/pages/auth/ResetPassword.vue";
 import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
+import Dsign_Create_Product_Page from "../pages/dashboard/Dsign_Create_Product_Page.vue";
 
 import QR_Payment from "../../payment/QR_Payment.vue";
 import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
@@ -66,7 +67,13 @@ const routes = [
 
   { path: "/:pathMatch(.*)*", component: NotFound },
 
-    {path:  "/payment", component:QR_Payment}
+    {path:  "/payment", component:QR_Payment},
+{
+  path: "/design_create_product_page",
+  name: "design_create_product_page",
+  component: Dsign_Create_Product_Page,
+}
+
 ];
 
 const router = createRouter({
