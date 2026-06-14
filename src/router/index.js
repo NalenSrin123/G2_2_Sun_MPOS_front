@@ -85,6 +85,8 @@ const route = [
 		children: [
       { path: "inventory", component: InventoryList },
       { path: "tables/new", component: TableForm },
+      { path: "categories", component: CategoryList },
+
     ],
 	},
 	{
