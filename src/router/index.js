@@ -23,6 +23,9 @@ import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
 
+import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
+
+
 const routes = [
   { path: "/", redirect: "/dashboard" },
   { path: "/preview", component: Preview },
@@ -42,6 +45,9 @@ const routes = [
       { path: "categories/new", component: Category },
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
+
+      { path: "products", component: ProductList },
+      { path: "products/detail/:id", component: ProductDetail },
     ],
   },
 
