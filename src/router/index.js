@@ -22,6 +22,7 @@ import ResetPassword from "@/pages/auth/ResetPassword.vue";
 import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
+import PaymentMethod from "../pages/orders/PaymentMethod.vue";
 
 const routes = [
   { path: "/", redirect: "/dashboard" },
@@ -42,6 +43,7 @@ const routes = [
       { path: "categories/new", component: Category },
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
+      {path: "payment", component: PaymentMethod}
     ],
   },
 
