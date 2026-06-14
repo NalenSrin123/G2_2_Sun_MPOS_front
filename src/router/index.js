@@ -57,7 +57,7 @@ const routes = [
       { path: "orders", component: Orders },
       { path: "user-form", component: UserForm },
       {
-          path: "create_product",
+          path: "create-product",
           name: "design_create_product_page",
           component: Dsign_Create_Product_Page,
       },

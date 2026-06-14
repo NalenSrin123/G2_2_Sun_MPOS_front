@@ -1,42 +1,5 @@
 <template>
   <main class="min-h-screen bg-[#f4f6f2] text-slate-800">
-    <!-- Top Header -->
-    <header
-      class="flex items-center justify-between border-b border-[#d9ddd6] bg-[#eef1eb] px-6 py-4"
-    >
-      <!-- Search -->
-      <div
-        class="flex h-11 w-full max-w-md items-center gap-3 rounded-full border border-[#d9ddd6] bg-[#f7f8f5] px-4"
-      >
-        <i class="fa-solid fa-magnifying-glass text-sm text-slate-400"></i>
-
-        <input
-          type="text"
-          placeholder="Search..."
-          class="w-full bg-transparent text-sm outline-none placeholder:text-slate-400"
-        />
-      </div>
-
-      <!-- Right -->
-      <div class="ml-5 flex items-center gap-5">
-        <button class="text-slate-500">
-          <i class="fa-regular fa-circle-question text-lg"></i>
-        </button>
-
-        <button class="relative text-slate-500">
-          <i class="fa-regular fa-bell text-lg"></i>
-
-          <span
-            class="absolute -right-1 -top-1 h-2.5 w-2.5 rounded-full bg-green-600"
-          ></span>
-        </button>
-
-        <img
-          src="https://i.pravatar.cc/100"
-          class="h-9 w-9 rounded-full object-cover"
-        />
-      </div>
-    </header>
 
     <!-- Content -->
     <section class="px-6 py-6">

@@ -7,10 +7,13 @@
         <h1 class="text-xl font-bold text-gray-900">Menu Management</h1>
         <p class="text-sm text-gray-400 mt-1">Manage your catalog of {{ items.length }} active items across 4 categories.</p>
       </div>
-      <button class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors" @click="openAdd">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-        Add New Item
-      </button>
+   
+        <RouterLink class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
+          to="/dashboard/create-product">
+          Add New Item
+        </RouterLink>
+        
+
     </div>
 
     <!-- Stats -->
@@ -308,7 +311,6 @@ function stockAccent(qty) { return qty === 0 ? 'bg-gray-300' : qty < 10 ? 'bg-am
 function stockBadge(qty)  { return qty === 0 ? 'bg-gray-100 text-gray-500' : qty < 10 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-700' }
 
 function removeItem(id)  { items.value = items.value.filter(i => i.id !== id) }
-function openAdd()       { editId.value = null; form.value = { name: '', desc: '', price: '', qty: 0, cat: 'Mains', img: '' }; showModal.value = true }
 function openEdit(item)  { editId.value = item.id; form.value = { ...item }; showModal.value = true }
 function closeModal()    { showModal.value = false }
 function saveItem() {
