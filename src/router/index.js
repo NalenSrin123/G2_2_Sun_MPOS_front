@@ -91,7 +91,10 @@ const route = [
 	},
 	{
 		path: "/auth",
-		children: [],
+		children: [
+      { path: "/forgot-password", component: SendEmail },
+
+    ],
 	},
 ];
 const router = createRouter({
