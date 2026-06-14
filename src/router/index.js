@@ -16,6 +16,7 @@ import TableForm from "@/pages/dashboard/TableForm.vue";
 import TableList from "@/pages/table/Tablelist.vue";
 import Orders from "@/pages/orders/Orders.vue";
 
+
 import Login from "@/pages/auth/Login.vue";
 import Register from "@/pages/auth/Register.vue";
 import ResetPassword from "@/pages/auth/ResetPassword.vue";
@@ -24,9 +25,11 @@ import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
 
 const routes = [
-  { path: "/", redirect: "/dashboard" },
+  { path: "/", redirect: "/home" },
   { path: "/preview", component: Preview },
   { path: "/home", component: Home },
+  { path: "/Home", redirect: "/home" },
+ 
 
   {
     path: "/",
