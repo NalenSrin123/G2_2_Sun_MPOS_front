@@ -13,6 +13,7 @@ import Category from "@/pages/dashboard/Category.vue";
 import Setting from "@/pages/dashboard/Setting.vue";
 import UserList from "@/pages/dashboard/UserList.vue";
 import TableForm from "@/pages/dashboard/TableForm.vue";
+import Shopping_cart from "@/pages/dashboard/Shopping_cart.vue";
 import TableList from "@/pages/table/Tablelist.vue";
 import Orders from "@/pages/orders/Orders.vue";
 
@@ -38,6 +39,7 @@ const routes = [
       { path: "products/detail/:id", component: ProductDetail },
       { path: "payment", component: PaymentMethod },
       { path: "confirm-payment", component: QR_Payment },
+      { path: "shopping-cart", component: Shopping_cart },
       
     ],
 	},
