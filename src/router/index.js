@@ -13,6 +13,7 @@ import Category from "@/pages/dashboard/Category.vue";
 import Setting from "@/pages/dashboard/Setting.vue";
 import UserList from "@/pages/dashboard/UserList.vue";
 import TableForm from "@/pages/dashboard/TableForm.vue";
+import Shopping_cart from "@/pages/dashboard/Shopping_cart.vue";
 import TableList from "@/pages/table/Tablelist.vue";
 import Orders from "@/pages/orders/Orders.vue";
 
@@ -56,6 +57,7 @@ const routes = [
 			{ path: "settings", component: Setting },
       { path: "users", component: UserList },
       { path: "user-form", component: UserForm },
+      { path: "shopping-cart", component: Shopping_cart },
       {
           path: "create_product",
           name: "design_create_product_page",
