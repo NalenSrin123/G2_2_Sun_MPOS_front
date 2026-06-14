@@ -45,7 +45,7 @@ const routes = [
 		path: "/dashboard/",
 		component: Sidebar,
 		children: [
-      { path: "overview", component: DashboardOverview },
+      { path: "", component: DashboardOverview },
       { path: "inventory", component: InventoryList },
       { path: "categories", component: CategoryList },
 			{ path: "tables", component: TableList },
