@@ -16,7 +16,6 @@ import TableForm from "@/pages/dashboard/TableForm.vue";
 import TableList from "@/pages/table/Tablelist.vue";
 import Orders from "@/pages/orders/Orders.vue";
 
-
 import Login from "@/pages/auth/Login.vue";
 import Register from "@/pages/auth/Register.vue";
 import ResetPassword from "@/pages/auth/ResetPassword.vue";
@@ -35,14 +34,13 @@ const routes = [
   { path: "/preview", component: Preview },
   { path: "/home", component: Home },
   { path: "/Home", redirect: "/home" },
- 
 
   {
     path: "/",
     component: Sidebar,
     children: [
       { path: "dashboard", component: Dashboard },
-      { path: "dashboard/overview", component: DashboardOverview },
+      // { path: "overview", component: DashboardOverview },
       { path: "orders", component: Orders },
       { path: "tables", component: TableList },
       { path: "tables/new", component: TableForm },
@@ -52,7 +50,6 @@ const routes = [
       { path: "settings", component: Setting },
       { path: "users", component: UserList },
 
-    
       { path: "products", component: ProductList },
       { path: "products/detail/:id", component: ProductDetail },
       {path: "payment", component: PaymentMethod}
@@ -77,32 +74,26 @@ const routes = [
 }
 
 ];
-const route=[
-    {
-      path:"/",
-      children:[
-
-      ]
-        
-    },
-    {
-      path:"/dashboard",
-      component:Sidebar,
-      children:[
-
-      ]
-    },
-    {
-      path: "/auth",
-      children:[
-
-      ]
-    }
-]
+const route = [
+  {
+    path: "/",
+    children: [],
+  },
+  {
+    path: "/dashboard",
+    component: Sidebar,
+    children: [
+      { path: "overview", component: DashboardOverview },
+    ],
+  },
+  {
+    path: "/auth",
+    children: [],
+  },
+];
 const router = createRouter({
   history: createWebHistory(),
   route,
 });
 
 export default router;
- 
