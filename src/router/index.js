@@ -25,6 +25,8 @@ import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
 
 import QR_Payment from "../../payment/QR_Payment.vue";
+import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
+
 
 const routes = [
   { path: "/", redirect: "/home" },
@@ -49,6 +51,8 @@ const routes = [
       { path: "users", component: UserList },
 
     
+      { path: "products", component: ProductList },
+      { path: "products/detail/:id", component: ProductDetail },
     ],
   },
 
