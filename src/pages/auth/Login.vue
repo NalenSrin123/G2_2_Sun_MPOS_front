@@ -97,14 +97,14 @@
               <input type="checkbox" class="w-4 h-4" />
               <span class="text-gray-700">Remember me</span>
             </div>
-
-            <a href="" class="text-[#216946] font-semibold hover:underline">
+            
+            <a href="/auth/forgot-password" class="text-[#216946] font-semibold hover:underline">
               Forgot password?
             </a>
           </div>
 
           <!-- BUTTON -->
-          <button type="submit" onclick="window.location.href='/confirm-otp'"
+          <button type="submit" onclick="window.location.href='/auth/confirm-otp'"
             class="w-full h-14 bg-[#2d724c] hover:bg-[#1f5d3b] rounded-2xl text-white text-base lg:text-lg font-semibold flex justify-center items-center gap-3 shadow-md transition">
             Sign In
             <i class="bi bi-box-arrow-in-right"></i>

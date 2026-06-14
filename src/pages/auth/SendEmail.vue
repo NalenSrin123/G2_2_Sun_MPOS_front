@@ -97,7 +97,7 @@
       <!-- Back -->
       <div class="text-center">
         <RouterLink
-          to="/login"
+          to="/auth/login"
           class="text-sm text-green-700 hover:text-green-800 hover:underline"
         >
           ← Back to Login

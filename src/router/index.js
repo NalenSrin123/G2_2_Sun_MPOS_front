@@ -66,13 +66,13 @@ const routes = [
     ],
 	},
 	{
-		path: "/auth",
+		path: "/auth/",
 		children: [
-      { path: "/login", component: Login },
-      { path: "/register", component: Register },
-      { path: "/reset-password", component: ResetPassword },
-      { path: "/confirm-otp", component: ConfirmOTP },
-      { path: "/forgot-password", component: SendEmail },
+      { path: "login", component: Login },
+      { path: "register", component: Register },
+      { path: "reset-password", component: ResetPassword },
+      { path: "confirm-otp", component: ConfirmOTP },
+      { path: "forgot-password", component: SendEmail },
 
     ],
 	},
