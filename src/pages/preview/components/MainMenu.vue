@@ -1,7 +1,7 @@
 
 <template>
-  <div class="min-h-screen bg-emerald-50 flex flex-col">
-    <div class="flex-1 px-5 pt-8 pb-28">
+  <div class="bg-emerald-50 flex flex-col pb-20">
+    <div class="flex-1 px-5 pt-8">
       <h1 class="text-3xl font-bold text-gray-900 mb-6">Main Menu</h1>
 
       <div class="space-y-5">
