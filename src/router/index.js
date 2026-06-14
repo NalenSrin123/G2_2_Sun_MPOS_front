@@ -95,7 +95,7 @@ const route=[
     {
       path: "/auth",
       children:[
-
+      { path: "/confirm-otp", component: ConfirmOTP }
       ]
     }
 ]
