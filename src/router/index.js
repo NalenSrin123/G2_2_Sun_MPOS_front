@@ -5,17 +5,6 @@ import Preview from "@/pages/preview/Preview.vue";
 import Home from "@/pages/home/Home.vue";
 import NotFound from "@/pages/NotFound.vue";
 
-import Dashboard from "@/pages/dashboard/Dashboard.vue";
-import DashboardOverview from "@/pages/dashboard/DashboardOverview.vue";
-import ProductList from "@/pages/dashboard/Product_list.vue";
-import CategoryList from "@/pages/dashboard/Category_List.vue";
-import Category from "@/pages/dashboard/Category.vue";
-import Setting from "@/pages/dashboard/Setting.vue";
-import UserList from "@/pages/dashboard/UserList.vue";
-import TableForm from "@/pages/dashboard/TableForm.vue";
-import TableList from "@/pages/table/Tablelist.vue";
-import Orders from "@/pages/orders/Orders.vue";
-
 import Login from "@/pages/auth/Login.vue";
 import Register from "@/pages/auth/Register.vue";
 import ResetPassword from "@/pages/auth/ResetPassword.vue";
@@ -23,42 +12,37 @@ import ConfirmOTP from "@/pages/auth/ConfirmOTP.vue";
 import SendEmail from "@/pages/auth/SendEmail.vue";
 import UserForm from "@/pages/auth/UserForm.vue";
 
+import InventoryView from "@/pages/dashboard/inventory/view/InventoryView.vue";
+
 const routes = [
-  { path: "/", redirect: "/dashboard" },
-  { path: "/preview", component: Preview },
-  { path: "/home", component: Home },
+	{ path: "/", redirect: "/dashboard/inventory" },
 
-  {
-    path: "/",
-    component: Sidebar,
-    children: [
-      { path: "dashboard", component: Dashboard },
-      { path: "dashboard/overview", component: DashboardOverview },
-      { path: "orders", component: Orders },
-      { path: "tables", component: TableList },
-      { path: "tables/new", component: TableForm },
-      { path: "products", component: ProductList },
-      { path: "categories", component: CategoryList },
-      { path: "categories/new", component: Category },
-      { path: "settings", component: Setting },
-      { path: "users", component: UserList },
-    ],
-  },
+	{ path: "/preview", component: Preview },
+	{
+		path: "/",
+		component: Sidebar,
+		children: [
+			{
+				path: "/inventory",
+				component: InventoryView,
+			},
+			{ path: "/home", component: Home },
+		],
+	},
 
-  { path: "/login", component: Login },
-  { path: "/register", component: Register },
-  { path: "/reset-password", component: ResetPassword },
-  { path: "/reset_pas`~word", redirect: "/reset-password" },
-  { path: "/confirm-otp", component: ConfirmOTP },
-  { path: "/forgot-password", component: SendEmail },
-  { path: "/user-form", component: UserForm },
+	{ path: "/login", component: Login },
+	{ path: "/register", component: Register },
+	{ path: "/reset-password", component: ResetPassword },
+	{ path: "/confirm-otp", component: ConfirmOTP },
+	{ path: "/forgot-password", component: SendEmail },
+	{ path: "/user-form", component: UserForm },
 
-  { path: "/:pathMatch(.*)*", component: NotFound },
+	{ path: "/:pathMatch(.*)*", component: NotFound },
 ];
 
 const router = createRouter({
-  history: createWebHistory(),
-  routes,
+	history: createWebHistory(),
+	routes,
 });
 
 export default router;
