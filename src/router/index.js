@@ -46,6 +46,7 @@ const routes = [
 			{ path: "tables", component: TableList },
 			{ path: "tables/new", component: TableForm },
 			{ path: "products", component: ProductList },
+			{ path: "inventory", component: InventoryList },
 			{ path: "categories", component: CategoryList },
 			{ path: "categories/new", component: Category },
 			{ path: "settings", component: Setting },
@@ -82,7 +83,7 @@ const route = [
 	{
 		path: "/dashboard",
 		component: Sidebar,
-		children: [{ path: "inventory", component: InventoryList }],
+		children: [{ path: "/inventory", component: InventoryList }],
 	},
 	{
 		path: "/auth",
@@ -92,6 +93,7 @@ const route = [
 const router = createRouter({
 	history: createWebHistory(),
 	route,
+	routes,
 });
 
 export default router;
