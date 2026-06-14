@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen bg-green-50 flex flex-col items-center justify-center px-4"
+    class="min-h-screen bg-white flex flex-col items-center justify-center px-4"
   >
     <!-- Logo -->
     <div class="flex flex-col items-center gap-1 mb-8">
