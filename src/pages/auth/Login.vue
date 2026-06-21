@@ -104,9 +104,10 @@
           </div>
 
           <!-- BUTTON -->
-          <button type="submit" onclick="window.location.href='/auth/confirm-otp'"
+          <p v-if="error" class="text-red-500 text-sm text-center">{{ error }}</p>
+          <button type="submit" :disabled="loading"
             class="w-full h-14 bg-[#2d724c] hover:bg-[#1f5d3b] rounded-2xl text-white text-base lg:text-lg font-semibold flex justify-center items-center gap-3 shadow-md transition">
-            Sign In
+            {{ loading ? 'Signing in...' : 'Sign In' }}
             <i class="bi bi-box-arrow-in-right"></i>
           </button>
 
@@ -120,11 +121,36 @@
 
 <script setup>
 import { ref, reactive } from "vue"
+import { useRouter } from "vue-router"
+import { loginAdmin } from "@/services/api.js"
 
+const router = useRouter()
 const showPassword = ref(false)
+const error = ref(null)
+const loading = ref(false)
 
 const form = reactive({
   email: "",
   password: ""
 })
+
+async function handleLogin() {
+  error.value = null
+  loading.value = true
+
+  try {
+    const data = await loginAdmin(form.email, form.password)
+
+    // Save token
+    localStorage.setItem('token', data.token)
+
+    // Redirect to dashboard
+    router.push('/dashboard')
+
+  } catch (err) {
+    error.value = err.response?.data?.message || 'Login failed. Please try again.'
+  } finally {
+    loading.value = false
+  }
+}
 </script>
