@@ -17,14 +17,16 @@
 |
 */
 
-import axios from 'axios'
+import axios from "axios";
 
 /**
  * Axios instance
  * Used for all API requests in the application
  */
 const api = axios.create({
-  baseURL: '/api',
-})
+	baseURL: "",
+	headers: "application/json",
+  
+});
 
-export default api
+export default api;
