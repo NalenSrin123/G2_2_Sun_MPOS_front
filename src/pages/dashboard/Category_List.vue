@@ -20,7 +20,7 @@
           to="/categories/new"
           class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center hover:bg-emerald-800 transition"
         >
-          <PlusIcon class="w-6 h-6" />
+          Add
         </RouterLink>
       </div>
 
