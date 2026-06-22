@@ -138,6 +138,7 @@
 
             <button
               class="text-red-500 hover:text-red-700 transition"
+              @click="deleteCategory(category.id)"
             >
               <TrashIcon class="w-5 h-5" />
             </button>
@@ -269,6 +270,7 @@
 
                   <button
                     class="text-red-500 hover:text-red-700 transition"
+                    @click="deleteCategory(category.id)"
                   >
                     <TrashIcon class="w-5 h-5" />
                   </button>
@@ -351,4 +353,27 @@ const categories = ref([
 const activeCount = computed(
   () => categories.value.filter((item) => item.active).length
 );
+
+/*import baseUrl*/ 
+import api from "../../services/api";
+/*
+  fetch api method delete category
+*/ 
+const deleteCategory = async (id) => {
+    // confirm delete check
+    const isConfirmed = confirm("Are you sure you want to delete this Category?");
+    if (!isConfirmed) {
+      return;
+    }
+
+    try {
+        await api.delete(`/categories/${id}`);
+
+        console.log("Category deleted successfully");
+        
+    } catch (error) {
+      console.error("Delete failed", error);
+      
+    }
+}
 </script>
