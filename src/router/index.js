@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHistory } from "vue-router";
 
 import Sidebar from "@/components/layout/Sidebar.vue";
@@ -40,7 +41,7 @@ const routes = [
       { path: "payment", component: PaymentMethod },
       { path: "confirm-payment", component: QR_Payment },
       { path: "shopping-cart", component: Shopping_cart },
-      
+
     ],
 	},
 	{
@@ -87,3 +88,4 @@ const router = createRouter({
 });
 
 export default router;
+
