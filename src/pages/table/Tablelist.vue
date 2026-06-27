@@ -163,3 +163,4 @@ const filtered = computed(() => tables.filter(t => {
   return matchArea && matchStatus && matchSearch
 }))
 </script>
+  

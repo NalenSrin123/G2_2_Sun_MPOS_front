@@ -17,14 +17,21 @@
 |
 */
 
-import axios from 'axios'
+const BASE_URL = "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1";
 
-/**
- * Axios instance
- * Used for all API requests in the application
- */
-const api = axios.create({
-  baseURL: '/api',
-})
+async function request(path, options = {}) {
+  const response = await fetch(`${BASE_URL}${path}`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+    ...options,
+  });
+  return response;
+}
 
-export default api
+export async function createTable(payload) {
+  return request("/tables", {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+}

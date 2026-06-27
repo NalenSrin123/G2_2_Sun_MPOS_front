@@ -66,7 +66,7 @@
         />
 
         <div
-          class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+          class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"
         ></div>
 
         <div class="absolute bottom-6 left-6 text-white">
