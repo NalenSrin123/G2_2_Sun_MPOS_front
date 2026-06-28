@@ -514,3 +514,4 @@ async function confirmDelete(table) {
 
 onMounted(fetchTables);
 </script>
+  

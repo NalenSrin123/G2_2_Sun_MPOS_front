@@ -49,16 +49,31 @@
       <h2 class="text-2xl font-bold mb-4 text-gray-900">Popular Choices</h2>
 
       <!-- Featured Card -->
-      <div
-        class="relative overflow-hidden rounded-3xl h-64 mb-5 shadow-lg cursor-pointer"
-        @click="goToDetail(featured)"
-      >
-        <img :src="featured.image" alt="Featured" class="w-full h-full object-cover"/>
-        <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-        <div class="absolute bottom-5 left-5 text-white">
-          <span class="inline-block px-3 py-1 bg-emerald-400 text-black rounded-full text-xs mb-2 font-semibold">Bestseller</span>
-          <h3 class="text-2xl font-bold">{{ featured.name }}</h3>
-          <p class="text-gray-200 text-sm">{{ featured.subtitle }}</p>
+      <div class="relative overflow-hidden rounded-3xl h-72 mb-5 shadow-lg">
+        <img
+          src="https://images.unsplash.com/photo-1544025162-d76694265947"
+          alt="Steak"
+          class="w-full h-full object-cover"
+        />
+
+        <div
+          class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"
+        ></div>
+
+        <div class="absolute bottom-6 left-6 text-white">
+          <span
+            class="inline-block px-4 py-1 bg-green-400 text-black rounded-full text-sm mb-3 font-medium"
+          >
+            Bestseller
+          </span>
+
+          <h3 class="text-3xl font-bold">
+            Wagyu Ribeye Steak
+          </h3>
+
+          <p class="text-gray-200">
+            Melt-in-your-mouth precision.
+          </p>
         </div>
       </div>
 
