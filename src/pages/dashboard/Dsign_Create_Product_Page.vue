@@ -205,7 +205,7 @@
 <script setup>
 import { reactive } from "vue";
 import axios from "axios";
-
+import api from "../../services/api";
 const Modal = reactive({
   product: {
     category_id: 1,
@@ -242,8 +242,8 @@ const createproduct = async () => {
       console.log(pair[0], pair[1]);
     }
 
-    const response = await axios.post(
-      "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/products",
+    const response = await api.post(
+      "/products",
       formData,
       {
         headers: {
