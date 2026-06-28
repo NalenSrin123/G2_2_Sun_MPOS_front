@@ -17,10 +17,10 @@
         </div>
 
         <RouterLink
-          to="/categories/new"
-          class="w-12 h-12 rounded-full bg-emerald-700 text-white flex items-center justify-center hover:bg-emerald-800 transition"
+          to="/dashboard/create-categorie"
+          class="w-40 h-10 rounded-sm flex border items-center justify-center hover:bg-gray-100 transition"
         >
-          <PlusIcon class="w-6 h-6" />
+          Add Category
         </RouterLink>
       </div>
 
