@@ -26,22 +26,16 @@
         </div>
         <button
           class="w-9 h-9 bg-white border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:bg-gray-50"
-          @click="fetchTables"
-          title="Refresh"
         >
           <svg
             class="w-4 h-4"
-            :class="{ 'animate-spin': isLoading }"
             fill="none"
             stroke="currentColor"
             stroke-width="2"
             viewBox="0 0 24 24"
           >
-            <polyline points="23 4 23 10 17 10" />
-            <polyline points="1 20 1 14 7 14" />
-            <path
-              d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"
-            />
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+            <path d="M13.73 21a2 2 0 0 1-3.46 0" />
           </svg>
         </button>
         <div
@@ -140,16 +134,8 @@
       </div>
     </div>
 
-    <!-- Loading state -->
-    <div
-      v-if="isLoading && tables.length === 0"
-      class="bg-white rounded-xl p-10 text-center text-gray-400 text-sm shadow-sm"
-    >
-      Loading tables...
-    </div>
-
     <!-- Table Rows -->
-    <div v-else class="flex flex-col gap-2">
+    <div class="flex flex-col gap-2">
       <div
         v-for="table in filtered"
         :key="table.id"
@@ -157,7 +143,7 @@
       >
         <!-- Accent bar -->
         <div
-          class="w-1.5 self-stretch shrink-0"
+          class="w-1.5 self-stretch flex-shrink-0"
           :class="statusAccent[table.status]"
         ></div>
 
@@ -167,13 +153,11 @@
           <p class="text-2xl font-mono font-medium leading-tight">
             {{ table.number }}
           </p>
-          <p class="text-[10px] text-gray-400 uppercase tracking-wide">
-            {{ table.area }}
-          </p>
+          <!-- <p class="text-[10px] text-gray-400 uppercase tracking-wide">{{ table.area }}</p> -->
         </div>
 
         <!-- Badge -->
-        <div class="min-w-30">
+        <div class="min-w-[120px]">
           <span
             class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
             :class="statusBadge[table.status]"
@@ -187,44 +171,19 @@
         </div>
 
         <!-- Capacity -->
-        <div
-          class="flex items-center gap-1.5 text-sm text-gray-500 min-w-37.5"
-        >
-          <svg
-            class="w-4 h-4 shrink-0"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <path
-              d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"
-            />
-          </svg>
+        <!-- <div class="flex items-center gap-1.5 text-sm text-gray-500 min-w-[150px]">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 7H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z"/></svg>
           {{ table.capacity }}-seat capacity
-        </div>
+        </div> -->
 
         <!-- Time -->
-        <div
-          class="flex items-center gap-1.5 text-sm text-gray-500 min-w-37.5"
-        >
-          <svg
-            class="w-4 h-4 shrink-0"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            viewBox="0 0 24 24"
-          >
-            <circle cx="12" cy="12" r="10" />
-            <polyline points="12 6 12 12 16 14" />
-          </svg>
+        <!-- <div class="flex items-center gap-1.5 text-sm text-gray-500 min-w-[150px]">
+          <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
           {{ table.timeInfo }}
-        </div>
+        </div> -->
 
         <!-- Booking / Priority -->
-        <div
-          class="flex items-center gap-1.5 text-sm text-gray-500 min-w-37.5"
-        >
+        <!-- <div class="flex items-center gap-1.5 text-sm text-gray-500 min-w-[150px]">
           <template v-if="table.booking">
             <svg
               class="w-4 h-4 shrink-0"
@@ -254,7 +213,7 @@
             </svg>
             Status: Priority
           </template>
-        </div>
+        </div> -->
 
         <div class="flex-1"></div>
 
@@ -283,96 +242,48 @@
               <line x1="16" y1="16" x2="16" y2="21" />
             </svg>
           </button>
-          <button
-            class="w-9 h-9 border border-gray-200 rounded-lg flex items-center justify-center text-gray-500 hover:bg-red-50 hover:text-red-600 hover:border-red-200 disabled:opacity-50 disabled:cursor-not-allowed"
-            :disabled="deletingId === table.id"
-            @click="confirmDelete(table)"
-            title="Delete table"
-          >
-            <svg
-              v-if="deletingId !== table.id"
-              class="w-4 h-4"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <polyline points="3 6 5 6 21 6" />
-              <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6" />
-              <path d="M10 11v6" />
-              <path d="M14 11v6" />
-              <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2" />
-            </svg>
-            <svg
-              v-else
-              class="w-4 h-4 animate-spin"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <path d="M21 12a9 9 0 1 1-9-9" />
-            </svg>
-          </button>
         </div>
-      </div>
-
-      <div
-        v-if="filtered.length === 0"
-        class="bg-white rounded-xl p-10 text-center text-gray-400 text-sm shadow-sm"
-      >
-        No tables match your filters.
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from "vue";
-
-// Base URL for the table service
-const API_BASE = "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1";
+import axios from "axios";
+import { ref, computed, onMounted } from "vue";
 
 const search = ref("");
 const selectedArea = ref("All Areas");
 const selectedStatus = ref("");
-const deletingId = ref(null);
-const errorMessage = ref("");
-const isLoading = ref(false);
 
 const areas = ["All Areas", "Main Dining", "Patio", "Bar"];
 
-const stats = computed(() => {
-  const total = tables.length;
-  const occupied = tables.filter((t) => t.status === "occupied").length;
-  const available = tables.filter((t) => t.status === "available").length;
-  return [
-    {
-      label: "Total Tables",
-      value: total,
-      valueClass: "text-gray-900",
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-700",
-      icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
-    },
-    {
-      label: "Active/Occupied",
-      value: occupied,
-      valueClass: "text-emerald-700",
-      iconBg: "bg-emerald-50",
-      iconColor: "text-emerald-700",
-      icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
-    },
-    {
-      label: "Available",
-      value: available,
-      valueClass: "text-gray-900",
-      iconBg: "bg-violet-50",
-      iconColor: "text-violet-600",
-      icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
-    },
-  ];
-});
+const stats = [
+  {
+    label: "Total Tables",
+    value: 42,
+    valueClass: "text-gray-900",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-700",
+    icon: '<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>',
+  },
+  {
+    label: "Active/Occupied",
+    value: 28,
+    valueClass: "text-emerald-700",
+    iconBg: "bg-emerald-50",
+    iconColor: "text-emerald-700",
+    icon: '<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+  },
+  {
+    label: "Available",
+    value: 14,
+    valueClass: "text-gray-900",
+    iconBg: "bg-violet-50",
+    iconColor: "text-violet-600",
+    icon: '<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+  },
+];
 
 const statusAccent = {
   occupied: "bg-emerald-600",
@@ -405,113 +316,66 @@ const actionBtn = {
   cleaning: "bg-gray-900 text-white hover:bg-gray-800",
 };
 
-const tables = reactive([]);
+// const tables = [ 
+//     { id: 1, number: '01', area: 'MAIN DINING', status: 'occupied', capacity: 4, timeInfo: 'Seated: 45m ago', booking: null, priority: false }, 
+//     { id: 2, number: '05', area: 'PATIO', status: 'available', capacity: 2, timeInfo: 'Vacant: 12m', booking: null, priority: false }, 
+//     { id: 3, number: '12', area: 'MAIN DINING', status: 'reserved', capacity: 6, timeInfo: 'Reserved: 10m', booking: '19:30', priority: false }, 
+//     { id: 4, number: '08', area: 'BAR AREA', status: 'cleaning', capacity: 2, timeInfo: 'Cleaning: 5m', booking: null, priority: true }, 
+//     { id: 5, number: '03', area: 'MAIN DINING', status: 'available', capacity: 4, timeInfo: 'Vacant: 30m', booking: null, priority: false }, 
+//     { id: 6, number: '07', area: 'BAR AREA', status: 'occupied', capacity: 2, timeInfo: 'Seated: 1h 10m', booking: null, priority: false }, 
+//     { id: 7, number: '11', area: 'PATIO', status: 'reserved', capacity: 4, timeInfo: 'Reserved: 25m', booking: '20:00', priority: false },
+// ]
 
-const filtered = computed(() =>
-  tables.filter((t) => {
+const tables = ref([]);
+
+const fetchTables = async () => {
+  try {
+    const res = await axios.get(
+      "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/tables"
+    );
+    tables.value = res.data.data;
+  } catch (err) {
+    console.error("Fetch tables error:", err);
+  }
+};
+
+onMounted(() => {
+  fetchTables();
+});
+
+const filtered = computed(() => {
+  if (!Array.isArray(tables.value)) return [];
+
+  return tables.value.filter((t) => {
     const matchArea =
       selectedArea.value === "All Areas" ||
-      (t.area || "").toLowerCase().includes(selectedArea.value.toLowerCase());
+      t.area?.toLowerCase().includes(selectedArea.value.toLowerCase());
+
     const matchStatus =
       !selectedStatus.value || t.status === selectedStatus.value;
+
     const matchSearch =
       !search.value ||
-      (t.number || "").includes(search.value) ||
-      (t.area || "").toLowerCase().includes(search.value.toLowerCase());
+      t.number?.includes(search.value) ||
+      t.area?.toLowerCase().includes(search.value.toLowerCase());
+
     return matchArea && matchStatus && matchSearch;
-  }),
-);
-
-/**
- * Loads tables from the backend.
- * GET {API_BASE}/tables
- * Adjust the field mapping in normalizeTable() if your API's response shape differs.
- */
-async function fetchTables() {
-  isLoading.value = true;
-  errorMessage.value = "";
-  try {
-    const response = await fetch(`${API_BASE}/tables`);
-    if (!response.ok)
-      throw new Error(`Failed to load tables (status ${response.status})`);
-
-    const data = await response.json();
-    const list = Array.isArray(data) ? data : data.tables || data.data || [];
-
-    tables.splice(0, tables.length, ...list.map(normalizeTable));
-  } catch (err) {
-    errorMessage.value = err.message || "Could not load tables.";
-  } finally {
-    isLoading.value = false;
-  }
-}
-
-/** Normalizes a raw API record into the shape this component expects. */
-function normalizeTable(raw) {
-  return {
-    id: raw.id ?? raw._id,
-    number: raw.number ?? raw.tableNumber ?? "",
-    area: raw.area ?? "MAIN DINING",
-    status: raw.status ?? "available",
-    capacity: raw.capacity ?? 2,
-    timeInfo: raw.timeInfo ?? raw.time_info ?? "",
-    booking: raw.booking ?? null,
-    priority: !!raw.priority,
-  };
-}
-
-/**
- * Calls the backend to delete a table.
- * DELETE {API_BASE}/tables/:id
- */
-async function deleteTable(id) {
-  const response = await fetch(`${API_BASE}/tables/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      // Add an Authorization header here if your API requires one, e.g.:
-      // 'Authorization': `Bearer ${authToken.value}`,
-    },
   });
+});
 
-  // Some APIs return 204 No Content on successful delete — don't try to parse JSON in that case.
-  if (!response.ok) {
-    let detail = "";
-    try {
-      const body = await response.json();
-      detail = body?.message || body?.error || "";
-    } catch {
-      // response had no JSON body
-    }
-    throw new Error(
-      detail || `Failed to delete table (status ${response.status})`,
-    );
-  }
-
-  return true;
-}
-
-async function confirmDelete(table) {
-  const ok = window.confirm(
-    `Delete Table ${table.number}? This cannot be undone.`,
-  );
-  if (!ok) return;
-
-  errorMessage.value = "";
-  deletingId.value = table.id;
-
-  try {
-    await deleteTable(table.id);
-    const index = tables.findIndex((t) => t.id === table.id);
-    if (index !== -1) tables.splice(index, 1);
-  } catch (err) {
-    errorMessage.value =
-      err.message || "Something went wrong while deleting the table.";
-  } finally {
-    deletingId.value = null;
-  }
-}
-
-onMounted(fetchTables);
+// const filtered = computed(() =>
+//   tables.filter((t) => {
+//     const matchArea =
+//       selectedArea.value === "All Areas" ||
+//       t.area.toLowerCase().includes(selectedArea.value.toLowerCase());
+//     const matchStatus =
+//       !selectedStatus.value || t.status === selectedStatus.value;
+//     const matchSearch =
+//       !search.value ||
+//       t.number.includes(search.value) ||
+//       t.area.toLowerCase().includes(search.value.toLowerCase());
+//     return matchArea && matchStatus && matchSearch;
+//   })
+// );
 </script>
   
