@@ -184,20 +184,15 @@
 					class="w-1.5 self-stretch flex-shrink-0"
 					:class="stockAccent(item.qty)"></div>
 
-				<!-- Image + name -->
-				<div class="flex items-center gap-3 px-4 py-3 min-w-[220px] flex-1">
-					<img
-						:src="item.img"
-						:alt="item.name"
-						class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
-					<div>
-						<p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
-						<p class="text-xs text-gray-400 mt-0.5">{{ item.desc }}</p>
-					</div>
-					<button class="btn-add" @click="design_create">
-						<i class="bi bi-plus-lg"></i>Add New Item Row
-					</button>
-				</div>
+        <!-- Image + name -->
+        <div class="flex items-center gap-3 px-4 py-3 min-w-[220px] flex-1">
+          <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
+          <div>
+            <p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
+            <p class="text-xs text-gray-400 mt-0.5">{{ item.desc }}</p>
+          </div>
+         <!-- <button class="btn-add" @click="design_create"><i class="bi bi-plus-lg"></i>Add New Item Row</button> -->
+        </div>
 
 				<!-- Category -->
 				<div class="min-w-[110px] px-2">
@@ -533,62 +528,122 @@
 </template>
 
 <script setup>
+import { useRouter } from "vue-router"
+import { ref, computed, onMounted } from 'vue'
+import api from "../../services/api"
 
-	// go to page design_create_product_page>
-	import axios from "axios"
-	import api from "../../services/api"
-	import { ref, computed } from 'vue'
-	import { useRouter } from "vue-router"
+const router = useRouter()
+
+// Navigation function
+const design_create = () => {
+  router.push("/design_create_product_page")
+}
+
+// Local items data
+const items = ref([
+  { id: 1, name: 'Grilled Lamb Chops',  desc: 'Grass-fed lamb, mint gremolata',        cat: 'Mains',    price: '$34.00', qty: 24, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
+  { id: 2, name: 'Artisan Quinoa Bowl',  desc: 'Tri-color quinoa, avocado, tahini',     cat: 'Starters', price: '$18.50', qty: 15, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
+  { id: 3, name: 'Molten Lava Cake',    desc: '70% dark chocolate centre',              cat: 'Desserts', price: '$12.00', qty: 0,  img: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
+  { id: 4, name: 'Premium Dry Martini', desc: 'Choice of botanist gin or vodka',        cat: 'Drinks',   price: '$16.00', qty: 4,  img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
+  { id: 5, name: 'Saffron Sea Bass',    desc: 'Wild-caught bass, saffron beurre blanc', cat: 'Mains',    price: '$29.00', qty: 12, img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
+])
+
+// API data
+const products = ref([])
+
+// Filter states
+const searchQuery = ref('')
+const selectCategory = ref('')
+const statusFilter = ref('')
+
+// Categories
+const categories = ['Starters', 'Mains', 'Desserts', 'Drinks']
+const activeCat = ref('All Items')
+const page = ref(1)
+const perPage = 5
+let nextId = 6
+
+// Modal states
+const showModal = ref(false)
+const editId = ref(null)
+const form = ref({ name: '', desc: '', price: '', qty: 0, cat: 'Mains', img: '' })
+
+// Computed properties
+const filtered = computed(() => items.value.filter(i => activeCat.value === 'All Items' || i.cat === activeCat.value))
+const totalPages = computed(() => Math.max(1, Math.ceil(filtered.value.length / perPage)))
+const pagedItems = computed(() => filtered.value.slice((page.value - 1) * perPage, page.value * perPage))
+const alertCount = computed(() => items.value.filter(i => i.qty > 0 && i.qty < 10).length)
+const inStockCount = computed(() => items.value.filter(i => i.qty >= 10).length)
+
+// Stock helper functions
+function stockLabel(qty) { 
+  return qty === 0 ? 'Sold Out' : qty < 10 ? 'Low Stock' : 'In Stock' 
+}
+
+function stockAccent(qty) { 
+  return qty === 0 ? 'bg-gray-300' : qty < 10 ? 'bg-amber-400' : 'bg-emerald-500' 
+}
+
+function stockBadge(qty) { 
+  return qty === 0 ? 'bg-gray-100 text-gray-500' : qty < 10 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-700' 
+}
+
+// CRUD operations
+function removeItem(id) { 
+  items.value = items.value.filter(i => i.id !== id) 
+}
+
+function openEdit(item) { 
+  editId.value = item.id
+  form.value = { ...item }
+  showModal.value = true 
+}
+
+function closeModal() { 
+  showModal.value = false 
+}
+
+function saveItem() {
+  if (!form.value.name.trim()) return
   
+  if (editId.value) {
+    const idx = items.value.findIndex(i => i.id === editId.value)
+    if (idx !== -1) {
+      items.value[idx] = { ...items.value[idx], ...form.value }
+    }
+  } else {
+    items.value.push({ id: nextId++, ...form.value })
+  }
+  closeModal()
+}
 
+// API functions
+const fetchAllData = async () => {
+  try {
+    const queryParams = {}
+    
+    if (searchQuery.value) {
+      queryParams.search = searchQuery.value
+    }
+    if (selectCategory.value) {
+      queryParams.category_id = selectCategory.value
+    }
+    if (statusFilter.value && statusFilter.value !== ' ') {
+      queryParams.is_active = statusFilter.value === 'true'
+    }
 
-	const router = useRouter()
-	const design_create = () => {
-	  router.push("/design_create_product_page")
-	}
+    const response = await api.get('/products', { params: queryParams })
+    products.value = response.data
+    console.log("Data Fetched Successfully...", response.data)
+  } catch (error) {
+    console.error("Server error", error)
+  }
+}
 
-
-	const items = ref([
-	  { id: 1, name: 'Grilled Lamb Chops',  desc: 'Grass-fed lamb, mint gremolata',        cat: 'Mains',    price: '$34.00', qty: 24, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-	  { id: 2, name: 'Artisan Quinoa Bowl',  desc: 'Tri-color quinoa, avocado, tahini',     cat: 'Starters', price: '$18.50', qty: 15, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-	  { id: 3, name: 'Molten Lava Cake',    desc: '70% dark chocolate centre',              cat: 'Desserts', price: '$12.00', qty: 0,  img: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-	  { id: 4, name: 'Premium Dry Martini', desc: 'Choice of botanist gin or vodka',        cat: 'Drinks',   price: '$16.00', qty: 4,  img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-	  { id: 5, name: 'Saffron Sea Bass',    desc: 'Wild-caught bass, saffron beurre blanc', cat: 'Mains',    price: '$29.00', qty: 12, img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-	])
-
-	const categories = ['Starters', 'Mains', 'Desserts', 'Drinks']
-	const activeCat  = ref('All Items')
-	const page       = ref(1)
-	const perPage    = 5
-	let   nextId     = 6
-
-	const showModal = ref(false)
-	const editId    = ref(null)
-	const form      = ref({ name: '', desc: '', price: '', qty: 0, cat: 'Mains', img: '' })
-
-	const filtered    = computed(() => items.value.filter(i => activeCat.value === 'All Items' || i.cat === activeCat.value))
-	const totalPages  = computed(() => Math.max(1, Math.ceil(filtered.value.length / perPage)))
-	const pagedItems  = computed(() => filtered.value.slice((page.value - 1) * perPage, page.value * perPage))
-	const alertCount  = computed(() => items.value.filter(i => i.qty > 0 && i.qty < 10).length)
-	const inStockCount = computed(() => items.value.filter(i => i.qty >= 10).length)
-
-	function stockLabel(qty) { return qty === 0 ? 'Sold Out' : qty < 10 ? 'Low Stock' : 'In Stock' }
-	function stockAccent(qty) { return qty === 0 ? 'bg-gray-300' : qty < 10 ? 'bg-amber-400' : 'bg-emerald-500' }
-	function stockBadge(qty)  { return qty === 0 ? 'bg-gray-100 text-gray-500' : qty < 10 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-700' }
-
-	function removeItem(id)  { items.value = items.value.filter(i => i.id !== id) }
-	function openEdit(item)  { editId.value = item.id; form.value = { ...item }; showModal.value = true }
-	function closeModal()    { showModal.value = false }
-	function saveItem() {
-	  if (!form.value.name.trim()) return
-	  if (editId.value) {
-	    const idx = items.value.findIndex(i => i.id === editId.value)
-	    items.value[idx] = { ...items.value[idx], ...form.value }
-	  } else {
-	    items.value.push({ id: nextId++, ...form.value })
-	  }
-	  closeModal()
-	}
+// Lifecycle hooks
+onMounted(() => {
+  fetchAllData()
+})
 </script>
 
 <style scoped>
@@ -598,14 +653,8 @@
 		font-family: "Inter", sans-serif;
 	}
 
-	@keyframes pop {
-		from {
-			transform: translateY(10px) scale(0.98);
-			opacity: 0;
-		}
-		to {
-			transform: none;
-			opacity: 1;
-		}
-	}
+@keyframes pop {
+  from { transform: translateY(10px) scale(.98); opacity: 0; }
+  to   { transform: none; opacity: 1; }
+}
 </style>
