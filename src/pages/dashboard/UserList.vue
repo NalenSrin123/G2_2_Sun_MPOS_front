@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-[#F6FFF8] p-6">
-    <!-- Header -->
     <div class="flex justify-between items-center mb-6">
       <div>
         <h1 class="text-3xl font-bold text-[#2D944E]">Users Management</h1>
@@ -9,14 +8,14 @@
         </p>
       </div>
 
-      <button
-        class="bg-[#38CB66] hover:bg-[#2D944E] text-white px-5 py-3 rounded-xl font-medium transition"
+      <router-link
+        to="/dashboard/user-form"
+        class="bg-[#38CB66] hover:bg-[#2D944E] text-white px-5 py-3 rounded-xl font-medium transition inline-block text-center"
       >
         + Add User
-      </button>
+      </router-link>
     </div>
 
-    <!-- Stats -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
       <div class="bg-white rounded-2xl p-5 shadow">
         <p class="text-gray-500">Total Users</p>
@@ -37,7 +36,6 @@
       </div>
     </div>
 
-    <!-- Search -->
     <div class="bg-white p-4 rounded-2xl shadow mb-6">
       <div class="flex flex-col md:flex-row gap-3">
         <input
@@ -57,7 +55,6 @@
       </div>
     </div>
 
-    <!-- Table -->
     <div class="bg-white rounded-2xl shadow overflow-hidden">
       <table class="w-full">
         <thead class="bg-[#D9FFE5]">
@@ -179,14 +176,13 @@ const users = [
     joined: "12 Mar 2026",
   },
 ]
+
 const roleClass = (role) => {
   switch (role) {
     case "Admin":
       return "bg-red-100 text-red-700"
-
     case "Chef":
       return "bg-orange-100 text-orange-700"
-
     default:
       return "bg-blue-100 text-blue-700"
   }
