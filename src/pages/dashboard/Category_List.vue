@@ -152,7 +152,7 @@
       <div
         class="hidden md:block overflow-x-auto border rounded-2xl"
       >
-        <table class="w-full min-w-[900px]">
+        <table class="w-full min-w-225">
 
           <thead class="bg-emerald-50 border-b border-gray-300">
             <tr>
