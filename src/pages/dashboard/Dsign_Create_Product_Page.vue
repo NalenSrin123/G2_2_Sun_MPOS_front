@@ -25,7 +25,7 @@
           </button>
 
           <button
-            class="flex items-center gap-2 rounded-full bg-[#0d7a4c] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#0b6c43]"
+          type="button"  @click="createproduct"   class="flex items-center gap-2 rounded-full bg-[#0d7a4c] px-5 py-2 text-sm font-medium text-white transition hover:bg-[#0b6c43]"
           >
             <i class="fa-regular fa-floppy-disk"></i>
             Save Item
@@ -61,7 +61,7 @@
                 </label>
 
                 <input
-                  type="text"
+                  type="text" v-model="Modal.product.name"
                   placeholder="e.g., Truffle Tagliatelle"
                   class="h-11 w-full rounded-lg border border-[#d7ddd4] bg-[#f8faf7] px-4 text-sm outline-none transition focus:border-[#0d7a4c]"
                 />
@@ -75,7 +75,7 @@
 
                 <div class="relative">
                   <select
-                    class="h-11 w-full appearance-none rounded-lg border border-[#d7ddd4] bg-[#f8faf7] px-4 text-sm outline-none focus:border-[#0d7a4c]"
+                  v-model="Modal.product.description"   class="h-11 w-full appearance-none rounded-lg border border-[#d7ddd4] bg-[#f8faf7] px-4 text-sm outline-none focus:border-[#0d7a4c]"
                   >
                     <option>Select a category</option>
                   </select>
@@ -132,7 +132,7 @@
                   </span>
 
                   <input
-                    type="text"
+                    type="text" v-model="Modal.product.price"
                     placeholder="0.00"
                     class="h-11 w-full rounded-lg border border-[#d7ddd4] bg-[#f8faf7] pl-8 pr-4 text-sm outline-none focus:border-[#0d7a4c]"
                   />
@@ -186,7 +186,7 @@
             <label
               class="flex h-55 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-[#ccd4c9] bg-[#f8faf7] text-center transition hover:border-[#0d7a4c]"
             >
-              <input type="file" class="hidden" />
+              <input type="file"  @change="handleImage" class="hidden" />
 
               <div
                 class="mb-4 flex h-14 w-14 items-center justify-center rounded-xl border border-[#ccd4c9] bg-white text-[#7b857b]"
@@ -311,7 +311,82 @@
   </main>
 </template>
 
-<script setup></script>
+<script setup>
+import { reactive } from "vue";
+import axios from "axios";
+
+const Modal = reactive({
+  product: {
+    category_id: 1,
+    name: "",
+    description: "",
+    price: "",
+    image: null,
+  },
+});
+
+const handleImage = (event) => {
+  const file = event.target.files[0];
+
+  if (file) {
+    Modal.product.image = file;
+  }
+};
+
+const createproduct = async () => {
+  try {
+    const formData = new FormData();
+
+    formData.append("category_id", Modal.product.category_id);
+    formData.append("name", Modal.product.name);
+    formData.append("description", Modal.product.description);
+    formData.append("price", Modal.product.price);
+
+    if (Modal.product.image) {
+      formData.append("image", Modal.product.image);
+    }
+
+    console.log("Sending Data:");
+    for (let pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    const response = await axios.post(
+      "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/products",
+      formData,
+      {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      }
+    );
+
+    console.log(response.data);
+
+    alert("Create Product Success");
+
+    Modal.product.category_id = "";
+    Modal.product.name = "";
+    Modal.product.description = "";
+    Modal.product.price = "";
+    Modal.product.image = null;
+
+  } catch (error) {
+    console.error(error);
+
+    if (error.response) {
+      console.log(error.response.data);
+
+      alert(
+        error.response.data.message ||
+        JSON.stringify(error.response.data.errors)
+      );
+    } else {
+      alert("Network Error");
+    }
+  }
+};
+</script>
 
 <style scoped>
 input,
