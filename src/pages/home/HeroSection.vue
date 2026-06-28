@@ -8,7 +8,6 @@
           placeholder="Search for delicacies..."
           class="w-full py-3 pl-12 pr-4 rounded-xl bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-green-500"
         />
-
         <svg
           xmlns="http://www.w3.org/2000/svg"
           class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
@@ -53,9 +52,7 @@
       </div>
 
       <!-- Popular Choices -->
-      <h2 class="text-3xl font-bold mb-5">
-        Popular Choices
-      </h2>
+      <h2 class="text-3xl font-bold mb-5">Popular Choices</h2>
 
       <!-- Featured Card -->
       <div class="relative overflow-hidden rounded-3xl h-72 mb-5 shadow-lg">
@@ -76,51 +73,43 @@
             Bestseller
           </span>
 
-          <h3 class="text-3xl font-bold">
-            Wagyu Ribeye Steak
-          </h3>
+          <h3 class="text-3xl font-bold">Wagyu Ribeye Steak</h3>
 
-          <p class="text-gray-200">
-            Melt-in-your-mouth precision.
-          </p>
+          <p class="text-gray-200">Melt-in-your-mouth precision.</p>
         </div>
       </div>
 
       <!-- Product Cards -->
       <div class="grid grid-cols-2 gap-4">
         <!-- Card 1 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
+        <div
+          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
+        >
           <img
             src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9"
             class="h-40 w-full object-cover"
           />
 
           <div class="p-3">
-            <h4 class="font-semibold">
-              Truffle Fettuccine
-            </h4>
+            <h4 class="font-semibold">Truffle Fettuccine</h4>
 
-            <p class="text-gray-500">
-              $32.00
-            </p>
+            <p class="text-gray-500">$32.00</p>
           </div>
         </div>
 
         <!-- Card 2 -->
-        <div class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition">
+        <div
+          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
+        >
           <img
             src="https://images.unsplash.com/photo-1575023782549-62ca0d244b39"
             class="h-40 w-full object-cover"
           />
 
           <div class="p-3">
-            <h4 class="font-semibold">
-              Midnight Orchid
-            </h4>
+            <h4 class="font-semibold">Midnight Orchid</h4>
 
-            <p class="text-gray-500">
-              $18.00
-            </p>
+            <p class="text-gray-500">$18.00</p>
           </div>
         </div>
       </div>
