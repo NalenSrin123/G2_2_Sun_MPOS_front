@@ -653,8 +653,14 @@ onMounted(() => {
 		font-family: "Inter", sans-serif;
 	}
 
-@keyframes pop {
-  from { transform: translateY(10px) scale(.98); opacity: 0; }
-  to   { transform: none; opacity: 1; }
-}
+	@keyframes pop {
+		from {
+			transform: translateY(10px) scale(0.98);
+			opacity: 0;
+		}
+		to {
+			transform: none;
+			opacity: 1;
+		}
+	}
 </style>
