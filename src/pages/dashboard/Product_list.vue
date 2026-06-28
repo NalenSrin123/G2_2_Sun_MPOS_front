@@ -279,9 +279,13 @@
 							stroke-width="2"
 							viewBox="0 0 24 24">
 							<polyline points="3 6 5 6 21 6" />
+
 							<path d="M19 6l-1 14H6L5 6" />
+
 							<path d="M10 11v6" />
+
 							<path d="M14 11v6" />
+
 							<path d="M9 6V4h6v2" />
 						</svg>
 					</button>
@@ -615,19 +619,13 @@
 	// Fecth Api delete_product
 	const isDeleting = ref(null);
 	const delete_Products = async (id) => {
-		if (!id) return;
 		isDeleting.value = id;
-
+		const url = `https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/products${id}`;
 		try {
-			await axios.delete(
-				`http://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/products/${id}`,
-			);
-
-			products.value = products.value.filter((item) => item.id !== id);
-
-			console.log("Delete Product successful:", id);
+			const response = await axios.delete(url);
+			console.log("Delete success!", response.data);
 		} catch (error) {
-			console.error("Can't delete Products: ", error.message);
+			console.error("ERROR deleting Data!", error);
 		} finally {
 			isDeleting.value = null;
 		}
