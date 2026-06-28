@@ -20,44 +20,11 @@
                         </div>
                     </div>
 
-                    <div class="grid gap-2">
-                        <label class="text-md font-medium text-gray-700">
-                            Seating Capacity
-                        </label>
-                        <div class="relative h-14 rounded-xl border border-gray-300 bg-[#F4FBF4]">
-                            <div class="absolute inset-y-0 left-4 flex items-center pointer-events-none">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke="currentColor" stroke-width="1.8" class="w-5 h-5 text-gray-400">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="M7 11V7a2 2 0 114 0v4m6 0V7a2 2 0 10-4 0v4M5 11h14v4H5v-4zm2 4v2m10-2v2" />
-                                </svg>
-                            </div>
-                            <input type="number" placeholder="Number of guests"
-                                class="w-full h-full pl-12 pr-4 bg-transparent outline-none text-gray-700 placeholder:text-gray-400 appearance-none">
-                        </div>
-                    </div>
+                    
 
                 </div>
 
-                <div class="grid gap-2">
-                    <label class="text-md font-medium text-gray-700">
-                        Floor Zone
-                    </label>
-                    <div class="relative">
-                        <select
-                            class="w-full h-14 rounded-xl border border-gray-300 bg-[#F4FBF4] px-4 pr-10 appearance-none focus:outline-none text-gray-700">
-                            <option>Select a zone</option>
-                            <option>Zone 1</option>
-                            <option>Zone 2</option>
-                        </select>
-                        <div class="absolute inset-y-0 right-3 flex items-center pointer-events-none">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-500" fill="none"
-                                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
+                
 
                 <!-- Active -->
                 <div class="p-4 flex items-center justify-between border border-gray-200 bg-[#F4FBF4] rounded-xl">

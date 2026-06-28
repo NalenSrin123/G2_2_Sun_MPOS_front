@@ -47,7 +47,7 @@
           <option value="cleaning">Cleaning</option>
         </select>
         <RouterLink
-          to="/tables/new"
+          to="create-table"
           class="flex items-center gap-2 bg-emerald-800 text-white text-sm font-semibold px-4 py-2 rounded-lg hover:bg-emerald-900 transition-colors"
         >
           <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
