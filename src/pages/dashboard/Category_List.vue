@@ -291,8 +291,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
-
+import { ref, computed, onMounted } from "vue";
+import api from "../../services/api";
 import {
   PlusIcon,
   TagIcon,
@@ -302,53 +302,21 @@ import {
   XCircleIcon,
 } from "@heroicons/vue/24/outline";
 
-const categories = ref([
-  {
-    id: 1,
-    name: "Appetizers",
-    items: 14,
-    description: "Starters & Snacks",
-    active: true,
-    image:
-      "https://img.freepik.com/free-photo/close-up-view-delicious-food-arrangement_23-2148510885.jpg",
-  },
-  {
-    id: 2,
-    name: "Main Course",
-    items: 22,
-    description: "Signature Dishes",
-    active: true,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSb0p9DwR9EHm8b4EDwxq9ncxB4JDzFi2ZSNI7loWtIoUNlQ1sa0Dp57LE&s",
-  },
-  {
-    id: 3,
-    name: "Desserts",
-    items: 8,
-    description: "Sweet Treats",
-    active: true,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHKNljXf15f9PNMcPIbVbhvwwWTK-wrgq7U9Kf81WOOOhLingyne8zFEY&s",
-  },
-  {
-    id: 4,
-    name: "Beverages",
-    items: 12,
-    description: "Hot & Cold",
-    active: true,
-    image:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSH-fOQqU6NAUnOO2p_RxRLLvXZ_zFXbzL8kECvsM3-T9fi4DLpAJ1esnA&s",
-  },
-  {
-    id: 5,
-    name: "Asian Food",
-    items: 18,
-    description: "Authentic Asian Flavors",
-    active: false,
-    image:
-      "https://images.unsplash.com/photo-1512058564366-18510be2db19",
-  },
-]);
+const categories = ref([]);
+
+const getCategories = async () => {
+  try {
+    const response = await api.get('/categories');
+    console.log(response.data);
+    categories.value= response.data.data;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+onMounted(async () => {
+    getCategories();
+})
 
 const activeCount = computed(
   () => categories.value.filter((item) => item.active).length
