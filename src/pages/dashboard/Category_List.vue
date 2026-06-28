@@ -351,4 +351,5 @@ const categories = ref([
 const activeCount = computed(
   () => categories.value.filter((item) => item.active).length
 );
+
 </script>

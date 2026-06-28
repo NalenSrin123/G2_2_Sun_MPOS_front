@@ -17,7 +17,7 @@
 |
 */
 
-import axios from 'axios'
+import axios from "axios";
 
 /**
  * Axios instance
@@ -27,4 +27,4 @@ const api = axios.create({
   baseURL: 'https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1',
 })
 
-export default api
+export default api;
