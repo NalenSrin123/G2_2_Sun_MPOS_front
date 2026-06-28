@@ -285,8 +285,7 @@
                   </span>
 
                   <span
-                    class="rounded-full border border-[#d7ddd4] bg-[#f7f8f6] px-3 py-1 text-xs text-slate-600"
-                  >
+git                  >
                     Contains Nuts
                   </span>
 
