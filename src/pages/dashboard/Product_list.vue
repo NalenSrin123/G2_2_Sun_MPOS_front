@@ -95,7 +95,7 @@
     <!-- Table rows (desktop) -->
     <div class="hidden md:flex flex-col gap-2">
       <div
-        v-for="item in pagedItems" :key="item.id"
+        v-for="item in items" :key="item.id"
         class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow"
       >
         <!-- Accent bar -->
@@ -153,7 +153,7 @@
 
     <!-- Mobile cards -->
     <div class="flex md:hidden flex-col gap-3">
-      <div v-for="item in pagedItems" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div v-for="item in items" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
         <div class="flex items-start gap-3 p-4">
           <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
           <div class="flex-1 min-w-0">
@@ -179,7 +179,7 @@
           <span class="text-xs" :class="item.qty > 0 && item.qty < 10 ? 'text-amber-500 font-semibold' : 'text-gray-500'">Qty: {{ item.qty }}</span>
         </div>
       </div>
-      <div v-if="pagedItems.length === 0" class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
+      <div v-if="items.length === 0" class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
         No items found.
       </div>
     </div>
@@ -283,13 +283,7 @@ const design_create = () => {
 }
 
 // Local items data
-const items = ref([
-  { id: 1, name: 'Grilled Lamb Chops',  desc: 'Grass-fed lamb, mint gremolata',        cat: 'Mains',    price: '$34.00', qty: 24, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 2, name: 'Artisan Quinoa Bowl',  desc: 'Tri-color quinoa, avocado, tahini',     cat: 'Starters', price: '$18.50', qty: 15, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 3, name: 'Molten Lava Cake',    desc: '70% dark chocolate centre',              cat: 'Desserts', price: '$12.00', qty: 0,  img: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 4, name: 'Premium Dry Martini', desc: 'Choice of botanist gin or vodka',        cat: 'Drinks',   price: '$16.00', qty: 4,  img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 5, name: 'Saffron Sea Bass',    desc: 'Wild-caught bass, saffron beurre blanc', cat: 'Mains',    price: '$29.00', qty: 12, img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-])
+const items = ref([])
 
 // API data
 const products = ref([])
@@ -376,7 +370,7 @@ const fetchAllData = async () => {
     }
 
     const response = await api.get('/products', { params: queryParams })
-    products.value = response.data
+    items.value = response.data.data
     console.log("Data Fetched Successfully...", response.data)
   } catch (error) {
     console.error("Server error", error)
