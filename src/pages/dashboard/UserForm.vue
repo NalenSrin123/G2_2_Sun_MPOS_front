@@ -24,15 +24,15 @@
           User details
         </div>
  
-        <div class="field-grid">
+        <div class="form-fields-stack">
           <div class="field-group">
             <label class="field-label">Username</label>
-            <input v-model="form.username" placeholder="Username" />
+            <input v-model="form.username" placeholder="Username" autocomplete="off" />
           </div>
           
           <div class="field-group">
             <label class="field-label">Email address</label>
-            <input v-model="form.email" placeholder="Email address" />
+            <input v-model="form.email" placeholder="Email address" autocomplete="off" />
           </div>
         </div>
  
@@ -43,7 +43,7 @@
           Account credentials
         </div>
  
-        <div class="field-grid">
+        <div class="form-fields-stack">
           <div class="field-group">
             <label class="field-label">Role</label>
             <select v-model="form.role">
@@ -58,9 +58,11 @@
             <label class="field-label">Password</label>
             <div class="pwd-wrap">
               <input
-                :type="showPwd ? 'text' : 'password'"
+                type="text"
                 v-model="form.password"
                 placeholder="Password"
+                :class="{ 'hide-text': !showPwd }"
+                autocomplete="off"
               />
               <button type="button" class="pwd-toggle" @click="showPwd = !showPwd">
                 <i :class="showPwd ? 'ti ti-eye-off' : 'ti ti-eye'"></i>
@@ -69,15 +71,14 @@
           </div>
         </div>
  
-        <div class="btn-group">
-          <button class="btn-cancel" type="button">
-            Cancel
-          </button>
-          <button class="btn-submit" @click="submitForm">
-            <i class="ti ti-user-plus"></i>
-            Create account
-          </button>
-        </div>
+        <button class="btn-submit" @click="submitForm">
+          <i class="ti ti-user-plus"></i>
+          Create account
+        </button>
+ 
+        <button class="btn-cancel" type="button">
+          Cancel
+        </button>
  
       </div>
     </div>
@@ -127,6 +128,7 @@ function submitForm() {
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap");
+@import url("https://raw.githubusercontent.com/noppa/text-security/master/dist/text-security.css");
  
 * {
   box-sizing: border-box;
@@ -136,16 +138,15 @@ function submitForm() {
  
 .wrap {
   font-family: "DM Sans", sans-serif;
-  padding: 2.5rem 1rem;
+  padding: 3rem 1rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
   min-height: 100vh;
-  background: #f8f9fa;
+  background: #f4f6f8;
 }
  
-/* ── Brand ── */
 .brand-wrap {
   display: flex;
   flex-direction: column;
@@ -155,109 +156,103 @@ function submitForm() {
 }
  
 .brand-icon {
-  width: 56px;
-  height: 56px;
+  width: 52px;
+  height: 52px;
   background: #1a7a54;
-  border-radius: 16px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(26, 122, 84, 0.15);
 }
  
 .brand-icon i {
-  font-size: 28px;
+  font-size: 24px;
   color: #fff;
 }
  
 .brand-name {
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 600;
   color: #1a1a1a;
-  letter-spacing: -0.4px;
+  letter-spacing: -0.3px;
 }
  
 .brand-sub {
   font-size: 11px;
   color: #6c757d;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.5px;
   text-transform: uppercase;
-  font-weight: 500;
 }
  
-/* ── Card ── */
 .form-card {
   width: 100%;
-  max-width: 750px; /* Kept at clean 750px max width */
+  max-width: 100%;
   background: #ffffff;
-  border: 1px solid #e9ecef;
-  border-radius: 16px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+  border: 1px solid #eef2f3;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
  
-/* ── Header ── */
 .form-header {
   padding: 1.5rem 2rem;
-  border-bottom: 1px solid #e9ecef;
-  background: #fdfdfd;
+  border-bottom: 1px solid #f1f3fa;
+  background: #fafbfd;
 }
  
 .form-header-title {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 6px;
+  gap: 8px;
+  margin-bottom: 4px;
 }
  
 .form-header-title i {
-  font-size: 20px;
+  font-size: 18px;
   color: #1a7a54;
 }
  
 .form-header-title span {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 600;
   color: #1a1a1a;
 }
  
 .form-header p {
   font-size: 13px;
-  color: #6c757d;
+  color: #8a96a3;
 }
  
-/* ── Body ── */
 .form-body {
-  padding: 2rem;
+  padding: 2rem 2rem;
 }
  
 .section-title {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: #1a7a54;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
+  letter-spacing: 0.6px;
   margin-bottom: 1.25rem;
 }
  
 .section-title i {
-  font-size: 16px;
+  font-size: 15px;
 }
  
-/* ── Fields Layout ── */
-.field-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
+.form-fields-stack {
+  display: flex;
+  flex-direction: column;
   gap: 1.25rem;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
 }
 
 .field-label {
@@ -267,41 +262,40 @@ function submitForm() {
   text-align: left;
 }
  
-.field-grid input,
-.field-grid select {
-  height: 42px;
+.form-fields-stack input,
+.form-fields-stack select {
+  height: 38px;
   padding: 0 14px;
-  border: 1px solid #ced4da;
+  border: 1px solid #dee2e6;
   border-radius: 8px;
   background: #ffffff;
-  color: #212529;
+  color: #313a46;
   font-size: 14px;
   font-family: "DM Sans", sans-serif;
   outline: none;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease;
   width: 100%;
 }
  
-.field-grid input:focus,
-.field-grid select:focus {
+.form-fields-stack input:focus,
+.form-fields-stack select:focus {
   border-color: #1a7a54;
-  box-shadow: 0 0 0 4px rgba(26, 122, 84, 0.1);
+  box-shadow: 0 0 0 3px rgba(26, 122, 84, 0.12);
 }
  
-.field-grid input::placeholder {
+.form-fields-stack input::placeholder {
   color: #adb5bd;
 }
  
-.field-grid select {
+.form-fields-stack select {
   appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23495057' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%236c757d' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
   background-position: right 14px center;
   padding-right: 36px;
   cursor: pointer;
 }
  
-/* ── Password ── */
 .pwd-wrap {
   position: relative;
   display: flex;
@@ -310,14 +304,14 @@ function submitForm() {
 }
  
 .pwd-wrap input {
-  padding-right: 42px;
+  padding-right: 40px;
 }
  
 .pwd-toggle {
   position: absolute;
-  right: 4px;
-  height: 36px;
-  width: 36px;
+  right: 6px;
+  height: 32px;
+  width: 32px;
   background: none;
   border: none;
   cursor: pointer;
@@ -326,51 +320,31 @@ function submitForm() {
   align-items: center;
   justify-content: center;
   font-size: 16px;
-  transition: color 0.15s;
 }
  
-.pwd-toggle:hover {
-  color: #212529;
-}
- 
-/* ── Divider ── */
 .divider {
   border: none;
-  border-top: 1px solid #000000;
-  opacity: 0.06;
+  border-top: 1px solid #edf2f9;
   margin: 1.75rem 0;
 }
  
-/* ── Buttons Group (Standard Inline) ── */
-.btn-group {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 12px;
-  margin-top: 2.5rem;
-}
-
-.btn-submit,
-.btn-cancel {
-  width: auto;       /* Removed width: 100% */
-  padding: 0 24px;   /* Added inline padding for custom fit */
-  height: 42px;      /* Matched to a standard uniform height */
+.btn-submit {
+  width: 100%;
+  height: 40px;
+  background: #1a7a54;
+  color: #fff;
+  border: none;
   border-radius: 8px;
   font-size: 14px;
+  font-weight: 500;
   font-family: "DM Sans", sans-serif;
   cursor: pointer;
+  margin-top: 1.75rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: all 0.2s ease;
-}
- 
-.btn-submit {
-  background: #1a7a54;
-  color: #fff;
-  border: none;
-  font-weight: 600;
+  transition: all 0.15s ease;
 }
  
 .btn-submit:hover {
@@ -382,34 +356,25 @@ function submitForm() {
 }
  
 .btn-cancel {
+  width: 100%;
+  height: 38px;
   background: transparent;
-  border: 1px solid #ced4da;
-  color: #495057;
-  font-weight: 500;
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  color: #6c757d;
+  font-size: 14px;
+  font-family: "DM Sans", sans-serif;
+  cursor: pointer;
+  margin-top: 8px;
+  transition: all 0.15s ease;
 }
  
 .btn-cancel:hover {
   background: #f8f9fa;
-  color: #212529;
+  color: #313a46;
 }
- 
-/* ── Responsive ── */
-@media (max-width: 576px) {
-  .field-grid {
-    grid-template-columns: 1fr;
-    gap: 1rem;
-  }
-  .form-body {
-    padding: 1.25rem;
-  }
-  /* Stacks buttons properly on smaller mobile devices */
-  .btn-group {
-    flex-direction: column-reverse;
-    gap: 10px;
-  }
-  .btn-submit,
-  .btn-cancel {
-    width: 100%;
-  }
+
+.hide-text {
+  font-family: "text-security-disc" !important;
 }
 </style>
