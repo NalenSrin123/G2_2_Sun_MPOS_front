@@ -237,13 +237,13 @@
                 <span
                   class="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-medium"
                   :class="
-                    category.active
+                    category.is_active
                       ? 'bg-green-100 text-green-700'
                       : 'bg-red-100 text-red-700'
                   "
                 >
                   <CheckCircleIcon
-                    v-if="category.active"
+                    v-if="category.is_active"
                     class="w-4 h-4"
                   />
 
@@ -252,7 +252,7 @@
                     class="w-4 h-4"
                   />
 
-                  {{ category.active ? "Active" : "Inactive" }}
+                  {{ category.is_active ? "Active" : "Inactive" }}
                 </span>
 
               </td>
@@ -321,9 +321,6 @@ onMounted(async () => {
 const activeCount = computed(
   () => categories.value.filter((item) => item.active).length
 );
-
-/*import baseUrl*/ 
-import api from "../../services/api";
 /*
   fetch api method delete category
 */ 

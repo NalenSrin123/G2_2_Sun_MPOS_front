@@ -589,8 +589,8 @@ function stockBadge(qty) {
 }
 
 // CRUD operations
-function removeItem(id) { 
-  items.value = items.value.filter(i => i.id !== id) 
+async function removeItem(id) { 
+  const response = await api.delete(`/products/${id}`)
 }
 
 function openEdit(item) { 
