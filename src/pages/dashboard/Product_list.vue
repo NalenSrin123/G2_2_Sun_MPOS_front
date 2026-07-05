@@ -173,24 +173,29 @@
 			</button>
 		</div>
 
-    <!-- Table rows (desktop) -->
-    <div class="hidden md:flex flex-col gap-2">
-      <div
-        v-for="item in items" :key="item.id"
-        class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow"
-      >
-        <!-- Accent bar -->
-        <div class="w-1.5 self-stretch flex-shrink-0" :class="stockAccent(item.qty)"></div>
+		<!-- Table rows (desktop) -->
+		<div class="hidden md:flex flex-col gap-2">
+			<div
+				v-for="item in items"
+				:key="item.id"
+				class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow">
+				<!-- Accent bar -->
+				<div
+					class="w-1.5 self-stretch flex-shrink-0"
+					:class="stockAccent(item.qty)"></div>
 
-        <!-- Image + name -->
-        <div class="flex items-center gap-3 px-4 py-3 min-w-[220px] flex-1">
-          <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
-          <div>
-            <p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
-            <p class="text-xs text-gray-400 mt-0.5">{{ item.desc }}</p>
-          </div>
-         <!-- <button class="btn-add" @click="design_create"><i class="bi bi-plus-lg"></i>Add New Item Row</button> -->
-        </div>
+				<!-- Image + name -->
+				<div class="flex items-center gap-3 px-4 py-3 min-w-[220px] flex-1">
+					<img
+						:src="item.img"
+						:alt="item.name"
+						class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
+					<div>
+						<p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
+						<p class="text-xs text-gray-400 mt-0.5">{{ item.desc }}</p>
+					</div>
+					<!-- <button class="btn-add" @click="design_create"><i class="bi bi-plus-lg"></i>Add New Item Row</button> -->
+				</div>
 
 				<!-- Category -->
 				<div class="min-w-[110px] px-2">
@@ -267,38 +272,85 @@
 			</div>
 		</div>
 
-    <!-- Mobile cards -->
-    <div class="flex md:hidden flex-col gap-3">
-      <div v-for="item in items" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
-        <div class="flex items-start gap-3 p-4">
-          <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
-          <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
-            <p class="text-xs text-gray-400 mt-0.5 truncate">{{ item.desc }}</p>
-          </div>
-          <div class="flex gap-1 flex-shrink-0">
-            <button @click="openEdit(item)" class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-700">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            </button>
-            <button @click="removeItem(item.id)" class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500">
-              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
-            </button>
-          </div>
-        </div>
-        <div class="flex items-center gap-3 px-4 pb-3 flex-wrap">
-          <span class="text-xs text-gray-500">{{ item.cat }}</span>
-          <span class="text-xs font-semibold text-gray-900">{{ item.price }}</span>
-          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold" :class="stockBadge(item.qty)">
-            <span v-if="item.qty > 0 && item.qty < 10" class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-            {{ stockLabel(item.qty) }}
-          </span>
-          <span class="text-xs" :class="item.qty > 0 && item.qty < 10 ? 'text-amber-500 font-semibold' : 'text-gray-500'">Qty: {{ item.qty }}</span>
-        </div>
-      </div>
-      <div v-if="items.length === 0" class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
-        No items found.
-      </div>
-    </div>
+		<!-- Mobile cards -->
+		<div class="flex md:hidden flex-col gap-3">
+			<div
+				v-for="item in items"
+				:key="item.id"
+				class="bg-white rounded-xl shadow-sm overflow-hidden">
+				<div class="flex items-start gap-3 p-4">
+					<img
+						:src="item.img"
+						:alt="item.name"
+						class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
+					<div class="flex-1 min-w-0">
+						<p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
+						<p class="text-xs text-gray-400 mt-0.5 truncate">{{ item.desc }}</p>
+					</div>
+					<div class="flex gap-1 flex-shrink-0">
+						<button
+							@click="openEdit(item)"
+							class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-700">
+							<svg
+								class="w-3.5 h-3.5"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								viewBox="0 0 24 24">
+								<path
+									d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
+								<path
+									d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
+							</svg>
+						</button>
+						<button
+							@click="removeItem(item.id)"
+							class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500">
+							<svg
+								class="w-3.5 h-3.5"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								viewBox="0 0 24 24">
+								<polyline points="3 6 5 6 21 6" />
+								<path d="M19 6l-1 14H6L5 6" />
+								<path d="M10 11v6" />
+								<path d="M14 11v6" />
+								<path d="M9 6V4h6v2" />
+							</svg>
+						</button>
+					</div>
+				</div>
+				<div class="flex items-center gap-3 px-4 pb-3 flex-wrap">
+					<span class="text-xs text-gray-500">{{ item.cat }}</span>
+					<span class="text-xs font-semibold text-gray-900">{{
+						item.price
+					}}</span>
+					<span
+						class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold"
+						:class="stockBadge(item.qty)">
+						<span
+							v-if="item.qty > 0 && item.qty < 10"
+							class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+						{{ stockLabel(item.qty) }}
+					</span>
+					<span
+						class="text-xs"
+						:class="
+							item.qty > 0 && item.qty < 10
+								? 'text-amber-500 font-semibold'
+								: 'text-gray-500'
+						"
+						>Qty: {{ item.qty }}</span
+					>
+				</div>
+			</div>
+			<div
+				v-if="items.length === 0"
+				class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
+				No items found.
+			</div>
+		</div>
 
 		<!-- Footer -->
 		<div
@@ -479,119 +531,146 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router"
-import { ref, computed, onMounted } from 'vue'
-import api from "../../services/api"
+	import { useRouter } from "vue-router";
+	import { ref, computed, onMounted } from "vue";
+	import api from "../../services/api";
 
-const router = useRouter()
+	const router = useRouter();
 
-// Navigation function
-const design_create = () => {
-  router.push("/design_create_product_page")
-}
+	// Navigation function
+	const design_create = () => {
+		router.push("/design_create_product_page");
+	};
 
-// Local items data
-const items = ref([])
+	// Local items data
+	const items = ref([]);
 
-// API data
-const products = ref([])
+	// API data
+	const products = ref([]);
 
-// Filter states
-const searchQuery = ref('')
-const selectCategory = ref('')
-const statusFilter = ref('')
+	// Filter states
+	const searchQuery = ref("");
+	const selectCategory = ref("");
+	const statusFilter = ref("");
 
-// Categories
-const categories = ['Starters', 'Mains', 'Desserts', 'Drinks']
-const activeCat = ref('All Items')
-const page = ref(1)
-const perPage = 5
-let nextId = 6
+	// Categories
+	const categories = ["Starters", "Mains", "Desserts", "Drinks"];
+	const activeCat = ref("All Items");
+	const page = ref(1);
+	const perPage = 5;
+	let nextId = 6;
 
-// Modal states
-const showModal = ref(false)
-const editId = ref(null)
-const form = ref({ name: '', desc: '', price: '', qty: 0, cat: 'Mains', img: '' })
+	// Modal states
+	const showModal = ref(false);
+	const editId = ref(null);
+	const form = ref({
+		name: "",
+		desc: "",
+		price: "",
+		qty: 0,
+		cat: "Mains",
+		img: "",
+	});
 
-// Computed properties
-const filtered = computed(() => items.value.filter(i => activeCat.value === 'All Items' || i.cat === activeCat.value))
-const totalPages = computed(() => Math.max(1, Math.ceil(filtered.value.length / perPage)))
-const pagedItems = computed(() => filtered.value.slice((page.value - 1) * perPage, page.value * perPage))
-const alertCount = computed(() => items.value.filter(i => i.qty > 0 && i.qty < 10).length)
-const inStockCount = computed(() => items.value.filter(i => i.qty >= 10).length)
+	// Computed properties
+	const filtered = computed(() =>
+		items.value.filter(
+			(i) => activeCat.value === "All Items" || i.cat === activeCat.value,
+		),
+	);
+	const totalPages = computed(() =>
+		Math.max(1, Math.ceil(filtered.value.length / perPage)),
+	);
+	const pagedItems = computed(() =>
+		filtered.value.slice((page.value - 1) * perPage, page.value * perPage),
+	);
+	const alertCount = computed(
+		() => items.value.filter((i) => i.qty > 0 && i.qty < 10).length,
+	);
+	const inStockCount = computed(
+		() => items.value.filter((i) => i.qty >= 10).length,
+	);
 
-// Stock helper functions
-function stockLabel(qty) { 
-  return qty === 0 ? 'Sold Out' : qty < 10 ? 'Low Stock' : 'In Stock' 
-}
+	// Stock helper functions
+	function stockLabel(qty) {
+		return qty === 0 ? "Sold Out" : qty < 10 ? "Low Stock" : "In Stock";
+	}
 
-function stockAccent(qty) { 
-  return qty === 0 ? 'bg-gray-300' : qty < 10 ? 'bg-amber-400' : 'bg-emerald-500' 
-}
+	function stockAccent(qty) {
+		return qty === 0
+			? "bg-gray-300"
+			: qty < 10
+				? "bg-amber-400"
+				: "bg-emerald-500";
+	}
 
-function stockBadge(qty) { 
-  return qty === 0 ? 'bg-gray-100 text-gray-500' : qty < 10 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-700' 
-}
+	function stockBadge(qty) {
+		return qty === 0
+			? "bg-gray-100 text-gray-500"
+			: qty < 10
+				? "bg-amber-50 text-amber-600"
+				: "bg-emerald-50 text-emerald-700";
+	}
 
-// CRUD operations
-async function removeItem(id) { 
-  const response = await api.delete(`/products/${id}`);
-  if(response.success){
-	router.push("/dashboard/products");
-  }
-}
+	// CRUD operations
+	async function removeItem(id) {
+		const response = await api.delete(`/products/${id}`);
+		if (response.success) {
+			router.push("/dashboard/products");
+		}
+	}
 
-function openEdit(item) { 
-  editId.value = item.id
-  form.value = { ...item }
-  showModal.value = true 
-}
+	function openEdit(item) {
+		editId.value = item.id;
+		form.value = { ...item };
+		showModal.value = true;
+	}
 
-function closeModal() { 
-  showModal.value = false 
-}
+	function closeModal() {
+		showModal.value = false;
+	}
 
-function saveItem() {
-  if (!form.value.name.trim()) return
-  
-  if (editId.value) {
-    const idx = items.value.findIndex(i => i.id === editId.value)
-    if (idx !== -1) {
-      items.value[idx] = { ...items.value[idx], ...form.value }
-    }
-  } else {
-    items.value.push({ id: nextId++, ...form.value })
-  }
-  closeModal()
-}
+	function saveItem() {
+		if (!form.value.name.trim()) return;
 
-// API functions
-const fetchAllData = async () => {
-  try {
-    const queryParams = {}
-    
-    if (searchQuery.value) {
-      queryParams.search = searchQuery.value
-    }
-    if (selectCategory.value) {
-      queryParams.category_id = selectCategory.value
-    }
-    if (statusFilter.value && statusFilter.value !== ' ') {
-      queryParams.is_active = statusFilter.value === 'true'
-    }
+		if (editId.value) {
+			const idx = items.value.findIndex((i) => i.id === editId.value);
+			if (idx !== -1) {
+				items.value[idx] = { ...items.value[idx], ...form.value };
+			}
+		} else {
+			items.value.push({ id: nextId++, ...form.value });
+		}
+		closeModal();
+	}
 
-    const response = await api.get('/products', { params: queryParams })
-    items.value = response.data.data
-    console.log("Data Fetched Successfully...", response.data)
-  } catch (error) {
-    console.error("Server error", error)
-  }
-}
+	// API functions
+	const fetchAllData = async () => {
+		try {
+			const queryParams = {};
 
-// Lifecycle hooks
-onMounted(() => {
-  fetchAllData()
-})
+			if (searchQuery.value) {
+				queryParams.search = searchQuery.value;
+			}
+			if (selectCategory.value) {
+				queryParams.category_id = selectCategory.value;
+			}
+			if (statusFilter.value && statusFilter.value !== " ") {
+				queryParams.is_active = statusFilter.value === "true";
+			}
+
+			const response = await api.get("/products", { params: queryParams });
+			items.value = response.data.data;
+			console.log("Data Fetched Successfully...", response.data);
+		} catch (error) {
+			console.error("Server error", error);
+		}
+	};
+
+	// Lifecycle hooks
+	onMounted(() => {
+		fetchAllData();
+	});
 </script>
 
 <style scoped>
