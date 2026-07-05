@@ -67,6 +67,27 @@
                 />
               </div>
 
+               <!-- Base Price -->
+              <div>
+                <label class="mb-2 block text-sm text-slate-600">
+                  Base Price ($)
+                </label>
+
+                <div class="relative">
+                  <span
+                    class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-500"
+                  >
+                    $
+                  </span>
+
+                  <input
+                    type="text"
+                    placeholder="0.00"
+                    class="h-11 w-full rounded-lg border border-[#d7ddd4] bg-[#f8faf7] pl-8 pr-4 text-sm outline-none focus:border-[#0d7a4c]"
+                  />
+                </div>
+              </div>
+
               <!-- Category -->
               <div>
                 <label class="mb-2 block text-sm text-slate-600">
@@ -105,68 +126,13 @@
           <section
             class="rounded-xl border border-[#dde2da] bg-white p-5"
           >
-            <div class="mb-5 flex items-center gap-3">
-              <div
-                class="flex h-9 w-9 items-center justify-center rounded-lg bg-[#e7f3ec] text-[#0d7a4c]"
-              >
-                <i class="fa-solid fa-money-bill-wave"></i>
-              </div>
-
-              <h2 class="text-sm font-semibold text-slate-700">
-                Pricing & Tax
-              </h2>
-            </div>
-
-            <div class="grid gap-4 md:grid-cols-2">
-              <!-- Base Price -->
-              <div>
-                <label class="mb-2 block text-sm text-slate-600">
-                  Base Price ($)
-                </label>
-
-                <div class="relative">
-                  <span
-                    class="absolute left-4 top-1/2 -translate-y-1/2 text-sm text-slate-500"
-                  >
-                    $
-                  </span>
-
-                  <input
-                    type="text"
-                    placeholder="0.00"
-                    class="h-11 w-full rounded-lg border border-[#d7ddd4] bg-[#f8faf7] pl-8 pr-4 text-sm outline-none focus:border-[#0d7a4c]"
-                  />
-                </div>
-              </div>
-
-              <!-- Tax -->
-              <div>
-                <label class="mb-2 block text-sm text-slate-600">
-                  Tax Rate (%)
-                </label>
-
-                <div class="relative">
-                  <input
-                    type="text"
-                    value="8.5"
-                    class="h-11 w-full rounded-lg border border-[#d7ddd4] bg-[#f8faf7] px-4 pr-8 text-sm outline-none focus:border-[#0d7a4c]"
-                  />
-
-                  <span
-                    class="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-slate-500"
-                  >
-                    %
-                  </span>
-                </div>
-              </div>
-            </div>
 
             <!-- Modifier -->
             <button
-              class="mt-5 flex h-14 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-[#cfd7cd] bg-[#f8faf7] text-sm font-medium text-[#0d7a4c] transition hover:bg-[#eef6f0]"
+              class="mt-5 flex h-14 w-full items-center justify-center gap-2 rounded-lg border border-dashed border-[#cfd7cd] bg-[#d7daf8] text-sm font-medium text-[#0d7a4c] transition hover:bg-[#eef6f0]"
             >
               <i class="fa-solid fa-plus"></i>
-              Add Price Modifiers (e.g., Gluten Free +$2.00)
+              Add
             </button>
           </section>
         </div>
@@ -204,107 +170,7 @@
             </label>
           </section>
 
-          <!-- Visibility -->
-          <section
-            class="rounded-xl border border-[#dde2da] bg-white p-5"
-          >
-            <h2
-              class="mb-5 text-xs font-semibold uppercase tracking-wide text-slate-500"
-            >
-              Visibility & Status
-            </h2>
-
-            <div class="space-y-5">
-              <!-- Order -->
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-slate-700">
-                    Available for Order
-                  </h3>
-
-                  <p class="text-xs text-slate-400">
-                    Display on digital menus
-                  </p>
-                </div>
-
-                <label class="relative inline-flex cursor-pointer items-center">
-                  <input type="checkbox" checked class="peer sr-only" />
-
-                  <div
-                    class="h-6 w-11 rounded-full bg-[#cfd7cd] transition peer-checked:bg-[#0d7a4c]"
-                  ></div>
-
-                  <div
-                    class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"
-                  ></div>
-                </label>
-              </div>
-
-              <!-- Featured -->
-              <div class="flex items-center justify-between">
-                <div>
-                  <h3 class="text-sm font-medium text-slate-700">
-                    Featured Item
-                  </h3>
-
-                  <p class="text-xs text-slate-400">
-                    Show in “Chef's Picks”
-                  </p>
-                </div>
-
-                <label class="relative inline-flex cursor-pointer items-center">
-                  <input type="checkbox" class="peer sr-only" />
-
-                  <div
-                    class="h-6 w-11 rounded-full bg-[#cfd7cd] transition peer-checked:bg-[#0d7a4c]"
-                  ></div>
-
-                  <div
-                    class="absolute left-1 top-1 h-4 w-4 rounded-full bg-white transition peer-checked:translate-x-5"
-                  ></div>
-                </label>
-              </div>
-
-              <!-- Labels -->
-              <div>
-                <h3 class="mb-3 text-sm font-medium text-slate-700">
-                  Dietary Labels
-                </h3>
-
-                <div class="flex flex-wrap gap-2">
-                  <span
-                    class="rounded-full border border-[#bdd9c9] bg-[#eef7f1] px-3 py-1 text-xs text-[#0d7a4c]"
-                  >
-                    Vegan
-                  </span>
-
-                  <span
-                    class="rounded-full border border-[#d7ddd4] bg-[#f7f8f6] px-3 py-1 text-xs text-slate-600"
-                  >
-                    Gluten-Free
-                  </span>
-
-                  <span
-                    class="rounded-full border border-[#d7ddd4] bg-[#f7f8f6] px-3 py-1 text-xs text-slate-600"
-                  >
-                    Contains Nuts
-                  </span>
-
-                  <span
-                    class="rounded-full border border-[#bdd9c9] bg-[#eef7f1] px-3 py-1 text-xs text-[#0d7a4c]"
-                  >
-                    Spicy
-                  </span>
-
-                  <button
-                    class="rounded-full border border-dashed border-[#d7ddd4] px-3 py-1 text-xs text-slate-500"
-                  >
-                    + Add New
-                  </button>
-                </div>
-              </div>
-            </div>
-          </section>
+          
         </aside>
       </div>
     </section>

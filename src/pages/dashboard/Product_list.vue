@@ -311,7 +311,15 @@ function stockAccent(qty) { return qty === 0 ? 'bg-gray-300' : qty < 10 ? 'bg-am
 function stockBadge(qty)  { return qty === 0 ? 'bg-gray-100 text-gray-500' : qty < 10 ? 'bg-amber-50 text-amber-600' : 'bg-emerald-50 text-emerald-700' }
 
 function removeItem(id)  { items.value = items.value.filter(i => i.id !== id) }
-function openEdit(item)  { editId.value = item.id; form.value = { ...item }; showModal.value = true }
+// function openEdit(item)  { editId.value = item.id; form.value = { ...item }; showModal.value = true }
+const openEdit = (item) => {
+  router.push({
+    name: 'design_create_product_page',
+    query: {
+      id: item.id
+    }
+  })
+}
 function closeModal()    { showModal.value = false }
 function saveItem() {
   if (!form.value.name.trim()) return
