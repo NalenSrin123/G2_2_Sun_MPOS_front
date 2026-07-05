@@ -10,7 +10,7 @@
 				</p>
 			</div>
 
-			<RouterLink
+				<RouterLink
 				class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
 				to="/dashboard/create-product">
 				Add New Item
@@ -176,7 +176,7 @@
     <!-- Table rows (desktop) -->
     <div class="hidden md:flex flex-col gap-2">
       <div
-        v-for="item in items" :key="item.id"
+        v-for="item in pagedItems" :key="item.id"
         class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow"
       >
         <!-- Accent bar -->
@@ -269,7 +269,7 @@
 
     <!-- Mobile cards -->
     <div class="flex md:hidden flex-col gap-3">
-      <div v-for="item in items" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
+      <div v-for="item in pagedItems" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
         <div class="flex items-start gap-3 p-4">
           <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
           <div class="flex-1 min-w-0">
@@ -485,11 +485,6 @@ import api from "../../services/api"
 
 const router = useRouter()
 
-// Navigation function
-const design_create = () => {
-  router.push("/design_create_product_page")
-}
-
 // Local items data
 const items = ref([])
 
@@ -534,23 +529,27 @@ function stockBadge(qty) {
 }
 
 // CRUD operations
-async function removeItem(id) { 
-  const response = await api.delete(`/products/${id}`);
-  if(response.success){
-	router.push("/dashboard/products");
+async function removeItem(id) {
+  try {
+    await api.delete(`/products/${id}`)
+    items.value = items.value.filter((i) => i.id !== id)
+  } catch (error) {
+    console.error("Failed to delete product", error)
   }
 }
 
-function openEdit(item) { 
-  editId.value = item.id
-  form.value = { ...item }
-  showModal.value = true 
+const openEdit = (item) => {
+  router.push({
+    name: 'design_create_product_page',
+    query: {
+      id: item.id
+    }
+  })
 }
 
-function closeModal() { 
-  showModal.value = false 
+function closeModal() {
+  showModal.value = false
 }
-
 function saveItem() {
   if (!form.value.name.trim()) return
   
