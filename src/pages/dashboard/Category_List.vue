@@ -322,8 +322,6 @@ const activeCount = computed(
   () => categories.value.filter((item) => item.active).length
 );
 
-/*import baseUrl*/ 
-import api from "../../services/api";
 /*
   fetch api method delete category
 */ 
