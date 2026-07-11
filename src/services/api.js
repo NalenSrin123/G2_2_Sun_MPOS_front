@@ -27,20 +27,8 @@ export async function loginAdmin(email, password) {
   const response = await api.post('/auth/login', { email, password })
   return response.data
 }
-async function request(path, options = {}) {
-  const response = await fetch(`${BASE_URL}${path}`, {
-    headers: {
-      "Content-Type": "application/json",
-    },
-    ...options,
-  });
-  return response;
-}
-
 export async function createTable(payload) {
-  return request("/tables", {
-    method: "POST",
-    body: JSON.stringify(payload),
-  });
+  const response = await api.post("/tables", payload);
+  return response.data;
 }
 export default api

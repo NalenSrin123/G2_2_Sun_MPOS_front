@@ -10,124 +10,30 @@
             General Information
           </h3>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 w-full">
+          <div class="grid gap-2 w-full">
             <div class="grid gap-2">
               <label class="text-md font-medium text-gray-700">
-                Table Number or Name
+                Table Number
               </label>
               <div
                 class="w-full h-14 rounded-xl border border-gray-300 bg-[#F4FBF4] flex items-center px-4"
               >
                 <input
-                  type="text"
-                  v-model="tableNumber"
-                  placeholder="# e.g. Table 1 or Terrace-01"
+                  v-model.number="tableNumber"
+                  type="number"
+                  min="1"
+                  step="1"
+                  placeholder="e.g. 1"
+                  required
                   class="w-full bg-transparent outline-none text-gray-700 placeholder:text-gray-400"
                 />
               </div>
             </div>
-
-            <div class="grid gap-2">
-              <label class="text-md font-medium text-gray-700">
-                Seating Capacity
-              </label>
-              <div
-                class="relative h-14 rounded-xl border border-gray-300 bg-[#F4FBF4]"
-              >
-                <div
-                  class="absolute inset-y-0 left-4 flex items-center pointer-events-none"
-                >
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    stroke-width="1.8"
-                    class="w-5 h-5 text-gray-400"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M7 11V7a2 2 0 114 0v4m6 0V7a2 2 0 10-4 0v4M5 11h14v4H5v-4zm2 4v2m10-2v2"
-                    />
-                  </svg>
-                </div>
-                <input
-                  type="number"
-                  v-model.number="seatingCapacity"
-                  placeholder="Number of guests"
-                  class="w-full h-full pl-12 pr-4 bg-transparent outline-none text-gray-700 placeholder:text-gray-400 appearance-none"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="grid gap-2">
-            <label class="text-md font-medium text-gray-700">
-              Floor Zone
-            </label>
-            <div class="relative">
-              <select
-                v-model="zone"
-                class="w-full h-14 rounded-xl border border-gray-300 bg-[#F4FBF4] px-4 pr-10 appearance-none focus:outline-none text-gray-700"
-              >
-                <option value="Zone 1">Zone 1</option>
-                <option value="Zone 2">Zone 2</option>
-              </select>
-              <div
-                class="absolute inset-y-0 right-3 flex items-center pointer-events-none"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  class="w-5 h-5 text-gray-500"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  stroke-width="2"
-                >
-                  <path
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          <!-- Active -->
-          <div
-            class="p-4 flex items-center justify-between border border-gray-200 bg-[#F4FBF4] rounded-xl"
-          >
-            <div>
-              <h5 class="text-md font-bold text-gray-800">Active Status</h5>
-              <span class="text-xs text-gray-400">
-                Table will be visible in the floor plan immediately.
-              </span>
-            </div>
-            <button
-              type="button"
-              @click="isActive = !isActive"
-              class="relative inline-flex h-7 w-12 items-center rounded-full transition-colors duration-300 cursor-pointer"
-              :class="isActive ? 'bg-[#006C49]' : 'bg-gray-300'"
-            >
-              <span
-                class="inline-block h-5 w-5 transform rounded-full bg-white shadow-md transition-transform duration-300"
-                :class="isActive ? 'translate-x-6' : 'translate-x-1'"
-              />
-            </button>
           </div>
         </div>
 
         <!-- Button footer -->
-        <div class="w-full flex flex-col sm:flex-row gap-4 mt-6">
-          <button
-            type="button"
-            class="w-full h-14 border border-[#006C49] rounded-xl font-bold text-md text-[#006C49] hover:bg-green-50 transition flex items-center justify-center px-4 cursor-pointer"
-          >
-            Save and Add Another
-          </button>
-
+        <div class="w-full flex mt-6">
           <button
             type="submit"
             :disabled="loading"
@@ -162,12 +68,11 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { createTable } from "@/services/api";
 
+const router = useRouter();
 const tableNumber = ref("");
-const seatingCapacity = ref(1);
-const zone = ref("Zone 1");
-const isActive = ref(true);
 const loading = ref(false);
 const message = ref("");
 const error = ref("");
@@ -176,8 +81,9 @@ async function onCreateTable() {
   message.value = "";
   error.value = "";
 
-  if (!tableNumber.value) {
-    error.value = "Please enter a table number.";
+  const number = Number(tableNumber.value);
+  if (!Number.isInteger(number) || number < 1) {
+    error.value = "Please enter a valid table number.";
     return;
   }
 
@@ -185,25 +91,14 @@ async function onCreateTable() {
 
   try {
     const payload = {
-      table_number: Number(tableNumber.value),
+      table_number: number,
     };
-    const response = await createTable(payload);
-
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      error.value =
-        errorData?.message || `Request failed with status ${response.status}`;
-      return;
-    }
-
-    const data = await response.json();
+    const data = await createTable(payload);
     message.value = `Table created successfully (ID: ${data.id}).`;
     tableNumber.value = "";
-    seatingCapacity.value = 1;
-    zone.value = "Zone 1";
-    isActive.value = true;
+    await router.push("/dashboard/tables");
   } catch (err) {
-    error.value = err?.message || "Network error. Check your API URL.";
+    error.value = err.response?.data?.message || err.message || "Unable to create table.";
   } finally {
     loading.value = false;
   }
