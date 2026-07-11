@@ -1,9 +1,13 @@
 <template>
   <div class="min-h-full bg-slate-50 px-4 py-6 text-slate-900 sm:px-6 lg:px-8">
     <main class="mx-auto max-w-6xl">
-      <div class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
+      <div
+        class="mb-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between"
+      >
         <div>
-          <p class="text-sm font-medium uppercase tracking-wide text-emerald-600">
+          <p
+            class="text-sm font-medium uppercase tracking-wide text-emerald-600"
+          >
             Menu Management
           </p>
           <h2 class="mt-1 text-2xl font-bold text-slate-950 sm:text-3xl">
@@ -62,7 +66,9 @@
                     </p>
                   </div>
 
-                  <label class="relative inline-flex cursor-pointer items-center">
+                  <label
+                    class="relative inline-flex cursor-pointer items-center"
+                  >
                     <input
                       v-model="isVisible"
                       type="checkbox"
@@ -119,7 +125,9 @@
                 >
                   +
                 </span>
-                <span class="relative mt-3 text-sm font-semibold text-slate-800">
+                <span
+                  class="relative mt-3 text-sm font-semibold text-slate-800"
+                >
                   {{ imagePreview ? "Change Image" : "Upload Image" }}
                 </span>
                 <span class="relative mt-1 text-xs text-slate-500">
@@ -136,7 +144,9 @@
               />
             </div>
 
-            <div class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end">
+            <div
+              class="flex flex-col-reverse gap-3 border-t border-slate-100 pt-5 sm:flex-row sm:justify-end"
+            >
               <button
                 type="button"
                 @click="resetForm"
@@ -149,14 +159,16 @@
                 type="submit"
                 class="h-11 rounded-lg bg-emerald-600 px-5 text-sm font-semibold text-white shadow-sm transition hover:bg-emerald-700"
               >
-                Create Category
+                {{ isEdit ? "Update Category" : "Create Category" }}
               </button>
             </div>
           </form>
         </section>
 
         <aside class="lg:sticky lg:top-6 lg:self-start">
-          <section class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
+          <section
+            class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm"
+          >
             <div class="border-b border-slate-100 px-5 py-4">
               <h3 class="text-base font-semibold text-slate-900">
                 Quick Preview
@@ -165,7 +177,9 @@
 
             <div class="p-5">
               <div class="overflow-hidden rounded-lg border border-slate-200">
-                <div class="flex h-36 items-center justify-center overflow-hidden bg-slate-100">
+                <div
+                  class="flex h-36 items-center justify-center overflow-hidden bg-slate-100"
+                >
                   <img
                     v-if="imagePreview"
                     :src="imagePreview"
@@ -180,11 +194,15 @@
 
                 <div class="space-y-3 border-l-4 border-emerald-500 p-4">
                   <div class="flex items-start justify-between gap-3">
-                    <h4 class="min-w-0 break-words text-base font-semibold text-slate-900">
+                    <h4
+                      class="min-w-0 break-words text-base font-semibold text-slate-900"
+                    >
                       {{ categoryName || "New Category Name" }}
                     </h4>
 
-                    <span class="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">
+                    <span
+                      class="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600"
+                    >
                       #{{ displayOrder }}
                     </span>
                   </div>
@@ -215,6 +233,16 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import api from "../../services/api"; // adjust the path if needed
+import { onMounted } from "vue";
+
+//2. Router and Route
+const router = useRouter();
+const route = useRoute();
+
+const id = route.query.id;
+const isEdit = !!id;
 
 const categoryName = ref("");
 const description = ref("");
@@ -250,8 +278,53 @@ const resetForm = () => {
   }
 };
 
-const submitForm = () => {
-  alert("Category created successfully!");
-  resetForm();
+const submitForm = async () => {
+  try {
+    const payload = {
+      name: categoryName.value,
+      description: description.value,
+      is_active: isVisible.value,
+    };
+
+    let res;
+
+    if (isEdit) {
+      res = await api.put(`/categories/${id}`, payload);
+
+      if (res.data.success) {
+        alert(res.data.message);
+        router.push("/dashboard/categories");
+      }
+    }
+
+    // else {
+    //   Your create code here
+    // }
+
+  } catch (error) {
+    console.log(error);
+  }
 };
+//3. Get Category By ID
+const getCategoryById = async () => {
+  try {
+    const res = await api.get(`/categories/${id}`);
+
+    categoryName.value = res.data.data.name;
+    description.value = res.data.data.description;
+    isVisible.value = res.data.data.is_active;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//4. Load the category when the page opens
+onMounted(() => {
+  if (isEdit) {
+    getCategoryById();
+  }
+});
+
+
+
 </script>
