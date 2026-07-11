@@ -1,6 +1,5 @@
 <template>
   <div class="min-h-screen bg-gray-50">
-    <!-- Top bar -->
     <div class="flex items-center justify-between px-5 pt-6 pb-2">
       <h1 class="text-2xl font-bold text-emerald-900">LuxeDine</h1>
       <div class="flex items-center gap-3">
@@ -18,9 +17,10 @@
     </div>
 
     <section class="p-4 pb-28">
-      <!-- Search -->
       <div class="relative mb-5">
         <input
+          v-model="searchQuery"
+          @input="debounceSearch"
           type="text"
           placeholder="Search for delicacies..."
           class="w-full py-3 pl-12 pr-4 rounded-xl bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
@@ -41,34 +41,41 @@
         </svg>
       </div>
 
-      <!-- Categories -->
       <div class="flex gap-3 overflow-x-auto mb-7 no-scrollbar">
         <button
-          v-for="cat in categories"
-          :key="cat"
-          @click="activeCategory = cat"
+          @click="selectCategory(null)"
           :class="[
             'px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all',
-            activeCategory === cat
+            activeCategoryId === null
               ? 'bg-emerald-800 text-white'
               : 'bg-white text-gray-600 border border-gray-200 hover:border-emerald-300'
           ]"
-        >{{ cat }}</button>
+        >All</button>
+
+        <button
+          v-for="cat in categories"
+          :key="cat.id"
+          @click="selectCategory(cat.id)"
+          :class="[
+            'px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all',
+            activeCategoryId === cat.id
+              ? 'bg-emerald-800 text-white'
+              : 'bg-white text-gray-600 border border-gray-200 hover:border-emerald-300'
+          ]"
+        >{{ cat.name }}</button>
       </div>
 
-      <!-- Popular Choices -->
       <h2 class="text-3xl font-bold mb-5">Popular Choices</h2>
 
-      <!-- Featured Card -->
-      <div class="relative overflow-hidden rounded-3xl h-72 mb-5 shadow-lg">
+      <div v-if="featuredItem" class="relative overflow-hidden rounded-3xl h-72 mb-5 shadow-lg cursor-pointer" @click="goToDetail(featuredItem)">
         <img
-          src="https://images.unsplash.com/photo-1544025162-d76694265947"
-          alt="Steak"
+          :src="featuredItem.image || 'https://images.unsplash.com/photo-1544025162-d76694265947'"
+          :alt="featuredItem.name"
           class="w-full h-full object-cover"
         />
 
         <div
-          class="absolute inset-0 bg-linear-to-t from-black/80 via-black/20 to-transparent"
+          class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
         ></div>
 
         <div class="absolute bottom-6 left-6 text-white">
@@ -78,49 +85,32 @@
             Bestseller
           </span>
 
-          <h3 class="text-3xl font-bold">Wagyu Ribeye Steak</h3>
+          <h3 class="text-3xl font-bold">{{ featuredItem.name }}</h3>
 
-          <p class="text-gray-200">Melt-in-your-mouth precision.</p>
+          <p class="text-gray-200">{{ featuredItem.description }}</p>
         </div>
       </div>
 
-      <!-- Product Cards -->
       <div class="grid grid-cols-2 gap-4">
-        <!-- Card 1 -->
         <div
-          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
+          v-for="item in products"
+          :key="item.id"
+          @click="goToDetail(item)"
+          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
         >
           <img
-            src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9"
+            :src="item.image || 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9'"
             class="h-40 w-full object-cover"
           />
 
           <div class="p-3">
-            <h4 class="font-semibold">Truffle Fettuccine</h4>
-
-            <p class="text-gray-500">$32.00</p>
+            <h4 class="font-semibold text-gray-800">{{ item.name }}</h4>
+            <p class="text-gray-500">${{ parseFloat(item.price).toFixed(2) }}</p>
           </div>
         </div>
       </div>
-
-        <!-- Card 2 -->
-        <div
-          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
-        >
-          <img
-            src="https://images.unsplash.com/photo-1575023782549-62ca0d244b39"
-            class="h-40 w-full object-cover"
-          />
-
-          <div class="p-3">
-            <h4 class="font-semibold">Midnight Orchid</h4>
-
-            <p class="text-gray-500">$18.00</p>
-          </div>
-        </div>
     </section>
 
-    <!-- Bottom order bar -->
     <div class="fixed bottom-0 left-0 right-0 px-4 pb-4 z-50">
       <div
         class="bg-emerald-800 rounded-2xl px-5 py-4 flex items-center justify-between text-white max-w-lg mx-auto cursor-pointer hover:bg-emerald-900 transition"
@@ -143,36 +133,70 @@
   </div>
 </template>
 
+
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const router = useRouter()
+const API_BASE = 'https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1'
 
-const categories = ['All', 'Starters', 'Main Course', 'Drinks']
-const activeCategory = ref('All')
+const categories = ref([])
+const products = ref([])
+const activeCategoryId = ref(null)
+const searchQuery = ref('')
+let searchTimeout = null
 
-const featured = {
-  id: 10,
-  name: 'Wagyu Ribeye Steak',
-  subtitle: 'Melt-in-your-mouth precision.',
-  price: 128,
-  image: 'https://images.unsplash.com/photo-1544025162-d76694265947?w=800&q=80',
-  description: 'Tender A5-grade Japanese Wagyu ribeye, slow-seared in clarified butter with fresh thyme and garlic.',
-  category: 'Main Course',
+const featuredItem = computed(() => {
+  return products.value.length > 0 ? products.value[0] : null
+})
+
+// ទាញយកប្រភេទមុខម្ហូប (Categories)
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get(`${API_BASE}/categories?is_active=true`)
+    categories.value = response.data.data || response.data
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
 }
 
-const gridItems = ref([
-  { id: 11, name: 'Truffle Fettuccine', price: 32, image: 'https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400', description: 'Fresh pasta, black truffle shavings, parmesan.', category: 'Main Course' },
-  { id: 12, name: 'Midnight Orchid', price: 18, image: 'https://images.unsplash.com/photo-1575023782549-62ca0d244b39?w=400', description: 'Signature cocktail with violet liqueur and elderflower.', category: 'Drinks' },
-])
+// មុខងារទាញយកមុខម្ហូប (Products)
+const fetchProducts = async () => {
+  try {
+    let url = `${API_BASE}/products?is_active=true`
+    if (activeCategoryId.value) {
+      url += `&category_id=${activeCategoryId.value}`
+    }
+    if (searchQuery.value) {
+      url += `&search=${encodeURIComponent(searchQuery.value)}`
+    }
+    const response = await axios.get(url)
+    products.value = response.data.data || response.data
+  } catch (error) {
+    console.error('Error fetching products:', error)
+  }
+}
 
-const menuItems = ref([
-  { id: 1, name: 'Seared Atlantic Salmon', description: 'Crispy skin salmon, citrus quinoa, asparagus, and a light saffron velouté.', price: 28.00, image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=200&h=200&fit=crop', category: 'Main Course' },
-  { id: 2, name: 'Garden Zenith Bowl', description: 'Avocado, heirloom tomatoes, roasted seeds, and an herb-tahini dressing.', price: 22.00, image: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?w=200&h=200&fit=crop', category: 'Starters' },
-  { id: 3, name: 'The Luxe Burger', description: 'Wagyu beef, 24-month aged cheddar, gold leaf fries, and truffle aioli.', price: 35.00, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop', category: 'Main Course' },
-])
+const debounceSearch = () => {
+  clearTimeout(searchTimeout)
+  searchTimeout = setTimeout(() => {
+    fetchProducts()
+  }, 350)
+}
 
+const selectCategory = (id) => {
+  activeCategoryId.value = id
+  fetchProducts()
+}
+
+onMounted(() => {
+  fetchCategories()
+  fetchProducts()
+})
+
+// ផ្នែកប្រព័ន្ធកាតទិញអីវ៉ាន់ (Shopping Cart Logic)
 const cart = ref([])
 const cartCount = computed(() => cart.value.reduce((s, i) => s + i.qty, 0))
 const cartTotal = computed(() => cart.value.reduce((s, i) => s + i.price * i.qty, 0))
@@ -191,7 +215,6 @@ function goToCart() {
   router.push('/shopping-cart')
 }
 </script>
-
 <style scoped>
 .no-scrollbar::-webkit-scrollbar {
   display: none;
