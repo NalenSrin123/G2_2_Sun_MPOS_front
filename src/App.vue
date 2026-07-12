@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import MainMenu from './pages/preview/components/MainMenu.vue';
+
 
 </script>
 
@@ -23,6 +25,6 @@
 */
 
 <template>
-  
+  <MainMenu/>
   <RouterView />
 </template>

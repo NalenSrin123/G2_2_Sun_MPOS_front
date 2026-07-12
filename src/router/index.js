@@ -82,7 +82,7 @@ const route=[
     {
       path:"/",
       children:[
-      
+       { path: "mainmenu", component: MainMenu },
       ]
         
     },
@@ -90,7 +90,6 @@ const route=[
       path:"/dashboard",
       component:Sidebar,
       children:[
-        { path: "mainmenu", component: MainMenu },
 
       ]
     },
@@ -103,7 +102,7 @@ const route=[
 ]
 const router = createRouter({
   history: createWebHistory(),
-  route,
+  routes,
 });
 
 export default router;
