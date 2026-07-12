@@ -53,7 +53,7 @@
                 </div>
             </div>            
             <div class="back-section">
-            <router-link to="/login" class="back-link">
+            <router-link to="/auth/login" class="back-link">
               <svg class="back-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M19 12H5M12 19l-7-7 7-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>

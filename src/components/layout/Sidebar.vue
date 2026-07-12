@@ -76,14 +76,13 @@
         </RouterLink>
 
         <!-- Logout -->
-        <RouterLink
-          to="/auth/login"
+        <button
           class="flex items-center justify-center gap-2 rounded-lg bg-emerald-700 py-3 text-white transition hover:bg-emerald-800"
-          @click="sidebarOpen = false"
+          @click="onLogout"
         >
           <i class="bi bi-box-arrow-right"></i>
           <span>Logout</span>
-        </RouterLink>
+        </button>
       </div>
     </aside>
 
@@ -166,10 +165,13 @@
 
 <script setup>
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+import useAuthStore from "@/stores/auth.store";
 
 const sidebarOpen = ref(false);
 const route = useRoute();
+const router = useRouter()
+const { logout } = useAuthStore()
 
 const navItems = [
   {
@@ -203,5 +205,10 @@ const navItems = [
     icon: "bi bi-people",
   },
 ];
-</script>
 
+const onLogout = () => {
+  sidebarOpen.value = false
+  logout()
+  router.push('/auth/login')
+}
+</script>

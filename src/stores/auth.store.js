@@ -1,13 +1,19 @@
 import { reactive } from 'vue'
 
-const state = reactive({ user: null })
+const state = reactive({
+  admin: typeof localStorage !== 'undefined'
+    ? JSON.parse(localStorage.getItem('auth_admin') || 'null')
+    : null,
+})
 
-function login(user) {
-  state.user = user
+function login(admin) {
+  state.admin = admin
+  localStorage.setItem('auth_admin', JSON.stringify(admin))
 }
 
 function logout() {
-  state.user = null
+  state.admin = null
+  localStorage.removeItem('auth_admin')
 }
 
 export default function useAuthStore() {

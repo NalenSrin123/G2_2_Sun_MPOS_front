@@ -123,8 +123,10 @@
 import { ref, reactive } from "vue"
 import { useRouter } from "vue-router"
 import { loginAdmin } from "@/services/api.js"
+import useAuthStore from "@/stores/auth.store"
 
 const router = useRouter()
+const { login } = useAuthStore()
 const showPassword = ref(false)
 const error = ref(null)
 const loading = ref(false)
@@ -141,14 +143,18 @@ async function handleLogin() {
   try {
     const data = await loginAdmin(form.email, form.password)
 
-    // Save token
-    localStorage.setItem('token', data.token)
+    if (!data?.success) {
+      throw new Error(data?.message || 'Login failed. Please try again.')
+    }
+
+    // Save the authenticated session in the shared auth store.
+    login(data.admin ?? null)
 
     // Redirect to dashboard
     router.push('/dashboard')
 
   } catch (err) {
-    error.value = err.response?.data?.message || 'Login failed. Please try again.'
+    error.value = err.response?.data?.message || err.message || 'Login failed. Please try again.'
   } finally {
     loading.value = false
   }

@@ -39,7 +39,7 @@
         <!-- Footer: link to login page -->
         <p class="mt-6 text-center text-sm text-slate-600">
           Already have an account?
-          <RouterLink class="font-semibold text-blue-600 hover:text-blue-700" to="/login">Login</RouterLink>
+          <RouterLink class="font-semibold text-blue-600 hover:text-blue-700" to="/auth/login">Login</RouterLink>
         </p>
 
       </div>

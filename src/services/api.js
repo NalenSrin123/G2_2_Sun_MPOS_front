@@ -19,11 +19,37 @@
 
 import axios from "axios";
 
+const API_BASE_URL =
+  import.meta.env.DEV
+    ? ""
+    : "https://g2-sun-11-mpos-back.onrender.com"
+
 const api = axios.create({
-	baseURL: "https://g2-sun-11-mpos-back.onrender.com/api/v1",
+	baseURL: `${API_BASE_URL}/api/v1`,
+	withCredentials: true,
+  xsrfCookieName: "XSRF-TOKEN",
+  xsrfHeaderName: "X-XSRF-TOKEN",
 });
 
+api.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token')
+
+  if (token) {
+    config.headers = config.headers || {}
+    config.headers.Authorization = `Bearer ${token}`
+  }
+
+  return config
+})
+
+async function ensureCsrfCookie() {
+  await axios.get(`${API_BASE_URL}/sanctum/csrf-cookie`, {
+    withCredentials: true,
+  })
+}
+
 export async function loginAdmin(email, password) {
+  await ensureCsrfCookie()
   const response = await api.post('/auth/login', { email, password })
   return response.data
 }

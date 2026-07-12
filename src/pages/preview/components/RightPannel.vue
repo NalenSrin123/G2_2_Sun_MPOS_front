@@ -30,7 +30,7 @@ import PreText from './PreText.vue';
  * Extend this list to add more preview routes.
  */
 const navLinks = [
-  { name: 'login', path: '/login' },
+  { name: 'login', path: '/auth/login' },
   { name: 'register', path: '/register' },
   { name: 'dashboard', path: '/dashboard' },
   { name: 'home', path: '/home' },

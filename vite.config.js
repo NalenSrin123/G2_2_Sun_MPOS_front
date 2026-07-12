@@ -9,6 +9,21 @@ export default defineConfig({
     tailwindcss(),   // Enable Tailwind CSS processing
   ],
 
+  server: {
+    proxy: {
+      "/api": {
+        target: "https://g2-sun-11-mpos-back.onrender.com",
+        changeOrigin: true,
+        secure: true,
+      },
+      "/sanctum": {
+        target: "https://g2-sun-11-mpos-back.onrender.com",
+        changeOrigin: true,
+        secure: true,
+      },
+    },
+  },
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),

@@ -1,5 +1,6 @@
 
 import { createRouter, createWebHistory } from "vue-router";
+import useAuthStore from "@/stores/auth.store";
 
 import Sidebar from "@/components/layout/Sidebar.vue";
 import Home from "@/pages/home/Home.vue";
@@ -45,6 +46,7 @@ const routes = [
   {
     path: "/dashboard/",
     component: Sidebar,
+    meta: { requiresAuth: true },
     children: [
       { path: "", component: DashboardOverview },
       { path: "categories", component: CategoryList },
@@ -84,5 +86,21 @@ const router = createRouter({
   routes,
 });
 
-export default router;
+router.beforeEach((to) => {
+  const { state } = useAuthStore()
+  const isAuthenticated = Boolean(state.admin || localStorage.getItem('auth_admin'))
 
+  if (to.matched.some((record) => record.meta.requiresAuth) && !isAuthenticated) {
+    return {
+      path: "/auth/login"
+    };
+  }
+
+  if (to.path.startsWith('/auth/') && isAuthenticated && to.path === '/auth/login') {
+    return "/dashboard";
+  }
+
+  return true;
+});
+
+export default router;

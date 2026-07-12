@@ -255,16 +255,17 @@ import useAuthStore from '@/stores/auth.store'
 
 const router = useRouter()
 const { state: authState, logout } = useAuthStore()
+const currentAdmin = authState.admin ?? {}
 
 const editing   = ref(false)
 const avatarUrl = ref(null)
 
 const form = reactive({
-  name:        authState.user?.name    ?? 'John Doe',
-  email:       authState.user?.email   ?? 'john@luxedine.com',
-  role_id:     authState.user?.role_id ?? 1,
-  memberSince: authState.user?.created_at
-    ? new Date(authState.user.created_at).toLocaleDateString('en-GB', {
+  name:        currentAdmin.name    ?? 'John Doe',
+  email:       currentAdmin.email   ?? 'john@luxedine.com',
+  role_id:     currentAdmin.role_id ?? 1,
+  memberSince: currentAdmin.created_at
+    ? new Date(currentAdmin.created_at).toLocaleDateString('en-GB', {
         day: '2-digit', month: 'short', year: 'numeric'
       })
     : '01 Jan 2024',
@@ -272,7 +273,7 @@ const form = reactive({
 
 const roleLabel = computed(() => {
   const map = { 1: 'Admin', 2: 'Chef', 3: 'Customer' }
-  return map[authState.user?.role_id] ?? 'User'
+  return map[currentAdmin.role_id] ?? currentAdmin.role ?? 'User'
 })
 
 const initials = computed(() =>
@@ -289,7 +290,7 @@ const profileSaved   = ref(false)
 
 const saveProfile = async () => {
   loadingProfile.value = true
-  await api.put('/users/' + authState.user.users_id, {
+  await api.put('/users/' + (currentAdmin.id ?? currentAdmin.users_id), {
     name:    form.name,
     email:   form.email,
     role_id: form.role_id,
@@ -317,7 +318,7 @@ const changePassword = async () => {
   passwordError.value = ''
   if (!canChangePassword.value) return
   loadingPassword.value = true
-  await api.put('/users/' + authState.user.users_id + '/password', {
+  await api.put('/users/' + (currentAdmin.id ?? currentAdmin.users_id) + '/password', {
     current_password: passwordForm.current,
     new_password:     passwordForm.newPass,
   })
@@ -337,6 +338,6 @@ const resetPasswordForm = () => {
 
 const onLogout = () => {
   logout()
-  router.push('/login')
+  router.push('/auth/login')
 }
 </script>
