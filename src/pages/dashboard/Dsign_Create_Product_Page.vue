@@ -1,6 +1,6 @@
-<template>
+[7/10/2026 11:31 PM] MengLeang Seanghak: <template>
   <main class="min-h-screen bg-[#f4f6f2] text-slate-800">
-    <form @submit.prevent="createproduct">
+    <form @submit.prevent="createProduct">
       <section class="px-6 py-6">
 
         <!-- Header -->
@@ -9,7 +9,7 @@
         >
           <div>
             <h1 class="text-2xl font-semibold">
-              Create New Menu Item
+              {{ isEditing ? "Edit Product" : "Create New Menu Item" }}
             </h1>
 
             <p class="mt-1 text-sm text-slate-500">
@@ -29,7 +29,7 @@
               type="submit"
               class="rounded-full bg-[#0d7a4c] px-5 py-2 text-white hover:bg-[#0b6c43]"
             >
-              Save Item
+              {{ isEditing ? "Update Item" : "Save Item" }}
             </button>
           </div>
         </div>
@@ -56,7 +56,7 @@
                   </label>
 
                   <input
-                    v-model="Modal.product.name"
+                    v-model=product.name
                     type="text"
                     placeholder="Item name"
                     class="w-full rounded-lg border px-4 py-3"
@@ -69,18 +69,24 @@
                     Category
                   </label>
 
-                  <select
-                    v-model="Modal.product.category_id"
-                    class="w-full rounded-lg border px-4 py-3"
-                  >
-                    <option disabled value="">
-                      Select Category
-                    </option>
+                    <select
+                      v-model=product.category_id
+                      class="w-full rounded-lg border px-4 py-3"
+                    >
+                      <option disabled selected value="">
+                        Select Category
+                      </option>
 
-                    <option value="1">Coffee</option>
-                    <option value="2">Tea</option>
-                    <option value="3">Dessert</option>
-                  </select>
+                      <option
+                        :value=cate.id
+                        v-for="cate in categories">{{ cate.name }}
+                      </option>
+                      <option value="">bay cha</option>
+                      <option value="">bay sgor</option>
+                      <option value="">bay m</option>
+                    </select>
+                  
+
                 </div>
 
                 <!-- Description -->
@@ -90,7 +96,7 @@
                   </label>
 
                   <textarea
-                    v-model="Modal.product.description"
+                    v-model=product.description
                     rows="5"
                     class="w-full rounded-lg border px-4 py-3"
                   ></textarea>
@@ -101,7 +107,7 @@
             </section>
 
             <!-- Pricing -->
-            <section class="rounded-xl border bg-white p-5">
+            <div class="rounded-xl border bg-white p-5">
 
               <h2 class="mb-5 text-lg font-semibold">
                 Pricing
@@ -116,34 +122,43 @@
                 <input
                   type="number"
                   step="0.01"
-                  v-model="Modal.product.price"
+                  v-model=product.price
                   class="w-full rounded-lg border px-4 py-3"
                 >
+                <h2 class="mb-5 text-lg font-semibold">
+                Stork
+              </h2>
 
+              <div>
+
+                <label class="mb-2 block text-sm">
+                  Quantity
+                </label>
+                 <input
+                  type="number"
+                  step="0.01"
+                  v-model=product.stock
+                  class="w-full rounded-lg border px-4 py-3"
+                >
               </div>
-
-            </section>
-
+              </div>
+            </div>
           </div>
-
           <!-- RIGHT -->
           <aside class="space-y-6">
-
             <!-- Image -->
             <section class="rounded-xl border bg-white p-5">
-
               <h2 class="mb-4 text-lg font-semibold">
                 Product Image
               </h2>
-
               <label
                 class="flex h-64 cursor-pointer items-center justify-center rounded-lg border-2 border-dashed"
               >
                 <input
-                  type="file"
-                  class="hidden"
-                  accept="image/*"
-                  @change="handleImage"
+               v-model=product.image
+               type="text"
+                class="w-full rounded-lg border px-4 py-3"
+                placeholder=""
                 >
 
                 <div class="text-center">
@@ -203,90 +218,71 @@
 </template>
 
 <script setup>
-import { reactive } from "vue";
-import axios from "axios";
+import { computed, reactive } from "vue";
+import { onMounted, ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import api from "../../services/api";
 
-const Modal = reactive({
-  product: {
-    category_id: 1,
-    name: "",
-    description: "",
-    price: "",
-    image: null,
-  },
-});
-
-const handleImage = (event) => {
-  const file = event.target.files[0];
-
-  if (file) {
-    Modal.product.image = file;
-  }
+const router = useRouter();
+let isEdit=false;
+let categories = ref([]);
+const isEditing = computed(() => false);
+const goBack = () => {
+router.push("/dashboard/products");
 };
-
-const createproduct = async () => {
-  try {
-    const formData = new FormData();
-
-    formData.append("category_id", Modal.product.category_id);
-    formData.append("name", Modal.product.name);
-    formData.append("description", Modal.product.description);
-    formData.append("price", Modal.product.price);
-
-    if (Modal.product.image) {
-      formData.append("image", Modal.product.image);
-    }
-
-    console.log("Sending Data:");
-    for (let pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    const response = await axios.post(
-      "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/products",
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      }
-    );
-
-    console.log(response.data);
-
-    alert("Create Product Success");
-
-    Modal.product.category_id = "";
-    Modal.product.name = "";
-    Modal.product.description = "";
-    Modal.product.price = "";
-    Modal.product.image = null;
-
-  } catch (error) {
-    console.error(error);
-
-    if (error.response) {
-      console.log(error.response.data);
-
-      alert(
-        error.response.data.message ||
-        JSON.stringify(error.response.data.errors)
-      );
-    } else {
-      alert("Network Error");
-    }
-  }
-};
+const route = useRoute();
+const id=route.query.id;
+if(id){
+isEdit=true
+}else{
+isEdit=false
+}
+const product=ref({
+name:"",
+category_id:"",
+description:"",
+price:0,
+stock:0,
+image: "",
+is_active: true
+})
+const getCategory=async()=>{
+try{
+const res= await api.get("/categories");
+categories.value=res.data.data;
+}catch(error){
+console.error(error);
+}
+}
+onMounted(()=>{
+getCategory();
+})
+const createProduct=async()=>{
+let res;
+try{
+const payload={ ... product.value}
+if(!isEdit){
+res= await api.post('/products',payload);
+}else{
+res= await api.put(`/products/${id}`,payload);
+}
+if(res.data.success){
+router.push('/dashboard/products')
+}
+}catch(error){
+console.log(error);
+}
+}
 </script>
 
 <style scoped>
-	input,
-	textarea,
-	select,
-	button {
-		transition: all 0.2s ease;
-	}
-	.error {
-		color: red;
-	}
+  input,
+  textarea,
+  select,
+  button {
+    transition: all 0.2s ease;
+  }
+  .error {
+    color: red;
+  }
 </style>
