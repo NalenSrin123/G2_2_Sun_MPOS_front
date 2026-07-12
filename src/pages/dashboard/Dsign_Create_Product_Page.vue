@@ -1,4 +1,4 @@
-[7/10/2026 11:31 PM] MengLeang Seanghak: <template>
+<template>
   <main class="min-h-screen bg-[#f4f6f2] text-slate-800">
     <form @submit.prevent="createProduct">
       <section class="px-6 py-6">

@@ -251,7 +251,7 @@
 <script setup>
 import axios from "axios";
 import { ref, computed, onMounted } from "vue";
-
+import api from "../../services/api";
 const search = ref("");
 const selectedArea = ref("All Areas");
 const selectedStatus = ref("");
@@ -330,8 +330,8 @@ const tables = ref([]);
 
 const fetchTables = async () => {
   try {
-    const res = await axios.get(
-      "https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/tables"
+    const res = await api.get(
+      "/tables"
     );
     tables.value = res.data.data;
   } catch (err) {

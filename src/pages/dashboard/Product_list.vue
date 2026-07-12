@@ -10,7 +10,7 @@
 				</p>
 			</div>
 
-			<RouterLink
+				<RouterLink
 				class="flex items-center gap-2 bg-white border border-gray-200 text-gray-700 text-sm font-medium px-4 py-2 rounded-lg hover:bg-gray-50 transition-colors"
 				to="/dashboard/create-product">
 				Add New Item
@@ -173,16 +173,14 @@
 			</button>
 		</div>
 
-		<!-- Table rows (desktop) -->
-		<div class="hidden md:flex flex-col gap-2">
-			<div
-				v-for="item in pagedItems"
-				:key="item.id"
-				class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow">
-				<!-- Accent bar -->
-				<div
-					class="w-1.5 self-stretch flex-shrink-0"
-					:class="stockAccent(item.qty)"></div>
+    <!-- Table rows (desktop) -->
+    <div class="hidden md:flex flex-col gap-2">
+      <div
+        v-for="item in pagedItems" :key="item.id"
+        class="bg-white rounded-xl flex items-center overflow-hidden shadow-sm hover:shadow-md transition-shadow"
+      >
+        <!-- Accent bar -->
+        <div class="w-1.5 self-stretch flex-shrink-0" :class="stockAccent(item.qty)"></div>
 
         <!-- Image + name -->
         <div class="flex items-center gap-3 px-4 py-3 min-w-[220px] flex-1">
@@ -269,85 +267,38 @@
 			</div>
 		</div>
 
-		<!-- Mobile cards -->
-		<div class="flex md:hidden flex-col gap-3">
-			<div
-				v-for="item in pagedItems"
-				:key="item.id"
-				class="bg-white rounded-xl shadow-sm overflow-hidden">
-				<div class="flex items-start gap-3 p-4">
-					<img
-						:src="item.img"
-						:alt="item.name"
-						class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
-					<div class="flex-1 min-w-0">
-						<p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
-						<p class="text-xs text-gray-400 mt-0.5 truncate">{{ item.desc }}</p>
-					</div>
-					<div class="flex gap-1 flex-shrink-0">
-						<button
-							@click="openEdit(item)"
-							class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-700">
-							<svg
-								class="w-3.5 h-3.5"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								viewBox="0 0 24 24">
-								<path
-									d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7" />
-								<path
-									d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z" />
-							</svg>
-						</button>
-						<button
-							@click="removeItem(item.id)"
-							class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500">
-							<svg
-								class="w-3.5 h-3.5"
-								fill="none"
-								stroke="currentColor"
-								stroke-width="2"
-								viewBox="0 0 24 24">
-								<polyline points="3 6 5 6 21 6" />
-								<path d="M19 6l-1 14H6L5 6" />
-								<path d="M10 11v6" />
-								<path d="M14 11v6" />
-								<path d="M9 6V4h6v2" />
-							</svg>
-						</button>
-					</div>
-				</div>
-				<div class="flex items-center gap-3 px-4 pb-3 flex-wrap">
-					<span class="text-xs text-gray-500">{{ item.cat }}</span>
-					<span class="text-xs font-semibold text-gray-900">{{
-						item.price
-					}}</span>
-					<span
-						class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold"
-						:class="stockBadge(item.qty)">
-						<span
-							v-if="item.qty > 0 && item.qty < 10"
-							class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
-						{{ stockLabel(item.qty) }}
-					</span>
-					<span
-						class="text-xs"
-						:class="
-							item.qty > 0 && item.qty < 10
-								? 'text-amber-500 font-semibold'
-								: 'text-gray-500'
-						"
-						>Qty: {{ item.qty }}</span
-					>
-				</div>
-			</div>
-			<div
-				v-if="pagedItems.length === 0"
-				class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
-				No items found.
-			</div>
-		</div>
+    <!-- Mobile cards -->
+    <div class="flex md:hidden flex-col gap-3">
+      <div v-for="item in pagedItems" :key="item.id" class="bg-white rounded-xl shadow-sm overflow-hidden">
+        <div class="flex items-start gap-3 p-4">
+          <img :src="item.img" :alt="item.name" class="w-12 h-12 rounded-lg object-cover border border-gray-100 flex-shrink-0" />
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-gray-900">{{ item.name }}</p>
+            <p class="text-xs text-gray-400 mt-0.5 truncate">{{ item.desc }}</p>
+          </div>
+          <div class="flex gap-1 flex-shrink-0">
+            <button @click="openEdit(item)" class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-gray-700">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            </button>
+            <button @click="removeItem(item.id)" class="w-8 h-8 border border-gray-200 rounded-lg flex items-center justify-center text-gray-400 hover:text-red-500">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+            </button>
+          </div>
+        </div>
+        <div class="flex items-center gap-3 px-4 pb-3 flex-wrap">
+          <span class="text-xs text-gray-500">{{ item.cat }}</span>
+          <span class="text-xs font-semibold text-gray-900">{{ item.price }}</span>
+          <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold" :class="stockBadge(item.qty)">
+            <span v-if="item.qty > 0 && item.qty < 10" class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+            {{ stockLabel(item.qty) }}
+          </span>
+          <span class="text-xs" :class="item.qty > 0 && item.qty < 10 ? 'text-amber-500 font-semibold' : 'text-gray-500'">Qty: {{ item.qty }}</span>
+        </div>
+      </div>
+      <div v-if="items.length === 0" class="bg-white rounded-xl p-10 text-center text-sm text-gray-400 shadow-sm">
+        No items found.
+      </div>
+    </div>
 
 		<!-- Footer -->
 		<div
@@ -534,19 +485,8 @@ import api from "../../services/api"
 
 const router = useRouter()
 
-// Navigation function
-const design_create = () => {
-  router.push("/design_create_product_page")
-}
-
 // Local items data
-const items = ref([
-  { id: 1, name: 'Grilled Lamb Chops',  desc: 'Grass-fed lamb, mint gremolata',        cat: 'Mains',    price: '$34.00', qty: 24, img: 'https://images.unsplash.com/photo-1546833999-b9f581a1996d?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 2, name: 'Artisan Quinoa Bowl',  desc: 'Tri-color quinoa, avocado, tahini',     cat: 'Starters', price: '$18.50', qty: 15, img: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 3, name: 'Molten Lava Cake',    desc: '70% dark chocolate centre',              cat: 'Desserts', price: '$12.00', qty: 0,  img: 'https://images.unsplash.com/photo-1624353365286-3f8d62daad51?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 4, name: 'Premium Dry Martini', desc: 'Choice of botanist gin or vodka',        cat: 'Drinks',   price: '$16.00', qty: 4,  img: 'https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-  { id: 5, name: 'Saffron Sea Bass',    desc: 'Wild-caught bass, saffron beurre blanc', cat: 'Mains',    price: '$29.00', qty: 12, img: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&auto=format&fit=crop&w=100&q=80' },
-])
+const items = ref([])
 
 // API data
 const products = ref([])
@@ -589,20 +529,27 @@ function stockBadge(qty) {
 }
 
 // CRUD operations
-async function removeItem(id) { 
-  const response = await api.delete(`/products/${id}`)
+async function removeItem(id) {
+  try {
+    await api.delete(`/products/${id}`)
+    items.value = items.value.filter((i) => i.id !== id)
+  } catch (error) {
+    console.error("Failed to delete product", error)
+  }
 }
 
-function openEdit(item) { 
-  editId.value = item.id
-  form.value = { ...item }
-  showModal.value = true 
+const openEdit = (item) => {
+  router.push({
+    name: 'design_create_product_page',
+    query: {
+      id: item.id
+    }
+  })
 }
 
-function closeModal() { 
-  showModal.value = false 
+function closeModal() {
+  showModal.value = false
 }
-
 function saveItem() {
   if (!form.value.name.trim()) return
   
@@ -633,7 +580,7 @@ const fetchAllData = async () => {
     }
 
     const response = await api.get('/products', { params: queryParams })
-    products.value = response.data
+    items.value = response.data.data
     console.log("Data Fetched Successfully...", response.data)
   } catch (error) {
     console.error("Server error", error)

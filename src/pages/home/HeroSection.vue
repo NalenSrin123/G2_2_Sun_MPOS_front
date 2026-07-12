@@ -25,8 +25,19 @@
           placeholder="Search for delicacies..."
           class="w-full py-3 pl-12 pr-4 rounded-xl bg-white shadow-sm border border-gray-200 focus:outline-none focus:ring-2 focus:ring-emerald-500"
         />
-        <svg xmlns="http://www.w3.org/2000/svg" class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"/>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M21 21l-4.35-4.35m1.85-5.15a7 7 0 11-14 0 7 7 0 0114 0z"
+          />
         </svg>
       </div>
 
@@ -46,7 +57,7 @@
       </div>
 
       <!-- Popular Choices -->
-      <h2 class="text-2xl font-bold mb-4 text-gray-900">Popular Choices</h2>
+      <h2 class="text-3xl font-bold mb-5">Popular Choices</h2>
 
       <!-- Featured Card -->
       <div class="relative overflow-hidden rounded-3xl h-72 mb-5 shadow-lg">
@@ -67,59 +78,46 @@
             Bestseller
           </span>
 
-          <h3 class="text-3xl font-bold">
-            Wagyu Ribeye Steak
-          </h3>
+          <h3 class="text-3xl font-bold">Wagyu Ribeye Steak</h3>
 
-          <p class="text-gray-200">
-            Melt-in-your-mouth precision.
-          </p>
+          <p class="text-gray-200">Melt-in-your-mouth precision.</p>
         </div>
       </div>
 
-      <!-- 2-col grid -->
-      <div class="grid grid-cols-2 gap-4 mb-8">
+      <!-- Product Cards -->
+      <div class="grid grid-cols-2 gap-4">
+        <!-- Card 1 -->
         <div
-          v-for="item in gridItems"
-          :key="item.id"
-          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer"
-          @click="goToDetail(item)"
+          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
         >
-          <img :src="item.image" class="h-36 w-full object-cover"/>
+          <img
+            src="https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9"
+            class="h-40 w-full object-cover"
+          />
+
           <div class="p-3">
-            <h4 class="font-semibold text-sm text-gray-900">{{ item.name }}</h4>
-            <p class="text-emerald-700 font-bold text-sm mt-1">${{ item.price.toFixed(2) }}</p>
+            <h4 class="font-semibold">Truffle Fettuccine</h4>
+
+            <p class="text-gray-500">$32.00</p>
           </div>
         </div>
       </div>
 
-      <!-- Main Menu List -->
-      <h2 class="text-2xl font-bold mb-4 text-gray-900">Main Menu</h2>
-      <div class="space-y-4">
+        <!-- Card 2 -->
         <div
-          v-for="item in menuItems"
-          :key="item.id"
-          class="flex gap-4 cursor-pointer group"
-          @click="goToDetail(item)"
+          class="bg-white rounded-2xl overflow-hidden shadow hover:shadow-lg transition"
         >
-          <img :src="item.image" :alt="item.name" class="w-24 h-24 rounded-2xl object-cover flex-shrink-0"/>
-          <div class="flex-1 min-w-0">
-            <h2 class="text-base font-semibold text-gray-900 group-hover:text-emerald-800 transition-colors">{{ item.name }}</h2>
-            <p class="text-sm text-gray-500 mt-1 line-clamp-2">{{ item.description }}</p>
-            <div class="flex items-center justify-between mt-2">
-              <span class="text-emerald-800 font-bold">${{ item.price.toFixed(2) }}</span>
-              <button
-                @click.stop="addToCart(item)"
-                class="w-8 h-8 flex items-center justify-center rounded-full bg-emerald-800 text-white hover:bg-emerald-900 transition"
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                </svg>
-              </button>
-            </div>
+          <img
+            src="https://images.unsplash.com/photo-1575023782549-62ca0d244b39"
+            class="h-40 w-full object-cover"
+          />
+
+          <div class="p-3">
+            <h4 class="font-semibold">Midnight Orchid</h4>
+
+            <p class="text-gray-500">$18.00</p>
           </div>
         </div>
-      </div>
     </section>
 
     <!-- Bottom order bar -->
@@ -195,6 +193,12 @@ function goToCart() {
 </script>
 
 <style scoped>
-.no-scrollbar::-webkit-scrollbar { display: none; }
-.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
 </style>
