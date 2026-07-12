@@ -155,6 +155,7 @@
           </form>
         </section>
 
+        
         <aside class="lg:sticky lg:top-6 lg:self-start">
           <section class="overflow-hidden rounded-lg border border-slate-200 bg-white shadow-sm">
             <div class="border-b border-slate-100 px-5 py-4">
@@ -180,8 +181,7 @@
 
                 <div class="space-y-3 border-l-4 border-emerald-500 p-4">
                   <div class="flex items-start justify-between gap-3">
-                    <h4 class="min-w-0 break-words text-base font-semibold text-slate-900">
-                      {{ categoryName || "New Category Name" }}
+                  <h4 class="min-w-0 wrap-break-word text-base font-semibold text-slate-900">                      {{ categoryName || "New Category Name" }}
                     </h4>
 
                     <span class="shrink-0 rounded-full bg-slate-100 px-2 py-1 text-xs font-medium text-slate-600">
@@ -189,7 +189,7 @@
                     </span>
                   </div>
 
-                  <p class="break-words text-sm leading-6 text-slate-500">
+                  <p class="wrap-break-word text-sm leading-6 text-slate-500">
                     {{ description || "Description placeholder..." }}
                   </p>
 
@@ -215,7 +215,10 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
+import api from "../../services/api";
 
+const router = useRouter();
 const categoryName = ref("");
 const description = ref("");
 const displayOrder = ref(1);
@@ -230,9 +233,7 @@ const openFile = () => {
 
 const onImageChange = (event) => {
   const file = event.target.files[0];
-
   if (!file) return;
-
   imageFile.value = file;
   imagePreview.value = URL.createObjectURL(file);
 };
@@ -244,14 +245,38 @@ const resetForm = () => {
   isVisible.value = true;
   imageFile.value = null;
   imagePreview.value = "";
-
   if (fileInput.value) {
     fileInput.value.value = "";
   }
 };
 
-const submitForm = () => {
-  alert("Category created successfully!");
-  resetForm();
+const submitForm = async () => {
+  if (!categoryName.value.trim()) {
+    alert("Please enter a category name!");
+    return;
+  }
+
+  try {
+    const payload = {
+      name: categoryName.value,
+      description: description.value || null,
+      is_active: isVisible.value,
+    };
+
+    const res = await api.post("/categories", payload);
+    const data = res.data;
+
+    if (data && data.success) {
+      alert(data.message || "Category created successfully!");
+      resetForm();
+      router.push("/dashboard/categories");
+    } else {
+      alert(data.message || "Failed to create category!");
+    }
+  } catch (error) {
+    console.error("Error creating category:", error);
+    const errorMsg = error.response?.data?.message || "Something went wrong connected to server.";
+    alert(errorMsg);  
+  }
 };
 </script>
