@@ -25,6 +25,5 @@ import MainMenu from './pages/preview/components/MainMenu.vue';
 */
 
 <template>
-  <MainMenu/>
   <RouterView />
 </template>

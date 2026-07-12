@@ -106,7 +106,7 @@
 
 <script setup>
 import { ref, computed, onMounted, onBeforeUnmount } from "vue";
-import api from "../../services/api";
+import api from "../../../services/api";
 // State
 const menuItems = ref([]);
 const loading = ref(false);

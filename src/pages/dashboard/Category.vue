@@ -241,8 +241,6 @@ const route = useRoute();
 
 const id = route.query.id;
 const isEdit = !!id;
-
-const router = useRouter();
 const categoryName = ref("");
 const description = ref("");
 const displayOrder = ref(1);
