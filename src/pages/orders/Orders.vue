@@ -18,27 +18,33 @@ import Title from './Title.vue'
 const activeFilter = ref('All Orders')
 const orders = ref([])
 const loading = ref(false)
-const error = ref(null)
+const error = ref('')
 
 const fetchOrders = async () => {
   loading.value = true
-  error.value = null
+  error.value = ''
 
   try {
-    const response = await axios.get('http://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/orders')
+    const { data } = await axios.get(
+      'https://g2-sun-11-mpos-back-gjyx.onrender.com/api/v1/orders'
+    )
 
-    orders.value = response.data
-
+    orders.value = data
   } catch (err) {
     console.error(err)
-    error.value = 'Failed to load orders'
+
+    if (err.response) {
+      error.value = err.response.data.message
+    } else {
+      error.value = 'Network Error'
+    }
   } finally {
     loading.value = false
   }
 }
 
-onMounted(() => {
-  fetchOrders()
+onMounted(async () => {
+  await fetchOrders()
 })
 
 const filteredOrders = computed(() => {
@@ -47,9 +53,7 @@ const filteredOrders = computed(() => {
   }
 
   return orders.value.filter(order =>
-    order.status
-      ?.toLowerCase()
-      .includes(activeFilter.value.toLowerCase())
+    order.status?.toLowerCase().includes(activeFilter.value.toLowerCase())
   )
 })
 </script>
