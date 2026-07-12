@@ -108,7 +108,7 @@
             <p class="text-gray-500">${{ parseFloat(item.price).toFixed(2) }}</p>
           </div>
         </div>
-      </div>
+      </div>  
     </section>
 
     <div class="fixed bottom-0 left-0 right-0 px-4 pb-4 z-50">

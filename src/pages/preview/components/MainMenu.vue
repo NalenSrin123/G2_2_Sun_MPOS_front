@@ -4,12 +4,22 @@
       <h1 class="text-3xl font-bold text-gray-900 mb-2">Main Menu</h1>
       <p class="text-gray-500 mb-6">Choose your favorite dishes and create your order.</p>
 
-      <div class="space-y-5">
-        <div
-          v-for="item in menuItems"
-          :key="item.id"
-          class="bg-white rounded-2xl shadow-sm p-3 flex gap-4"
-        >
+      <!-- Loading State -->
+      <div v-if="loading" class="text-center py-10 text-gray-600">
+        Loading menu items...
+      </div>
+
+      <!-- Error State -->
+      <div
+        v-if="error"
+        class="text-center py-4 mb-4 text-amber-700 bg-amber-50 rounded-lg"
+      >
+        ⚠️ {{ error }} — Showing sample menu instead
+      </div>
+
+      <!-- Menu List -->
+      <div v-if="!loading && menuItems.length" class="space-y-5">
+        <div v-for="item in menuItems" :key="item.id" class="flex gap-4">
           <img
             :src="item.image"
             :alt="item.name"
@@ -18,14 +28,17 @@
           />
 
           <div class="flex-1 min-w-0">
-            <h2 class="text-lg font-semibold text-gray-900">{{ item.name }}</h2>
+            <h2 class="text-lg font-semibold text-gray-900">
+              {{ item.name }}
+            </h2>
+
             <p class="text-sm text-gray-500 mt-1 line-clamp-2">
               {{ item.description }}
             </p>
 
-            <div class="flex items-center justify-between mt-3">
+            <div class="flex items-center justify-between mt-2">
               <span class="text-emerald-800 font-bold text-lg">
-                ${{ item.price.toFixed(2) }}
+                ${{ Number(item.price).toFixed(2) }}
               </span>
 
               <button
@@ -55,7 +68,9 @@
 
     <!-- Bottom Order Bar -->
     <div class="fixed bottom-0 left-0 right-0 px-4 pb-4">
-      <div class="bg-emerald-800 rounded-2xl px-5 py-4 flex items-center justify-between text-white max-w-md mx-auto shadow-lg">
+      <div
+        class="bg-emerald-800 rounded-2xl px-5 py-4 flex items-center justify-between text-white max-w-md mx-auto"
+      >
         <div class="flex items-center gap-3">
           <div class="relative">
             <svg
@@ -80,54 +95,42 @@
             </span>
           </div>
 
-          <div>
-            <p class="font-medium">View your order</p>
-            <p class="text-xs text-emerald-100" v-if="orderId">
-              Order #{{ orderId }}
-            </p>
-          </div>
+          <span class="font-medium">View your order</span>
         </div>
 
-        <div class="flex items-center gap-3">
-          <span class="font-bold text-lg">${{ cartTotal.toFixed(2) }}</span>
-
-          <button
-            @click="createOrder"
-            :disabled="loading || cartCount === 0"
-            class="bg-white text-emerald-800 px-4 py-2 rounded-xl font-semibold hover:bg-emerald-100 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {{ loading ? 'Creating...' : 'Order Now' }}
-          </button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Success / Error Message -->
-    <div v-if="message" class="fixed top-4 left-1/2 -translate-x-1/2 z-50">
-      <div
-        class="px-4 py-3 rounded-xl shadow-lg text-white"
-        :class="messageType === 'success' ? 'bg-emerald-600' : 'bg-red-500'"
-      >
-        {{ message }}
+        <span class="font-bold text-lg"> ${{ cartTotal.toFixed(2) }} </span>
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
-import api from '../../../services/api' // adjust path if needed
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
+import api from "../../services/api";
+// State
+const menuItems = ref([]);
+const loading = ref(false);
+const error = ref(null);
+const cart = ref([]);
 
-// --------------------
-// Demo menu data
-// --------------------
-const menuItems = ref([
+const cartCount = computed(() => cart.value.length);
+
+const cartTotal = computed(() => {
+  return cart.value.reduce((sum, item) => {
+    const price = Number(item.price) || 0;
+    return sum + price;
+  }, 0);
+});
+
+// fallback menu
+const sampleMenu = [
   {
     id: 1,
-    name: 'Seared Atlantic Salmon',
-    description: 'Crispy skin salmon, citrus quinoa, asparagus, and a light saffron sauce.',
-    price: 28.00,
-    image: 'https://images.unsplash.com/photo-1467003909585-2f8a72700288?w=200&h=200&fit=crop'
+    name: "Truffle Fettuccine",
+    price: 32,
+    description: "Creamy truffle sauce, parmesan cheese, fresh pasta",
+    image:
+      "https://images.unsplash.com/photo-1621996346565-e3dbc646d9a9?w=400&h=400&fit=crop",
   },
   {
     id: 2,
@@ -137,94 +140,36 @@ const menuItems = ref([
     image:
       "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=400&h=400&fit=crop",
   },
-  {
-    id: 3,
-    name: 'The Luxe Burger',
-    description: 'Wagyu beef, aged cheddar, fries, and truffle mayo.',
-    price: 35.00,
-    image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=200&h=200&fit=crop'
-  }
-])
+];
 
-// --------------------
-// Cart state
-// --------------------
-const cart = ref([])
-const loading = ref(false)
-const orderId = ref(null)
-const message = ref('')
-const messageType = ref('success')
+let isMounted = true;
 
-// You can change these values later
-const tableId = ref(2)
-const adminId = ref(1)
-const paymentMethod = ref('cash')
-
-// --------------------
-// Computed
-// --------------------
-const cartCount = computed(() => cart.value.length)
-const cartTotal = computed(() =>
-  cart.value.reduce((sum, item) => sum + Number(item.price), 0)
-)
-
-// --------------------
-// Methods
-// --------------------
-function addToCart(item) {
-  cart.value.push(item)
-  showMessage(`${item.name} added to cart`, 'success')
-}
-
-function showMessage(text, type = 'success') {
-  message.value = text
-  messageType.value = type
-
-  setTimeout(() => {
-    message.value = ''
-  }, 2500)
-}
-
-async function createOrder() {
-  if (cart.value.length === 0) {
-    showMessage('Please add at least one item first.', 'error')
-    return
-  }
-
-  loading.value = true
+// Fetch menu items
+const fetchMenuItems = async () => {
+  loading.value = true;
+  error.value = null;
 
   try {
-    const payload = {
-      table_id: tableId.value,
-      admin_id: adminId.value,
-      payment_method: paymentMethod.value
-    }
-
-    const res = await api.post('/orders', payload)
-
-    // API example returns:
-    // {
-    //   id: 3,
-    //   table_id: 2,
-    //   admin_id: 1,
-    //   status: "pending",
-    //   total_amount: 0,
-    //   payment_method: "cash"
-    // }
-
-    orderId.value = res.data.id
-    showMessage(`Order created successfully. Order ID: ${orderId.value}`, 'success')
-
-    console.log('Created order:', res.data)
-
-    // next step later:
-    // send cart items to /order-items or your order detail API
-  } catch (error) {
-    console.error('Create order error:', error)
-    showMessage('Failed to create order.', 'error')
+    const response = await api.get("/products");
+    menuItems.value = response.data.map((product) => ({
+      id: product.id,
+      name: product.title || "Untitled",
+      description: product.description || "No description",
+      price: Number(product.price) || 0,
+      image: product.image || "",
+    }));
+  } catch (err) {
+    console.error(err);
+    error.value = err.message;
+    menuItems.value = sampleMenu;
   } finally {
-    loading.value = false
+    if (isMounted) loading.value = false;
   }
+};
+
+// Cart
+function addToCart(item) {
+  cart.value.push({ ...item });
 }
 
 onMounted(() => {
