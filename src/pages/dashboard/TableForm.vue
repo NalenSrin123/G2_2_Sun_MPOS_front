@@ -123,9 +123,11 @@
         <div class="w-full flex flex-col sm:flex-row gap-4 mt-6">
           <button
             type="button"
-            class="w-full h-14 border border-[#006C49] rounded-xl font-bold text-md text-[#006C49] hover:bg-green-50 transition flex items-center justify-center px-4 cursor-pointer"
+            @click="onCreateTable(true)"
+            :disabled="loading"
+            class="w-full h-14 border border-[#006C49] rounded-xl font-bold text-md text-[#006C49] hover:bg-green-50 transition flex items-center justify-center px-4 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
           >
-            Save and Add Another
+            {{ loading ? "Saving..." : "Save and Add Another" }}
           </button>
 
           <button
@@ -162,7 +164,10 @@
 
 <script setup>
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 import { createTable } from "@/services/api";
+
+const router = useRouter();
 
 const tableNumber = ref("");
 const seatingCapacity = ref(1);
@@ -172,7 +177,23 @@ const loading = ref(false);
 const message = ref("");
 const error = ref("");
 
-async function onCreateTable() {
+function resetForm() {
+  tableNumber.value = "";
+  seatingCapacity.value = 1;
+  zone.value = "Zone 1";
+  isActive.value = true;
+}
+
+function getErrorMessage(err) {
+  return (
+    err.response?.data?.message ||
+    err.response?.data?.error ||
+    err?.message ||
+    "Network error. Check your API URL."
+  );
+}
+
+async function onCreateTable(addAnother = false) {
   message.value = "";
   error.value = "";
 
@@ -181,29 +202,26 @@ async function onCreateTable() {
     return;
   }
 
+  const normalizedTableNumber = /^\d+$/.test(tableNumber.value)
+    ? Number(tableNumber.value)
+    : tableNumber.value;
+
   loading.value = true;
 
   try {
-    const payload = {
-      table_number: Number(tableNumber.value),
-    };
-    const response = await createTable(payload);
+    const data = await createTable({
+      table_number: normalizedTableNumber,
+    });
 
-    if (!response.ok) {
-      const errorData = await response.json().catch(() => null);
-      error.value =
-        errorData?.message || `Request failed with status ${response.status}`;
+    if (addAnother) {
+      message.value = `Table created successfully${data?.id ? ` (ID: ${data.id})` : ""}.`;
+      resetForm();
       return;
     }
 
-    const data = await response.json();
-    message.value = `Table created successfully (ID: ${data.id}).`;
-    tableNumber.value = "";
-    seatingCapacity.value = 1;
-    zone.value = "Zone 1";
-    isActive.value = true;
+    router.push("/dashboard/tables");
   } catch (err) {
-    error.value = err?.message || "Network error. Check your API URL.";
+    error.value = getErrorMessage(err);
   } finally {
     loading.value = false;
   }
