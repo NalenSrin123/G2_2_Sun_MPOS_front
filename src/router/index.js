@@ -30,6 +30,7 @@ import QR_Payment from "../../payment/QR_Payment.vue";
 import ProductDetail from "@/pages/dashboard/ProductDetail.vue";
 import PaymentMethod from "../pages/orders/PaymentMethod.vue";
 import OrderHistory from "../pages/orders/OrderHistory.vue";
+import MainMenu from "../pages/preview/components/MainMenu.vue";
 
 const routes = [
   {
@@ -41,6 +42,7 @@ const routes = [
       { path: "confirm-payment", component: QR_Payment },
       { path: "shopping-cart", component: Shopping_cart },
       { path: "order-history", component: OrderHistory },
+      { path: "mainmenu", component: MainMenu },
     ],
   },
   {
