@@ -19,3 +19,6 @@ function logout() {
 export default function useAuthStore() {
   return { state, login, logout }
 }
+export default function createOrder() {
+  return { state, login, logout }
+}
